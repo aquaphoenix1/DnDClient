@@ -1,0 +1,168 @@
+﻿using System;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+
+namespace DnDClient
+{
+    public partial class CreateCharacterForm : Form
+    {
+        public CreateCharacterForm()
+        {
+            InitializeComponent();
+        }
+
+        private string[] parametres =
+        {
+            "Сила",
+            "Ловкость",
+            "Телосложение",
+            "Интеллект",
+            "Мудрость",
+            "Харизма"
+        };
+
+        private void CalculateBonusValue(object sender, EventArgs e)
+        {
+            var elem = sender as TextBox;
+            Control tb;
+
+            try
+            {
+                tb = elem.Parent.Controls.Find("textBoxBonus", true)[0];
+            }
+            catch
+            {
+                return;
+            }
+
+            if (!int.TryParse(sender.ToString(), out int value))
+            {
+                return;
+            }
+
+            if (Enumerable.Range(6, 7).Contains(value))
+            {
+                tb.Text = "-2";
+            }
+            else if (Enumerable.Range(8, 9).Contains(value))
+            {
+                tb.Text = "-1";
+            }
+            else if (Enumerable.Range(10, 11).Contains(value))
+            {
+                tb.Text = "0";
+            }
+            else if (Enumerable.Range(12, 13).Contains(value))
+            {
+                tb.Text = "1";
+            }
+            else if (Enumerable.Range(14, 15).Contains(value))
+            {
+                tb.Text = "2";
+            }
+            else if (Enumerable.Range(16, 17).Contains(value))
+            {
+                tb.Text = "3";
+            }
+            else if (Enumerable.Range(18, 19).Contains(value))
+            {
+                tb.Text = "4";
+            }
+        }
+
+        private Panel GetCharacterPanel(string name, int y)
+        {
+            const int numbersHeight = 20;
+            int panelwidth = panelCharacteristic.Width;
+            const int panelHeight = 100;
+
+            var panel = new Panel
+            {
+                Width = panelwidth,
+                Height = panelHeight,
+                Location = new Point(0, y),
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            var textBoxName = new TextBox
+            {
+                Text = name,
+                Width = panel.Width,
+                ReadOnly = true,
+                Height = numbersHeight,
+                Location = new Point(0, 0),
+                TextAlign = HorizontalAlignment.Center,
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle,
+                Parent = panel
+            };
+
+            var valuePanel = new Panel
+            {
+                Width = panelwidth,
+                Height = panelHeight - 2 * numbersHeight,
+                Location = new Point(0, numbersHeight),
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            var textBoxValue = new TextBox
+            {
+                Width = valuePanel.Width,
+                Height = numbersHeight,
+                Location = new Point(0, valuePanel.Height / 2 - numbersHeight / 2),
+                TextAlign = HorizontalAlignment.Center,
+                BorderStyle = BorderStyle.None,
+                Parent = panel
+            };
+
+            textBoxValue.TextChanged += CalculateBonusValue;
+
+            valuePanel.Controls.Add(textBoxValue);
+
+            var textBoxBonus = new TextBox
+            {
+                Height = numbersHeight,
+                Width = panel.Width,
+                Location = new Point(0, panel.Height - numbersHeight),
+                TextAlign = HorizontalAlignment.Center,
+                ReadOnly = true,
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle,
+                Parent = panel,
+                Name = "textBoxBonus"
+            };
+
+            panel.Controls.Add(textBoxName);
+            panel.Controls.Add(valuePanel);
+            panel.Controls.Add(textBoxBonus);
+
+            return panel;
+        }
+
+        private void CreateCharacterForm_Load(object sender, EventArgs e)
+        {
+            var y = 0;
+
+            foreach(var elem in parametres)
+            {
+                var panel = GetCharacterPanel(elem, y);
+
+                y += panel.Height + 10;
+
+                panelCharacteristic.Controls.Add(panel);
+            }
+        }
+
+        private void ButtonDecline_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void ButtonAccept_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
