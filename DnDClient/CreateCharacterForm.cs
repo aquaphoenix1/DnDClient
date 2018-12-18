@@ -7,6 +7,9 @@ namespace DnDClient
 {
     public partial class CreateCharacterForm : Form
     {
+        private const int CHARACTER_POINT_HEIGHT = 80;
+        private const int SAVE_HEIGHT = 20;
+
         public CreateCharacterForm()
         {
             InitializeComponent();
@@ -22,7 +25,23 @@ namespace DnDClient
             "Харизма"
         };
 
-        private void CalculateBonusValue(object sender, EventArgs e)
+        private void ChangeCharacteristic(object sender, EventArgs e)
+        {
+            CalculateBonusValue(sender);
+            CalculateSave(sender);
+        }
+
+        private void ChangeSave(object sender, EventArgs e)
+        {
+            CalculateSave(sender);
+        }
+
+        private void CalculateSave(object sender)
+        {
+
+        }
+
+        private void CalculateBonusValue(object sender)
         {
             var elem = sender as TextBox;
             Control tb;
@@ -69,18 +88,21 @@ namespace DnDClient
             {
                 tb.Text = "4";
             }
+            else
+            {
+                tb.Text = "NaN";
+            }
         }
 
         private Panel GetCharacterPanel(string name, int y)
         {
             const int numbersHeight = 20;
             int panelwidth = panelCharacteristic.Width;
-            const int panelHeight = 100;
 
             var panel = new Panel
             {
                 Width = panelwidth,
-                Height = panelHeight,
+                Height = CHARACTER_POINT_HEIGHT,
                 Location = new Point(0, y),
                 BorderStyle = BorderStyle.FixedSingle
             };
@@ -101,7 +123,7 @@ namespace DnDClient
             var valuePanel = new Panel
             {
                 Width = panelwidth,
-                Height = panelHeight - 2 * numbersHeight,
+                Height = CHARACTER_POINT_HEIGHT - 2 * numbersHeight,
                 Location = new Point(0, numbersHeight),
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.FixedSingle
@@ -117,7 +139,7 @@ namespace DnDClient
                 Parent = panel
             };
 
-            textBoxValue.TextChanged += CalculateBonusValue;
+            textBoxValue.TextChanged += ChangeCharacteristic;
 
             valuePanel.Controls.Add(textBoxValue);
 
@@ -141,17 +163,86 @@ namespace DnDClient
             return panel;
         }
 
+        private Panel GetSavePanel(string name, int y)
+        {
+            int panelwidth = panelSave.Width;
+            int panelHeight = 20;
+            int checkBoxWidth = 20;
+            int valueWidth = 20;
+            int margin = 2;
+
+            var panel = new Panel
+            {
+                Width = panelwidth,
+                Height = panelHeight,
+                Location = new Point(0, y),
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            var checkBoxEnabled = new CheckBox
+            {
+                Height = panelHeight,
+                Parent = panel,
+                Width = checkBoxWidth
+            };
+
+            checkBoxEnabled.CheckedChanged += ChangeSave;
+
+            var textBoxValue = new TextBox
+            {
+                Width = valueWidth,
+                ReadOnly = true,
+                Location = new Point(checkBoxEnabled.Width + margin, 0),
+                Text = "0",
+                BorderStyle = BorderStyle.None
+            };
+
+            /*var tbHeight = textBoxValue.Height;
+            var topMargin = (panelHeight - tbHeight) / 2;
+
+            textBoxValue.Margin.Top = topMargin;*/
+
+            var textBoxName = new TextBox
+            {
+                Width = panelwidth - checkBoxEnabled.Width - 2 * margin,
+                Parent = panel,
+                Location = new Point(checkBoxEnabled.Width + textBoxValue.Width + 2 * margin, 0),
+                Text = name,
+                BorderStyle = BorderStyle.None,
+                ReadOnly = true
+            };
+
+            panel.Controls.Add(checkBoxEnabled);
+            panel.Controls.Add(textBoxValue);
+            panel.Controls.Add(textBoxName);
+
+            return panel;
+        }
+
         private void CreateCharacterForm_Load(object sender, EventArgs e)
         {
-            var y = 0;
+            var height = parametres.Length* CHARACTER_POINT_HEIGHT;
+            Height = height + 300;
+            panelCharacteristic.Height = height + 300;
+
+            var save_margin = 10;
+            var saveHeight = parametres.Length * (SAVE_HEIGHT + save_margin);
+
+            panelSave.Height = saveHeight;
+
+            var characterPanelY = 0;
+            var saveY = 0;
 
             foreach(var elem in parametres)
             {
-                var panel = GetCharacterPanel(elem, y);
+                var panel = GetCharacterPanel(elem, characterPanelY);
+                var save = GetSavePanel(elem, saveY);
 
-                y += panel.Height + 10;
+                characterPanelY += panel.Height + 10;
+                saveY += save.Height + 10;
 
                 panelCharacteristic.Controls.Add(panel);
+                panelSave.Controls.Add(save);
             }
         }
 
