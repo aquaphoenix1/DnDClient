@@ -106,7 +106,7 @@
             this.Controls.Add(this.buttonAccept);
             this.Name = "CreateCharacterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Создание персонажа";
+            this.Text = "/";
             this.Load += new System.EventHandler(this.CreateCharacterForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMastery)).EndInit();
             this.ResumeLayout(false);
