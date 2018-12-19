@@ -12,16 +12,55 @@ namespace DnDClient
     {
         private const int CHARACTER_POINT_HEIGHT = 80;
         private const int SAVE_HEIGHT = 20;
+        private const int SKILL_HEIGHT = 20;
+        private const int DEFAULT_MASTERY_VALUE = 2;
 
-        public CreateCharacterForm()
+        private bool isLoad;
+
+        public CreateCharacterForm(bool isLoad)
         {
             InitializeComponent();
+
+            this.isLoad = isLoad;
+
+            if (isLoad)
+            {
+                DisableLoadElements();
+            }
         }
 
         private Dictionary<string, TextBox> characteristicsValueTextBoxes;
         private Dictionary<string, TextBox> bonusValueTextBoxes;
         private Dictionary<string, CheckBox> saveCheckBoxes;
         private Dictionary<string, TextBox> saveTextBoxes;
+
+        private void DisableLoadElements()
+        {
+            buttonAccept.Enabled = false;
+            buttonAccept.Visible = false;
+            buttonDecline.Enabled = false;
+            buttonDecline.Visible = false;
+
+            textBoxName.ReadOnly = true;
+            textBoxUserName.ReadOnly = true;
+            textBoxClassAndLevel.ReadOnly = true;
+            textBoxHistory.ReadOnly = true;
+            textBoxUserName.ReadOnly = true;
+            textBoxRace.ReadOnly = true;
+            textBoxGod.ReadOnly = true;
+            textBoxKD.ReadOnly = true;
+            textBoxInitiative.ReadOnly = true;
+            textBoxSpeed.ReadOnly = true;
+            textBoxMaxHP.ReadOnly = true;
+            textBoxPassive.ReadOnly = true;
+
+            richTextBoxTraits.ReadOnly = true;
+            richTextBoxIdeals.ReadOnly = true;
+            richTextBoxAttachment.ReadOnly = true;
+            richTextBoxWeaknesses.ReadOnly = true;
+
+            numericUpDownMastery.ReadOnly = true;
+        }
 
         private TextBox GetCharacteristicsValueTextBoxByName(string name)
         {
@@ -43,15 +82,19 @@ namespace DnDClient
             return saveTextBoxes.First(x => x.Key.Equals(name)).Value;
         }
 
-        private string[] parametres =
+        private Dictionary<string, string> parametres;
+
+        private string GetParametresByName(string name)
         {
-            "Сила",
-            "Ловкость",
-            "Телосложение",
-            "Интеллект",
-            "Мудрость",
-            "Харизма"
-        };
+            return parametres.First(x => x.Key.Equals(name)).Value;
+        }
+
+        private Dictionary<string, string> skills;
+
+        private string GetSkillByName(string name)
+        {
+            return skills.First(x => x.Key.Equals(name)).Value;
+        }
 
         private void ChangeCharacteristic(object sender, EventArgs e)
         {
@@ -62,7 +105,7 @@ namespace DnDClient
                 return;
             }
 
-            var name = characteristicsValueTextBoxes.FirstOrDefault(x => x.Value.Equals(elem)).Key;
+            var name = characteristicsValueTextBoxes.First(x => x.Value.Equals(elem)).Key;
             
             int bonus = CalculateBonusValue(result);
 
@@ -71,6 +114,37 @@ namespace DnDClient
             int save = CalculateSave(name);
 
             GetSaveTextBoxesByName(name).Text = save.ToString();
+
+            ChangeAllSkills(name, bonus);
+        }
+
+        private void ChangeAllSkills(string name, int value)
+        {
+            foreach(var cb in skillsCheckBoxes)
+            {
+                var charType = skills.First(x => x.Key.Equals(cb.Key));
+                if (charType.Value.Equals(name))
+                {
+                    var val = CalculateSkill(charType.Key, cb.Value.Checked);
+
+                    var tb = GetSkillTextBoxByName(charType.Key);
+
+                    tb.Text = val.ToString();
+                }
+            }
+        }
+
+        private void ChangeAllSkills(int value)
+        {
+            foreach (var cb in skillsCheckBoxes)
+            {
+                var charType = skills.First(x => x.Key.Equals(cb.Key));
+                var val = CalculateSkill(charType.Key, cb.Value.Checked);
+
+                var tb = GetSkillTextBoxByName(charType.Key);
+
+                tb.Text = val.ToString();
+            }
         }
 
         private void ChangeSave(object sender, EventArgs e)
@@ -180,7 +254,7 @@ namespace DnDClient
 
             var textBoxName = new TextBox
             {
-                Text = name,
+                Text = GetParametresByName(name),
                 Width = panel.Width,
                 ReadOnly = true,
                 Height = numbersHeight,
@@ -205,7 +279,8 @@ namespace DnDClient
                 Height = numbersHeight,
                 Location = new Point(0, valuePanel.Height / 2 - numbersHeight / 2),
                 TextAlign = HorizontalAlignment.Center,
-                BorderStyle = BorderStyle.None
+                BorderStyle = BorderStyle.None,
+                ReadOnly = isLoad
             };
 
             textBoxValue.Text = value.ToString();
@@ -236,17 +311,110 @@ namespace DnDClient
             return panel;
         }
 
-        private Panel GetSavePanel(string name, int y)
+        private Dictionary<string, CheckBox> skillsCheckBoxes;
+        private Dictionary<string, TextBox> skillsTextBoxes;
+
+        private TextBox GetSkillTextBoxByName(string name)
         {
-            int panelwidth = panelSave.Width;
-            int panelHeight = 20;
-            int checkBoxWidth = 20;
-            int valueWidth = 20;
-            int margin = 2;
+            return skillsTextBoxes.First(x => x.Key.Equals(name)).Value;
+        }
+
+        private int CalculateSkill(string name, bool isMastery)
+        {
+            var parameter = GetBonusValueTextBoxesByName(GetSkillByKey(name)).Text;
+
+            if(!int.TryParse(parameter, out int value))
+            {
+                return 0;
+            }
+
+            if(value == int.MinValue)
+            {
+                return 0;
+            }
+
+            return CalculateSaveValue(value, isMastery);
+        }
+
+        private void ChangeSkill(object sender, EventArgs e)
+        {
+            var elem = sender as CheckBox;
+
+            var name = skillsCheckBoxes.First(x => x.Value.Equals(elem)).Key;
+
+            int value = CalculateSkill(name, elem.Checked);
+
+            GetSkillTextBoxByName(name).Text = value.ToString();
+        }
+
+        private string GetSkillByKey(string key)
+        {
+            return skills.First(x => x.Key.Equals(key)).Value;
+        }
+
+        private Panel GetSkillPanel(string name, int y)
+        {
+            var panelWidth = panelSkills.Width;
+            var checkBoxWidth = 20;
+            var valueWidth = 20;
+            var margin = 2;
 
             var panel = new Panel
             {
-                Width = panelwidth,
+                Width = panelWidth,
+                Height = SKILL_HEIGHT,
+                Location = new Point(0, y),
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            var checkBoxEnabled = new CheckBox
+            {
+                Height = SKILL_HEIGHT,
+                Width = checkBoxWidth,
+                Enabled = !isLoad
+            };
+
+            checkBoxEnabled.CheckedChanged += ChangeSkill;
+
+            skillsCheckBoxes.Add(name, checkBoxEnabled);
+
+            var textBoxValue = new TextBox
+            {
+                Width = valueWidth,
+                ReadOnly = true,
+                Location = new Point(checkBoxEnabled.Width + margin, 0),
+                BorderStyle = BorderStyle.None
+            };
+
+            skillsTextBoxes.Add(name, textBoxValue);
+
+            var textBoxName = new TextBox
+            {
+                Width = panelWidth - checkBoxEnabled.Width - 2 * margin,
+                Location = new Point(checkBoxEnabled.Width + textBoxValue.Width + 2 * margin, 0),
+                Text = name + " (" + GetParametresByName(GetSkillByKey(name)) + ")",
+                BorderStyle = BorderStyle.None,
+                ReadOnly = true
+            };
+
+            panel.Controls.Add(checkBoxEnabled);
+            panel.Controls.Add(textBoxValue);
+            panel.Controls.Add(textBoxName);
+
+            return panel;
+        }
+
+        private Panel GetSavePanel(string name, int y)
+        {
+            var panelWidth = panelSave.Width;
+            var panelHeight = 20;
+            var checkBoxWidth = 20;
+            var valueWidth = 20;
+            var margin = 2;
+
+            var panel = new Panel
+            {
+                Width = panelWidth,
                 Height = panelHeight,
                 Location = new Point(0, y),
                 BorderStyle = BorderStyle.FixedSingle
@@ -255,8 +423,8 @@ namespace DnDClient
             var checkBoxEnabled = new CheckBox
             {
                 Height = panelHeight,
-                Parent = panel,
-                Width = checkBoxWidth
+                Width = checkBoxWidth,
+                Enabled = !isLoad
             };
 
             checkBoxEnabled.CheckedChanged += ChangeSave;
@@ -266,16 +434,14 @@ namespace DnDClient
                 Width = valueWidth,
                 ReadOnly = true,
                 Location = new Point(checkBoxEnabled.Width + margin, 0),
-                Text = "0",
                 BorderStyle = BorderStyle.None
             };
 
             var textBoxName = new TextBox
             {
-                Width = panelwidth - checkBoxEnabled.Width - 2 * margin,
-                Parent = panel,
+                Width = panelWidth - checkBoxEnabled.Width - 2 * margin,
                 Location = new Point(checkBoxEnabled.Width + textBoxValue.Width + 2 * margin, 0),
-                Text = name,
+                Text = GetParametresByName(name),
                 BorderStyle = BorderStyle.None,
                 ReadOnly = true
             };
@@ -290,19 +456,37 @@ namespace DnDClient
             return panel;
         }
 
+        private void FillParametres()
+        {
+            parametres.Add("Strength", "Сила");
+            parametres.Add("Agility", "Ловкость");
+            parametres.Add("Body", "Телосложение");
+            parametres.Add("Intelligence", "Интеллект");
+            parametres.Add("Wisdom", "Мудрость");
+            parametres.Add("Charism", "Харизма");
+        }
+
         private void CreateCharacterForm_Load(object sender, EventArgs e)
         {
             characteristicsValueTextBoxes = new Dictionary<string, TextBox>();
             bonusValueTextBoxes = new Dictionary<string, TextBox>();
             saveCheckBoxes = new Dictionary<string, CheckBox>();
             saveTextBoxes = new Dictionary<string, TextBox>();
+            skills = new Dictionary<string, string>();
 
-            var height = parametres.Length * CHARACTER_POINT_HEIGHT;
+            skillsCheckBoxes = new Dictionary<string, CheckBox>();
+            skillsTextBoxes = new Dictionary<string, TextBox>();
+
+            parametres = new Dictionary<string, string>();
+
+            FillParametres();
+
+            var height = parametres.Count * CHARACTER_POINT_HEIGHT;
             Height = height + 300;
             panelCharacteristic.Height = height + 300;
 
             var save_margin = 10;
-            var saveHeight = parametres.Length * (SAVE_HEIGHT + save_margin);
+            var saveHeight = parametres.Count * (SAVE_HEIGHT + save_margin);
 
             panelSave.Height = saveHeight;
 
@@ -313,15 +497,51 @@ namespace DnDClient
 
             foreach (var elem in parametres)
             {
-                var panel = GetCharacterPanel(elem, value, characterPanelY);
-                var save = GetSavePanel(elem, saveY);
+                var panel = GetCharacterPanel(elem.Key, value, characterPanelY);
+                var save = GetSavePanel(elem.Key, saveY);
 
                 characterPanelY += panel.Height + 10;
-                saveY += save.Height + 10;
+                saveY += save.Height + 5;
 
                 panelCharacteristic.Controls.Add(panel);
                 panelSave.Controls.Add(save);
             }
+
+            var skillsY = 5;
+
+            FillSkills();
+            foreach(var elem in skills)
+            {
+                var panel = GetSkillPanel(elem.Key, skillsY);
+
+                panelSkills.Controls.Add(panel);
+
+                skillsY += SKILL_HEIGHT + 5;
+            }
+
+            numericUpDownMastery.Value = DEFAULT_MASTERY_VALUE;
+        }
+
+        private void FillSkills()
+        {
+            skills.Add("Акробатика", "Agility");
+            skills.Add("Анализ", "Intelligence");
+            skills.Add("Атлетика", "Strength");
+            skills.Add("Внимательность", "Wisdom");
+            skills.Add("Выживание", "Wisdom");
+            skills.Add("Выступление", "Charism");
+            skills.Add("Запугивание", "Charism");
+            skills.Add("История", "Intelligence");
+            skills.Add("Ловкость рук", "Agility");
+            skills.Add("Магия", "Intelligence");
+            skills.Add("Медицина", "Wisdom");
+            skills.Add("Обман", "Charism");
+            skills.Add("Природа", "Intelligence");
+            skills.Add("Проницательность", "Wisdom");
+            skills.Add("Религия", "Intelligence");
+            skills.Add("Скрытность", "Agility");
+            skills.Add("Убеждение", "Charism");
+            skills.Add("Уход за животными", "Wisdom");
         }
 
         private void ButtonDecline_Click(object sender, EventArgs e)
@@ -356,11 +576,11 @@ namespace DnDClient
 
             foreach (var elem in parametres)
             {
-                var paramValueTextBox = GetCharacteristicsValueTextBoxByName(elem);
+                var paramValueTextBox = GetCharacteristicsValueTextBoxByName(elem.Key);
 
-                var paramBonusTextBox = GetBonusValueTextBoxesByName(elem);
+                var paramBonusTextBox = GetBonusValueTextBoxesByName(elem.Key);
 
-                var characteristic = new Character.Characteristic(elem, int.Parse(paramValueTextBox.Text), int.Parse(paramBonusTextBox.Text));
+                var characteristic = new Character.Characteristic(elem.Key, int.Parse(paramValueTextBox.Text), int.Parse(paramBonusTextBox.Text));
 
                 characteristics.Add(characteristic);
             }
@@ -387,6 +607,7 @@ namespace DnDClient
         private void NumericUpDownMastery_ValueChanged(object sender, EventArgs e)
         {
             ChangeAllSaves((int)numericUpDownMastery.Value);
+            ChangeAllSkills((int)numericUpDownMastery.Value);
         }
     }
 }

@@ -35,6 +35,8 @@
             this.персонажToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createCharacterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadCharacterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelCharacter = new System.Windows.Forms.Panel();
+            this.сохранитьПерсонажаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,7 +79,8 @@
             // 
             this.персонажToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createCharacterToolStripMenuItem,
-            this.loadCharacterToolStripMenuItem});
+            this.loadCharacterToolStripMenuItem,
+            this.сохранитьПерсонажаToolStripMenuItem});
             this.персонажToolStripMenuItem.Name = "персонажToolStripMenuItem";
             this.персонажToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
             this.персонажToolStripMenuItem.Text = "Персонаж";
@@ -96,11 +99,25 @@
             this.loadCharacterToolStripMenuItem.Text = "Загрузить персонажа";
             this.loadCharacterToolStripMenuItem.Click += new System.EventHandler(this.LoadCharacterToolStripMenuItem_Click);
             // 
+            // panelCharacter
+            // 
+            this.panelCharacter.Location = new System.Drawing.Point(490, 12);
+            this.panelCharacter.Name = "panelCharacter";
+            this.panelCharacter.Size = new System.Drawing.Size(739, 664);
+            this.panelCharacter.TabIndex = 4;
+            // 
+            // сохранитьПерсонажаToolStripMenuItem
+            // 
+            this.сохранитьПерсонажаToolStripMenuItem.Name = "сохранитьПерсонажаToolStripMenuItem";
+            this.сохранитьПерсонажаToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.сохранитьПерсонажаToolStripMenuItem.Text = "Сохранить персонажа";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1241, 627);
+            this.ClientSize = new System.Drawing.Size(1241, 688);
+            this.Controls.Add(this.panelCharacter);
             this.Controls.Add(this.buttonSendChatMessage);
             this.Controls.Add(this.textBoxChatMessage);
             this.Controls.Add(this.richTextBoxChat);
@@ -124,6 +141,8 @@
         private System.Windows.Forms.ToolStripMenuItem персонажToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createCharacterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadCharacterToolStripMenuItem;
+        private System.Windows.Forms.Panel panelCharacter;
+        private System.Windows.Forms.ToolStripMenuItem сохранитьПерсонажаToolStripMenuItem;
     }
 }
 

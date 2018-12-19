@@ -62,7 +62,7 @@ namespace DnDClient
 
         private void CreateCharacterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new CreateCharacterForm().ShowDialog();
+            new CreateCharacterForm(false).ShowDialog();
         }
 
         private void LoadCharacterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -79,6 +79,13 @@ namespace DnDClient
                     var text = File.ReadAllText(path);
 
                     dynamic element = JsonConvert.DeserializeObject(text);
+
+                    var form = new CreateCharacterForm(true) {
+                        AutoScroll = true,
+                        TopLevel = false
+                    };
+                    panelCharacter.Controls.Add(form);
+                    form.Show();
                 }
             }
         }
