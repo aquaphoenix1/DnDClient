@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,6 +18,31 @@ namespace DnDClient
             InitializeComponent();
         }
 
+        private Dictionary<string, TextBox> characteristicsValueTextBoxes;
+        private Dictionary<string, TextBox> bonusValueTextBoxes;
+        private Dictionary<string, CheckBox> saveCheckBoxes;
+        private Dictionary<string, TextBox> saveTextBoxes;
+
+        private TextBox GetCharacteristicsValueTextBoxByName(string name)
+        {
+            return characteristicsValueTextBoxes.First(x => x.Key.Equals(name)).Value;
+        }
+
+        private TextBox GetBonusValueTextBoxesByName(string name)
+        {
+            return bonusValueTextBoxes.First(x => x.Key.Equals(name)).Value;
+        }
+
+        private CheckBox GetSaveCheckBoxByName(string name)
+        {
+            return saveCheckBoxes.First(x => x.Key.Equals(name)).Value;
+        }
+
+        private TextBox GetSaveTextBoxesByName(string name)
+        {
+            return saveTextBoxes.First(x => x.Key.Equals(name)).Value;
+        }
+
         private string[] parametres =
         {
             "Сила",
@@ -28,32 +56,32 @@ namespace DnDClient
         private void ChangeCharacteristic(object sender, EventArgs e)
         {
             var elem = sender as TextBox;
-            Control tb;
 
-            try
-            {
-                tb = elem.Parent.Parent.Controls.Find("textBoxBonus", true)[0];
-            }
-            catch
+            if (!int.TryParse(elem.Text, out int result))
             {
                 return;
             }
 
-            if(!int.TryParse(elem.Text, out int result))
-            {
-                return;
-            }
-
+            var name = characteristicsValueTextBoxes.FirstOrDefault(x => x.Value.Equals(elem)).Key;
+            
             int bonus = CalculateBonusValue(result);
 
-            tb.Text = bonus.ToString();
+            GetBonusValueTextBoxesByName(name).Text = bonus.ToString();
 
-            CalculateSave(sender);
+            int save = CalculateSave(name);
+
+            GetSaveTextBoxesByName(name).Text = save.ToString();
         }
 
         private void ChangeSave(object sender, EventArgs e)
         {
-            CalculateSave(sender as CheckBox);
+            var elem = sender as CheckBox;
+
+            var name = saveCheckBoxes.First(x => x.Value.Equals(elem)).Key;
+
+            int value = CalculateSave(name);
+
+            GetSaveTextBoxesByName(name).Text = value.ToString();
         }
 
         private int CalculateSaveValue(int value, bool isCheckedSave)
@@ -70,111 +98,25 @@ namespace DnDClient
             }
         }
 
-        private void CalculateSave(object sender)
+        private int CalculateSave(string name)
         {
-            switch (sender){
-                case TextBox textBox:
-                    {
-                       var elements = panelSave.Controls.Find(textBox.Name, true);
+            var value = GetBonusValueTextBoxesByName(name).Text;
 
-                        CheckBox checkBox = null;
-
-                        foreach(var e in elements)
-                        {
-                            if(e is CheckBox)
-                            {
-                                checkBox = e as CheckBox;
-                                break;
-                            }
-                        }
-
-                        if (checkBox.Checked)
-                        {
-                            TextBox tb = null;
-
-                            foreach (var e in elements)
-                            {
-                                if (e is TextBox && e.Name == textBox.Name)
-                                {
-                                    tb = e as TextBox;
-                                    break;
-                                }
-                            }
-
-                            if (!int.TryParse(textBox.Text, out int value))
-                            {
-                                return;
-                            }
-
-                            int bonus = CalculateBonusValue(value);
-
-                            tb.Text = CalculateSaveValue(bonus, true).ToString();
-                        }
-                        else
-                        {
-                            foreach (var e in elements)
-                            {
-                                if (e is TextBox && e.Name == checkBox.Name)
-                                {
-                                    if (!int.TryParse(textBox.Text, out int value))
-                                    {
-                                        return;
-                                    }
-
-                                    int bonus = CalculateBonusValue(value);
-
-                                    e.Text = CalculateSaveValue(bonus, false).ToString();
-                                    break;
-                                }
-                            }
-                        }
-
-                        break;
-                    }
-                case CheckBox checkBox:
-                    {
-                        var state = panelCharacteristic.Controls.Find(checkBox.Name, true)[0].Parent.Parent.Controls.Find("textBoxBonus", true)[0] as TextBox;
-
-                        if(!int.TryParse(state.Text, out int value))
-                        {
-                            return;
-                        }
-
-                        if(value == int.MinValue)
-                        {
-                            return;
-                        }
-
-                        if (checkBox.CheckState == CheckState.Checked)
-                        {
-                            var elements = panelSave.Controls.Find(checkBox.Name, true);
-
-                            foreach (var e in elements)
-                            {
-                                if (e is TextBox && e.Name == checkBox.Name)
-                                {
-                                    e.Text = CalculateSaveValue(value, true).ToString();
-                                    break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            var elements = panelSave.Controls.Find(checkBox.Name, true);
-
-                            foreach (var e in elements)
-                            {
-                                if (e is TextBox && e.Name == checkBox.Name)
-                                {
-                                    e.Text = state.Text;
-                                    break;
-                                }
-                            }
-                        }
-
-                        break;
-                    }
+            if (!int.TryParse(value, out int bonus))
+            {
+                return 0;
             }
+
+            if(bonus == int.MinValue)
+            {
+                return 0;
+            }
+
+            var checkBox = GetSaveCheckBoxByName(name);
+
+            var save = CalculateSaveValue(bonus, checkBox.Checked);
+
+            return save;
         }
 
         private bool IsInRange(int value, int bottom, int top)
@@ -263,8 +205,7 @@ namespace DnDClient
                 Height = numbersHeight,
                 Location = new Point(0, valuePanel.Height / 2 - numbersHeight / 2),
                 TextAlign = HorizontalAlignment.Center,
-                BorderStyle = BorderStyle.None,
-                Name = name
+                BorderStyle = BorderStyle.None
             };
 
             textBoxValue.Text = value.ToString();
@@ -282,13 +223,15 @@ namespace DnDClient
                 ReadOnly = true,
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.FixedSingle,
-                Name = "textBoxBonus",
                 Text = CalculateBonusValue(int.Parse(textBoxValue.Text)).ToString()
             };
 
             panel.Controls.Add(textBoxName);
             panel.Controls.Add(valuePanel);
             panel.Controls.Add(textBoxBonus);
+
+            characteristicsValueTextBoxes.Add(name, textBoxValue);
+            bonusValueTextBoxes.Add(name, textBoxBonus);
 
             return panel;
         }
@@ -313,8 +256,7 @@ namespace DnDClient
             {
                 Height = panelHeight,
                 Parent = panel,
-                Width = checkBoxWidth,
-                Name = name
+                Width = checkBoxWidth
             };
 
             checkBoxEnabled.CheckedChanged += ChangeSave;
@@ -325,14 +267,8 @@ namespace DnDClient
                 ReadOnly = true,
                 Location = new Point(checkBoxEnabled.Width + margin, 0),
                 Text = "0",
-                BorderStyle = BorderStyle.None,
-                Name = name
+                BorderStyle = BorderStyle.None
             };
-
-            /*var tbHeight = textBoxValue.Height;
-            var topMargin = (panelHeight - tbHeight) / 2;
-
-            textBoxValue.Margin.Top = topMargin;*/
 
             var textBoxName = new TextBox
             {
@@ -348,11 +284,19 @@ namespace DnDClient
             panel.Controls.Add(textBoxValue);
             panel.Controls.Add(textBoxName);
 
+            saveCheckBoxes.Add(name, checkBoxEnabled);
+            saveTextBoxes.Add(name, textBoxValue);
+
             return panel;
         }
 
         private void CreateCharacterForm_Load(object sender, EventArgs e)
         {
+            characteristicsValueTextBoxes = new Dictionary<string, TextBox>();
+            bonusValueTextBoxes = new Dictionary<string, TextBox>();
+            saveCheckBoxes = new Dictionary<string, CheckBox>();
+            saveTextBoxes = new Dictionary<string, TextBox>();
+
             var height = parametres.Length * CHARACTER_POINT_HEIGHT;
             Height = height + 300;
             panelCharacteristic.Height = height + 300;
@@ -385,9 +329,64 @@ namespace DnDClient
             Close();
         }
 
+        private bool IsValidData()
+        {
+            return true;
+        }
+
         private void ButtonAccept_Click(object sender, EventArgs e)
         {
+            if (IsValidData())
+            {
+                SaveCharacter();
+            }
+        }
 
+        private void SaveCharacter()
+        {
+            string name = textBoxName.Text;
+
+            string path = Directory.GetCurrentDirectory() + "\\" + name;
+
+            var stream = File.Create(path);
+
+            stream.Close();
+
+            List<Character.Characteristic> characteristics = new List<Character.Characteristic>();
+
+            foreach (var elem in parametres)
+            {
+                var paramValueTextBox = GetCharacteristicsValueTextBoxByName(elem);
+
+                var paramBonusTextBox = GetBonusValueTextBoxesByName(elem);
+
+                var characteristic = new Character.Characteristic(elem, int.Parse(paramValueTextBox.Text), int.Parse(paramBonusTextBox.Text));
+
+                characteristics.Add(characteristic);
+            }
+
+            int mastery = (int)numericUpDownMastery.Value;
+
+            var character = new Character(name, characteristics, mastery);
+
+            var json = JsonConvert.SerializeObject(character);
+
+            File.WriteAllText(path, json);
+        }
+
+        private void ChangeAllSaves(int mastery)
+        {
+            foreach(var e in bonusValueTextBoxes)
+            {
+                var newValue = CalculateSave(e.Key);
+
+                GetSaveTextBoxesByName(e.Key).Text = newValue.ToString();
+            }
+        }
+
+        private void NumericUpDownMastery_ValueChanged(object sender, EventArgs e)
+        {
+            ChangeAllSaves((int)numericUpDownMastery.Value);
         }
     }
 }
