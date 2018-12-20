@@ -481,10 +481,6 @@ namespace DnDClient
 
             FillParametres();
 
-            var height = parametres.Count * CHARACTER_POINT_HEIGHT;
-            Height = height + 300;
-            panelCharacteristic.Height = height + 300;
-
             var save_margin = 10;
             var saveHeight = parametres.Count * (SAVE_HEIGHT + save_margin);
 

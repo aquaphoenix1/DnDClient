@@ -104,6 +104,29 @@
             this.textBoxPassive = new System.Windows.Forms.TextBox();
             this.labelPassive = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
+            this.dataGridViewAbilities = new System.Windows.Forms.DataGridView();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAbout = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewWeapons = new System.Windows.Forms.DataGridView();
+            this.ColumnWeaponName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAccuracy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnWeaponDamage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewEquipment = new System.Windows.Forms.DataGridView();
+            this.ColumnEquipmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnEquipmentAbout = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.labelCopperMoney = new System.Windows.Forms.Label();
+            this.numericUpDownCopperMoney = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownSilverMoney = new System.Windows.Forms.NumericUpDown();
+            this.labelSilverMoney = new System.Windows.Forms.Label();
+            this.numericUpDownElectroMoney = new System.Windows.Forms.NumericUpDown();
+            this.labelElectroMoney = new System.Windows.Forms.Label();
+            this.numericUpDownGoldMoney = new System.Windows.Forms.NumericUpDown();
+            this.labelGoldMoney = new System.Windows.Forms.Label();
+            this.numericUpDownPlatinumMoney = new System.Windows.Forms.NumericUpDown();
+            this.labelPlatinumMoney = new System.Windows.Forms.Label();
+            this.richTextBoxHist = new System.Windows.Forms.RichTextBox();
+            this.labelHist = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMastery)).BeginInit();
             this.panelHP.SuspendLayout();
             this.panelTimeHP.SuspendLayout();
@@ -116,14 +139,21 @@
             this.panelAtacks.SuspendLayout();
             this.panelAbilities.SuspendLayout();
             this.panelEquipment.SuspendLayout();
-            this.panelSkills.SuspendLayout();
             this.panelLanguages.SuspendLayout();
             this.panelPassive.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAbilities)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWeapons)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEquipment)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCopperMoney)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSilverMoney)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownElectroMoney)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGoldMoney)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlatinumMoney)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonAccept
             // 
-            this.buttonAccept.Location = new System.Drawing.Point(631, 22);
+            this.buttonAccept.Location = new System.Drawing.Point(920, 20);
             this.buttonAccept.Name = "buttonAccept";
             this.buttonAccept.Size = new System.Drawing.Size(75, 23);
             this.buttonAccept.TabIndex = 0;
@@ -133,7 +163,8 @@
             // 
             // buttonDecline
             // 
-            this.buttonDecline.Location = new System.Drawing.Point(631, 69);
+            this.buttonDecline.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonDecline.Location = new System.Drawing.Point(920, 67);
             this.buttonDecline.Name = "buttonDecline";
             this.buttonDecline.Size = new System.Drawing.Size(75, 23);
             this.buttonDecline.TabIndex = 1;
@@ -146,7 +177,7 @@
             this.panelCharacteristic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelCharacteristic.Location = new System.Drawing.Point(12, 23);
             this.panelCharacteristic.Name = "panelCharacteristic";
-            this.panelCharacteristic.Size = new System.Drawing.Size(100, 685);
+            this.panelCharacteristic.Size = new System.Drawing.Size(100, 707);
             this.panelCharacteristic.TabIndex = 2;
             // 
             // labelMastery
@@ -200,7 +231,7 @@
             // labelTraits
             // 
             this.labelTraits.AutoSize = true;
-            this.labelTraits.Location = new System.Drawing.Point(47, 3);
+            this.labelTraits.Location = new System.Drawing.Point(192, 3);
             this.labelTraits.Name = "labelTraits";
             this.labelTraits.Size = new System.Drawing.Size(95, 13);
             this.labelTraits.TabIndex = 10;
@@ -571,14 +602,14 @@
             this.panelTraits.Controls.Add(this.labelTraits);
             this.panelTraits.Location = new System.Drawing.Point(517, 113);
             this.panelTraits.Name = "panelTraits";
-            this.panelTraits.Size = new System.Drawing.Size(189, 56);
+            this.panelTraits.Size = new System.Drawing.Size(484, 56);
             this.panelTraits.TabIndex = 7;
             // 
             // richTextBoxTraits
             // 
             this.richTextBoxTraits.Location = new System.Drawing.Point(3, 23);
             this.richTextBoxTraits.Name = "richTextBoxTraits";
-            this.richTextBoxTraits.Size = new System.Drawing.Size(183, 30);
+            this.richTextBoxTraits.Size = new System.Drawing.Size(474, 30);
             this.richTextBoxTraits.TabIndex = 38;
             this.richTextBoxTraits.Text = "";
             // 
@@ -589,21 +620,21 @@
             this.panelIdeals.Controls.Add(this.labelIdeals);
             this.panelIdeals.Location = new System.Drawing.Point(517, 176);
             this.panelIdeals.Name = "panelIdeals";
-            this.panelIdeals.Size = new System.Drawing.Size(189, 56);
+            this.panelIdeals.Size = new System.Drawing.Size(484, 56);
             this.panelIdeals.TabIndex = 8;
             // 
             // richTextBoxIdeals
             // 
             this.richTextBoxIdeals.Location = new System.Drawing.Point(3, 21);
             this.richTextBoxIdeals.Name = "richTextBoxIdeals";
-            this.richTextBoxIdeals.Size = new System.Drawing.Size(183, 30);
+            this.richTextBoxIdeals.Size = new System.Drawing.Size(474, 30);
             this.richTextBoxIdeals.TabIndex = 40;
             this.richTextBoxIdeals.Text = "";
             // 
             // labelIdeals
             // 
             this.labelIdeals.AutoSize = true;
-            this.labelIdeals.Location = new System.Drawing.Point(71, 1);
+            this.labelIdeals.Location = new System.Drawing.Point(216, 1);
             this.labelIdeals.Name = "labelIdeals";
             this.labelIdeals.Size = new System.Drawing.Size(47, 13);
             this.labelIdeals.TabIndex = 39;
@@ -616,21 +647,21 @@
             this.panelAttachment.Controls.Add(this.labelAttachment);
             this.panelAttachment.Location = new System.Drawing.Point(517, 238);
             this.panelAttachment.Name = "panelAttachment";
-            this.panelAttachment.Size = new System.Drawing.Size(189, 56);
+            this.panelAttachment.Size = new System.Drawing.Size(484, 56);
             this.panelAttachment.TabIndex = 8;
             // 
             // richTextBoxAttachment
             // 
             this.richTextBoxAttachment.Location = new System.Drawing.Point(2, 23);
             this.richTextBoxAttachment.Name = "richTextBoxAttachment";
-            this.richTextBoxAttachment.Size = new System.Drawing.Size(183, 30);
+            this.richTextBoxAttachment.Size = new System.Drawing.Size(475, 30);
             this.richTextBoxAttachment.TabIndex = 40;
             this.richTextBoxAttachment.Text = "";
             // 
             // labelAttachment
             // 
             this.labelAttachment.AutoSize = true;
-            this.labelAttachment.Location = new System.Drawing.Point(50, 1);
+            this.labelAttachment.Location = new System.Drawing.Point(196, 1);
             this.labelAttachment.Name = "labelAttachment";
             this.labelAttachment.Size = new System.Drawing.Size(86, 13);
             this.labelAttachment.TabIndex = 39;
@@ -643,21 +674,21 @@
             this.panelWeaknesses.Controls.Add(this.labelWeaknesses);
             this.panelWeaknesses.Location = new System.Drawing.Point(517, 300);
             this.panelWeaknesses.Name = "panelWeaknesses";
-            this.panelWeaknesses.Size = new System.Drawing.Size(189, 56);
+            this.panelWeaknesses.Size = new System.Drawing.Size(484, 56);
             this.panelWeaknesses.TabIndex = 8;
             // 
             // richTextBoxWeaknesses
             // 
             this.richTextBoxWeaknesses.Location = new System.Drawing.Point(3, 24);
             this.richTextBoxWeaknesses.Name = "richTextBoxWeaknesses";
-            this.richTextBoxWeaknesses.Size = new System.Drawing.Size(183, 30);
+            this.richTextBoxWeaknesses.Size = new System.Drawing.Size(474, 30);
             this.richTextBoxWeaknesses.TabIndex = 40;
             this.richTextBoxWeaknesses.Text = "";
             // 
             // labelWeaknesses
             // 
             this.labelWeaknesses.AutoSize = true;
-            this.labelWeaknesses.Location = new System.Drawing.Point(67, 4);
+            this.labelWeaknesses.Location = new System.Drawing.Point(212, -1);
             this.labelWeaknesses.Name = "labelWeaknesses";
             this.labelWeaknesses.Size = new System.Drawing.Size(55, 13);
             this.labelWeaknesses.TabIndex = 39;
@@ -666,28 +697,30 @@
             // panelAtacks
             // 
             this.panelAtacks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelAtacks.Controls.Add(this.dataGridViewWeapons);
             this.panelAtacks.Controls.Add(this.labelAtacks);
             this.panelAtacks.Location = new System.Drawing.Point(291, 363);
             this.panelAtacks.Name = "panelAtacks";
-            this.panelAtacks.Size = new System.Drawing.Size(220, 244);
+            this.panelAtacks.Size = new System.Drawing.Size(352, 244);
             this.panelAtacks.TabIndex = 7;
             // 
             // labelAtacks
             // 
             this.labelAtacks.AutoSize = true;
-            this.labelAtacks.Location = new System.Drawing.Point(60, 4);
+            this.labelAtacks.Location = new System.Drawing.Point(86, 0);
             this.labelAtacks.Name = "labelAtacks";
-            this.labelAtacks.Size = new System.Drawing.Size(109, 13);
+            this.labelAtacks.Size = new System.Drawing.Size(37, 13);
             this.labelAtacks.TabIndex = 41;
-            this.labelAtacks.Text = "Атаки и заклинания";
+            this.labelAtacks.Text = "Атаки";
             // 
             // panelAbilities
             // 
             this.panelAbilities.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelAbilities.Controls.Add(this.dataGridViewAbilities);
             this.panelAbilities.Controls.Add(this.labelAbilities);
-            this.panelAbilities.Location = new System.Drawing.Point(518, 363);
+            this.panelAbilities.Location = new System.Drawing.Point(649, 363);
             this.panelAbilities.Name = "panelAbilities";
-            this.panelAbilities.Size = new System.Drawing.Size(186, 494);
+            this.panelAbilities.Size = new System.Drawing.Size(352, 517);
             this.panelAbilities.TabIndex = 42;
             // 
             // labelAbilities
@@ -702,34 +735,44 @@
             // panelEquipment
             // 
             this.panelEquipment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelEquipment.Controls.Add(this.numericUpDownPlatinumMoney);
+            this.panelEquipment.Controls.Add(this.labelPlatinumMoney);
+            this.panelEquipment.Controls.Add(this.numericUpDownGoldMoney);
+            this.panelEquipment.Controls.Add(this.labelGoldMoney);
+            this.panelEquipment.Controls.Add(this.numericUpDownElectroMoney);
+            this.panelEquipment.Controls.Add(this.labelElectroMoney);
+            this.panelEquipment.Controls.Add(this.numericUpDownSilverMoney);
+            this.panelEquipment.Controls.Add(this.labelSilverMoney);
+            this.panelEquipment.Controls.Add(this.numericUpDownCopperMoney);
+            this.panelEquipment.Controls.Add(this.labelCopperMoney);
+            this.panelEquipment.Controls.Add(this.dataGridViewEquipment);
             this.panelEquipment.Controls.Add(this.labelEquipment);
             this.panelEquipment.Location = new System.Drawing.Point(291, 613);
             this.panelEquipment.Name = "panelEquipment";
-            this.panelEquipment.Size = new System.Drawing.Size(220, 244);
+            this.panelEquipment.Size = new System.Drawing.Size(352, 266);
             this.panelEquipment.TabIndex = 42;
             // 
             // labelEquipment
             // 
             this.labelEquipment.AutoSize = true;
-            this.labelEquipment.Location = new System.Drawing.Point(88, 4);
+            this.labelEquipment.Location = new System.Drawing.Point(76, 0);
             this.labelEquipment.Name = "labelEquipment";
-            this.labelEquipment.Size = new System.Drawing.Size(41, 13);
+            this.labelEquipment.Size = new System.Drawing.Size(70, 13);
             this.labelEquipment.TabIndex = 41;
-            this.labelEquipment.Text = "label23";
+            this.labelEquipment.Text = "Снаряжение";
             // 
             // panelSkills
             // 
             this.panelSkills.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelSkills.Controls.Add(this.labelSkills);
-            this.panelSkills.Location = new System.Drawing.Point(118, 258);
+            this.panelSkills.Location = new System.Drawing.Point(118, 273);
             this.panelSkills.Name = "panelSkills";
-            this.panelSkills.Size = new System.Drawing.Size(167, 450);
+            this.panelSkills.Size = new System.Drawing.Size(167, 457);
             this.panelSkills.TabIndex = 42;
             // 
             // labelSkills
             // 
             this.labelSkills.AutoSize = true;
-            this.labelSkills.Location = new System.Drawing.Point(59, 6);
+            this.labelSkills.Location = new System.Drawing.Point(171, 260);
             this.labelSkills.Name = "labelSkills";
             this.labelSkills.Size = new System.Drawing.Size(47, 13);
             this.labelSkills.TabIndex = 41;
@@ -739,7 +782,7 @@
             // 
             this.panelLanguages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelLanguages.Controls.Add(this.labelLanguages);
-            this.panelLanguages.Location = new System.Drawing.Point(12, 755);
+            this.panelLanguages.Location = new System.Drawing.Point(10, 777);
             this.panelLanguages.Name = "panelLanguages";
             this.panelLanguages.Size = new System.Drawing.Size(273, 102);
             this.panelLanguages.TabIndex = 42;
@@ -758,7 +801,7 @@
             this.panelPassive.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelPassive.Controls.Add(this.textBoxPassive);
             this.panelPassive.Controls.Add(this.labelPassive);
-            this.panelPassive.Location = new System.Drawing.Point(12, 714);
+            this.panelPassive.Location = new System.Drawing.Point(11, 736);
             this.panelPassive.Name = "panelPassive";
             this.panelPassive.Size = new System.Drawing.Size(273, 35);
             this.panelPassive.TabIndex = 43;
@@ -788,12 +831,216 @@
             this.label28.TabIndex = 46;
             this.label28.Text = "Характеристики";
             // 
+            // dataGridViewAbilities
+            // 
+            this.dataGridViewAbilities.AllowUserToOrderColumns = true;
+            this.dataGridViewAbilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewAbilities.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnName,
+            this.ColumnAbout,
+            this.ColumnText});
+            this.dataGridViewAbilities.Location = new System.Drawing.Point(3, 20);
+            this.dataGridViewAbilities.Name = "dataGridViewAbilities";
+            this.dataGridViewAbilities.Size = new System.Drawing.Size(343, 490);
+            this.dataGridViewAbilities.TabIndex = 42;
+            // 
+            // ColumnName
+            // 
+            this.ColumnName.HeaderText = "Название умения";
+            this.ColumnName.Name = "ColumnName";
+            // 
+            // ColumnAbout
+            // 
+            this.ColumnAbout.HeaderText = "Описание";
+            this.ColumnAbout.Name = "ColumnAbout";
+            // 
+            // ColumnText
+            // 
+            this.ColumnText.HeaderText = "Заметки";
+            this.ColumnText.Name = "ColumnText";
+            // 
+            // dataGridViewWeapons
+            // 
+            this.dataGridViewWeapons.AllowUserToOrderColumns = true;
+            this.dataGridViewWeapons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewWeapons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnWeaponName,
+            this.ColumnAccuracy,
+            this.ColumnWeaponDamage});
+            this.dataGridViewWeapons.Location = new System.Drawing.Point(5, 16);
+            this.dataGridViewWeapons.Name = "dataGridViewWeapons";
+            this.dataGridViewWeapons.Size = new System.Drawing.Size(343, 223);
+            this.dataGridViewWeapons.TabIndex = 43;
+            // 
+            // ColumnWeaponName
+            // 
+            this.ColumnWeaponName.HeaderText = "Название";
+            this.ColumnWeaponName.Name = "ColumnWeaponName";
+            // 
+            // ColumnAccuracy
+            // 
+            this.ColumnAccuracy.HeaderText = "Попадание";
+            this.ColumnAccuracy.Name = "ColumnAccuracy";
+            // 
+            // ColumnWeaponDamage
+            // 
+            this.ColumnWeaponDamage.HeaderText = "Урон";
+            this.ColumnWeaponDamage.Name = "ColumnWeaponDamage";
+            // 
+            // dataGridViewEquipment
+            // 
+            this.dataGridViewEquipment.AllowUserToOrderColumns = true;
+            this.dataGridViewEquipment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewEquipment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnEquipmentName,
+            this.ColumnEquipmentAbout});
+            this.dataGridViewEquipment.Location = new System.Drawing.Point(104, 16);
+            this.dataGridViewEquipment.Name = "dataGridViewEquipment";
+            this.dataGridViewEquipment.Size = new System.Drawing.Size(243, 244);
+            this.dataGridViewEquipment.TabIndex = 44;
+            // 
+            // ColumnEquipmentName
+            // 
+            this.ColumnEquipmentName.HeaderText = "Название";
+            this.ColumnEquipmentName.Name = "ColumnEquipmentName";
+            // 
+            // ColumnEquipmentAbout
+            // 
+            this.ColumnEquipmentAbout.HeaderText = "Описание";
+            this.ColumnEquipmentAbout.Name = "ColumnEquipmentAbout";
+            // 
+            // labelCopperMoney
+            // 
+            this.labelCopperMoney.AutoSize = true;
+            this.labelCopperMoney.Location = new System.Drawing.Point(3, 26);
+            this.labelCopperMoney.Name = "labelCopperMoney";
+            this.labelCopperMoney.Size = new System.Drawing.Size(34, 13);
+            this.labelCopperMoney.TabIndex = 47;
+            this.labelCopperMoney.Text = "Медь";
+            // 
+            // numericUpDownCopperMoney
+            // 
+            this.numericUpDownCopperMoney.Location = new System.Drawing.Point(50, 23);
+            this.numericUpDownCopperMoney.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.numericUpDownCopperMoney.Name = "numericUpDownCopperMoney";
+            this.numericUpDownCopperMoney.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownCopperMoney.TabIndex = 47;
+            // 
+            // numericUpDownSilverMoney
+            // 
+            this.numericUpDownSilverMoney.Location = new System.Drawing.Point(50, 56);
+            this.numericUpDownSilverMoney.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.numericUpDownSilverMoney.Name = "numericUpDownSilverMoney";
+            this.numericUpDownSilverMoney.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownSilverMoney.TabIndex = 48;
+            // 
+            // labelSilverMoney
+            // 
+            this.labelSilverMoney.AutoSize = true;
+            this.labelSilverMoney.Location = new System.Drawing.Point(3, 59);
+            this.labelSilverMoney.Name = "labelSilverMoney";
+            this.labelSilverMoney.Size = new System.Drawing.Size(50, 13);
+            this.labelSilverMoney.TabIndex = 49;
+            this.labelSilverMoney.Text = "Серебро";
+            // 
+            // numericUpDownElectroMoney
+            // 
+            this.numericUpDownElectroMoney.Location = new System.Drawing.Point(50, 89);
+            this.numericUpDownElectroMoney.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.numericUpDownElectroMoney.Name = "numericUpDownElectroMoney";
+            this.numericUpDownElectroMoney.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownElectroMoney.TabIndex = 50;
+            // 
+            // labelElectroMoney
+            // 
+            this.labelElectroMoney.AutoSize = true;
+            this.labelElectroMoney.Location = new System.Drawing.Point(3, 92);
+            this.labelElectroMoney.Name = "labelElectroMoney";
+            this.labelElectroMoney.Size = new System.Drawing.Size(49, 13);
+            this.labelElectroMoney.TabIndex = 51;
+            this.labelElectroMoney.Text = "Электро";
+            // 
+            // numericUpDownGoldMoney
+            // 
+            this.numericUpDownGoldMoney.Location = new System.Drawing.Point(50, 122);
+            this.numericUpDownGoldMoney.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.numericUpDownGoldMoney.Name = "numericUpDownGoldMoney";
+            this.numericUpDownGoldMoney.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownGoldMoney.TabIndex = 52;
+            // 
+            // labelGoldMoney
+            // 
+            this.labelGoldMoney.AutoSize = true;
+            this.labelGoldMoney.Location = new System.Drawing.Point(3, 125);
+            this.labelGoldMoney.Name = "labelGoldMoney";
+            this.labelGoldMoney.Size = new System.Drawing.Size(43, 13);
+            this.labelGoldMoney.TabIndex = 53;
+            this.labelGoldMoney.Text = "Золото";
+            // 
+            // numericUpDownPlatinumMoney
+            // 
+            this.numericUpDownPlatinumMoney.Location = new System.Drawing.Point(50, 155);
+            this.numericUpDownPlatinumMoney.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.numericUpDownPlatinumMoney.Name = "numericUpDownPlatinumMoney";
+            this.numericUpDownPlatinumMoney.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownPlatinumMoney.TabIndex = 54;
+            // 
+            // labelPlatinumMoney
+            // 
+            this.labelPlatinumMoney.AutoSize = true;
+            this.labelPlatinumMoney.Location = new System.Drawing.Point(3, 158);
+            this.labelPlatinumMoney.Name = "labelPlatinumMoney";
+            this.labelPlatinumMoney.Size = new System.Drawing.Size(50, 13);
+            this.labelPlatinumMoney.TabIndex = 55;
+            this.labelPlatinumMoney.Text = "Платина";
+            // 
+            // richTextBoxHist
+            // 
+            this.richTextBoxHist.Location = new System.Drawing.Point(618, 22);
+            this.richTextBoxHist.Name = "richTextBoxHist";
+            this.richTextBoxHist.Size = new System.Drawing.Size(297, 68);
+            this.richTextBoxHist.TabIndex = 39;
+            this.richTextBoxHist.Text = "";
+            // 
+            // labelHist
+            // 
+            this.labelHist.AutoSize = true;
+            this.labelHist.Location = new System.Drawing.Point(738, 7);
+            this.labelHist.Name = "labelHist";
+            this.labelHist.Size = new System.Drawing.Size(74, 13);
+            this.labelHist.TabIndex = 47;
+            this.labelHist.Text = "Подробности";
+            // 
             // CreateCharacterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(711, 865);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(1007, 886);
             this.ControlBox = false;
+            this.Controls.Add(this.labelHist);
+            this.Controls.Add(this.richTextBoxHist);
+            this.Controls.Add(this.labelSkills);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.panelPassive);
             this.Controls.Add(this.panelLanguages);
@@ -838,9 +1085,13 @@
             this.Controls.Add(this.panelCharacteristic);
             this.Controls.Add(this.buttonDecline);
             this.Controls.Add(this.buttonAccept);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "CreateCharacterForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Персонаж";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.CreateCharacterForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMastery)).EndInit();
             this.panelHP.ResumeLayout(false);
@@ -865,12 +1116,18 @@
             this.panelAbilities.PerformLayout();
             this.panelEquipment.ResumeLayout(false);
             this.panelEquipment.PerformLayout();
-            this.panelSkills.ResumeLayout(false);
-            this.panelSkills.PerformLayout();
             this.panelLanguages.ResumeLayout(false);
             this.panelLanguages.PerformLayout();
             this.panelPassive.ResumeLayout(false);
             this.panelPassive.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAbilities)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWeapons)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEquipment)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCopperMoney)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSilverMoney)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownElectroMoney)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGoldMoney)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlatinumMoney)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -954,5 +1211,28 @@
         private System.Windows.Forms.Label labelPassive;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.CheckBox checkBoxBoneHP;
+        private System.Windows.Forms.DataGridView dataGridViewAbilities;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAbout;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnText;
+        private System.Windows.Forms.DataGridView dataGridViewWeapons;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnWeaponName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAccuracy;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnWeaponDamage;
+        private System.Windows.Forms.DataGridView dataGridViewEquipment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnEquipmentName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnEquipmentAbout;
+        private System.Windows.Forms.NumericUpDown numericUpDownPlatinumMoney;
+        private System.Windows.Forms.Label labelPlatinumMoney;
+        private System.Windows.Forms.NumericUpDown numericUpDownGoldMoney;
+        private System.Windows.Forms.Label labelGoldMoney;
+        private System.Windows.Forms.NumericUpDown numericUpDownElectroMoney;
+        private System.Windows.Forms.Label labelElectroMoney;
+        private System.Windows.Forms.NumericUpDown numericUpDownSilverMoney;
+        private System.Windows.Forms.Label labelSilverMoney;
+        private System.Windows.Forms.NumericUpDown numericUpDownCopperMoney;
+        private System.Windows.Forms.Label labelCopperMoney;
+        private System.Windows.Forms.RichTextBox richTextBoxHist;
+        private System.Windows.Forms.Label labelHist;
     }
 }
