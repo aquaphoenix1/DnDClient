@@ -1,14 +1,7 @@
 ﻿using DnDClient.Client_Elements;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DnDClient
@@ -85,7 +78,11 @@ namespace DnDClient
                         TopLevel = false
                     };
                     panelCharacter.Controls.Add(form);
-                    form.Show();
+                    try
+                    {
+                        form.Show();
+                    }
+                    catch { }
                 }
             }
         }
@@ -102,7 +99,10 @@ namespace DnDClient
 
             if (input != "")
             {
-                panelCharacter.Controls.RemoveAt(0);
+                if (panelCharacter.Controls.Count > 0)
+                {
+                    panelCharacter.Controls.RemoveAt(0);
+                }
 
                 string path = Directory.GetCurrentDirectory() + "\\" + input;
 
@@ -112,7 +112,11 @@ namespace DnDClient
 
                     dynamic element = JsonConvert.DeserializeObject(text);
 
-                    new CreateCharacterForm(false, element).ShowDialog();
+                    try
+                    {
+                        new CreateCharacterForm(false, element).ShowDialog();
+                    }
+                    catch { }
                 }
             }
         }

@@ -102,6 +102,7 @@ namespace DnDClient
         public List<Characteristic> Characteristics { get; set; }
         public int Mastery { get; set; }
         public List<Save> Saves { get; set; }
+        public List<Skill> Skills { get; set; }
         public DeadAlive DeadAndAlive { get; set; }
         public List<Weapon> Weapons { get; set; }
         public List<Abilitiy> Abilities { get; set; }
@@ -135,12 +136,13 @@ namespace DnDClient
         
         public string Hist { get; set; }
 
-        public Character(string name, List<Characteristic> characteristics, int mastery, List<Save> saves, DeadAlive deadAndAlive, List<Weapon> weapons, List<Abilitiy> abilities, List<Equipment> equipments, string userName, string classAndLevel, string history, string race, string god, int speed, string traits, string ideals, string attachment, string weaknesses, int maxHP, int currentHP, int timeHP, string boneHP, bool isCheckedBoneHP, string languages, int passive, int xP, bool inspiration, int kD, int initiative, int copperMoney, int silverMoney, int electroMoney, int goldMoney, int platinumMoney, string hist)
+        public Character(string name, List<Characteristic> characteristics, int mastery, List<Save> saves, List<Skill> skills, DeadAlive deadAndAlive, List<Weapon> weapons, List<Abilitiy> abilities, List<Equipment> equipments, string userName, string classAndLevel, string history, string race, string god, int speed, string traits, string ideals, string attachment, string weaknesses, int maxHP, int currentHP, int timeHP, string boneHP, bool isCheckedBoneHP, string languages, int passive, int xP, bool inspiration, int kD, int initiative, int copperMoney, int silverMoney, int electroMoney, int goldMoney, int platinumMoney, string hist)
         {
             Name = name;
             Characteristics = characteristics;
             Mastery = mastery;
             Saves = saves;
+            Skills = skills;
             DeadAndAlive = deadAndAlive;
             Weapons = weapons;
             Abilities = abilities;

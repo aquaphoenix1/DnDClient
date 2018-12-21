@@ -11,6 +11,9 @@ namespace DnDClient
     public partial class CreateCharacterForm : Form
     {
         private bool IsLoad { get; set; }
+        private CheckBox[] AliveCheckBoxes { get; set; }
+        private CheckBox[] DeadCheckBoxes { get; set; }
+        private dynamic LoadedCharacter { get; set; }
 
         private const int CHARACTER_POINT_HEIGHT = 80;
         private const int SAVE_HEIGHT = 20;
@@ -20,17 +23,14 @@ namespace DnDClient
         public CreateCharacterForm(bool isLoad, dynamic element)
         {
             InitializeComponent();
-            IsLoad = false;
+            IsLoad = isLoad;
 
             if (isLoad)
             {
                 DisableLoadElements();
             }
 
-            if (element != null)
-            {
-                LoadCharacter(element);
-            }
+            LoadedCharacter = element;
         }
 
         private Dictionary<string, TextBox> characteristicsValueTextBoxes;
@@ -52,18 +52,19 @@ namespace DnDClient
             textBoxUserName.ReadOnly = true;
             textBoxRace.ReadOnly = true;
             textBoxGod.ReadOnly = true;
-            numericUpDownKD.ReadOnly = true;
-            numericUpDownInitiative.ReadOnly = true;
-            numericUpDownSpeed.ReadOnly = true;
-            numericUpDownMaximumHP.ReadOnly = true;
-            numericUpDownPassive.ReadOnly = true;
+            numericUpDownKD.Enabled = false;
+            numericUpDownInitiative.Enabled = false;
+            numericUpDownSpeed.Enabled = false;
+            numericUpDownMaximumHP.Enabled = false;
+            numericUpDownPassive.Enabled = false;
 
             richTextBoxTraits.ReadOnly = true;
             richTextBoxIdeals.ReadOnly = true;
             richTextBoxAttachment.ReadOnly = true;
             richTextBoxWeaknesses.ReadOnly = true;
+            richTextBoxHist.ReadOnly = true;
 
-            numericUpDownMastery.ReadOnly = true;
+            numericUpDownMastery.Enabled = false;
         }
 
         private TextBox GetCharacteristicsValueTextBoxByName(string name)
@@ -94,11 +95,6 @@ namespace DnDClient
         }
 
         private Dictionary<string, string> skills;
-
-        private string GetSkillByName(string name)
-        {
-            return skills.First(x => x.Key.Equals(name)).Value;
-        }
 
         private void ChangeInitiative(int value)
         {
@@ -144,7 +140,7 @@ namespace DnDClient
                 {
                     var val = CalculateSkill(charType.Key, cb.Value.Checked);
 
-                    var tb = GetSkillTextBoxByName(charType.Key);
+                    var tb = GetSkillValueTextBoxByName(charType.Key);
 
                     tb.Text = val.ToString();
                 }
@@ -158,7 +154,7 @@ namespace DnDClient
                 var charType = skills.First(x => x.Key.Equals(cb.Key));
                 var val = CalculateSkill(charType.Key, cb.Value.Checked);
 
-                var tb = GetSkillTextBoxByName(charType.Key);
+                var tb = GetSkillValueTextBoxByName(charType.Key);
 
                 tb.Text = val.ToString();
             }
@@ -329,11 +325,22 @@ namespace DnDClient
         }
 
         private Dictionary<string, CheckBox> skillsCheckBoxes;
-        private Dictionary<string, TextBox> skillsTextBoxes;
+        private Dictionary<string, TextBox> skillsValueTextBoxes;
+        private Dictionary<string, TextBox> skillsNameTextBoxes;
 
-        private TextBox GetSkillTextBoxByName(string name)
+        private TextBox GetSkillValueTextBoxByName(string name)
         {
-            return skillsTextBoxes.First(x => x.Key.Equals(name)).Value;
+            return skillsValueTextBoxes.First(x => x.Key.Equals(name)).Value;
+        }
+
+        private TextBox GetSkillNameTextBoxByName(string name)
+        {
+            return skillsNameTextBoxes.First(x => x.Key.Equals(name)).Value;
+        }
+
+        private CheckBox GetSkillCheckBoxByName(string name)
+        {
+            return skillsCheckBoxes.First(x => x.Key.Equals(name)).Value;
         }
 
         private int CalculateSkill(string name, bool isMastery)
@@ -361,7 +368,7 @@ namespace DnDClient
 
             int value = CalculateSkill(name, elem.Checked);
 
-            GetSkillTextBoxByName(name).Text = value.ToString();
+            GetSkillValueTextBoxByName(name).Text = value.ToString();
         }
 
         private string GetSkillByKey(string key)
@@ -403,7 +410,7 @@ namespace DnDClient
                 BorderStyle = BorderStyle.None
             };
 
-            skillsTextBoxes.Add(name, textBoxValue);
+            skillsValueTextBoxes.Add(name, textBoxValue);
 
             var textBoxName = new TextBox
             {
@@ -413,6 +420,8 @@ namespace DnDClient
                 BorderStyle = BorderStyle.None,
                 ReadOnly = true
             };
+
+            skillsNameTextBoxes.Add(name, textBoxName);
 
             panel.Controls.Add(checkBoxEnabled);
             panel.Controls.Add(textBoxValue);
@@ -492,7 +501,19 @@ namespace DnDClient
             skills = new Dictionary<string, string>();
 
             skillsCheckBoxes = new Dictionary<string, CheckBox>();
-            skillsTextBoxes = new Dictionary<string, TextBox>();
+            skillsValueTextBoxes = new Dictionary<string, TextBox>();
+            skillsNameTextBoxes = new Dictionary<string, TextBox>();
+
+            AliveCheckBoxes = new CheckBox[3];
+            DeadCheckBoxes = new CheckBox[3];
+
+            AliveCheckBoxes[0] = checkBoxAliveOne;
+            AliveCheckBoxes[1] = checkBoxAliveTwo;
+            AliveCheckBoxes[2] = checkBoxAliveThree;
+
+            DeadCheckBoxes[0] = checkBoxDeathOne;
+            DeadCheckBoxes[1] = checkBoxDeathTwo;
+            DeadCheckBoxes[2] = checkBoxDeathThree;
 
             parametres = new Dictionary<string, string>();
 
@@ -533,6 +554,11 @@ namespace DnDClient
             }
 
             numericUpDownMastery.Value = DEFAULT_MASTERY_VALUE;
+
+            if (LoadedCharacter != null)
+            {
+                LoadCharacter();
+            }
         }
 
         private void FillSkills()
@@ -674,12 +700,6 @@ namespace DnDClient
 
             string name = textBoxName.Text;
 
-            string path = Directory.GetCurrentDirectory() + "\\" + name;
-
-            var stream = File.Create(path);
-
-            stream.Close();
-
             List<Character.Characteristic> characteristics = new List<Character.Characteristic>();
 
             foreach (var elem in parametres)
@@ -701,7 +721,7 @@ namespace DnDClient
             {
                 var checkBox = GetSaveCheckBoxByName(elem.Key);
                 var value = GetSaveTextBoxesByName(elem.Key).Text;
-                var paramName = elem.Value;
+                var paramName = elem.Key;
 
                 saves.Add(new Character.Save(checkBox.Checked, value, paramName));
             }
@@ -728,9 +748,9 @@ namespace DnDClient
             {
                 if (elem.Cells[0].Value != null)
                 {
-                    var weaponName = elem.Cells[0].Value.ToString();
-                    var accuracy = elem.Cells[1].Value.ToString();
-                    var damage = elem.Cells[2].Value.ToString();
+                    var weaponName = (elem.Cells[0].Value != null) ? elem.Cells[0].Value.ToString() : "";
+                    var accuracy = (elem.Cells[1].Value != null) ? elem.Cells[1].Value.ToString() : "";
+                    var damage = (elem.Cells[2].Value != null) ? elem.Cells[2].Value.ToString() : "";
 
                     weapons.Add(new Character.Weapon(weaponName, accuracy, damage));
                 }
@@ -738,13 +758,13 @@ namespace DnDClient
 
             var abilities = new List<Character.Abilitiy>();
 
-            foreach(DataGridViewRow elem in dataGridViewAbilities.Rows)
+            foreach (DataGridViewRow elem in dataGridViewAbilities.Rows)
             {
                 if (elem.Cells[0].Value != null)
                 {
-                    var abilityName = elem.Cells[0].Value.ToString();
-                    var aboutAbility = elem.Cells[1].Value.ToString();
-                    var textAbility = elem.Cells[2].Value.ToString();
+                    var abilityName = (elem.Cells[0].Value != null) ? elem.Cells[0].Value.ToString() : "";
+                    var aboutAbility = (elem.Cells[1].Value != null) ? elem.Cells[1].Value.ToString() : "";
+                    var textAbility = (elem.Cells[2].Value != null) ? elem.Cells[2].Value.ToString() : "";
 
                     abilities.Add(new Character.Abilitiy(abilityName, aboutAbility, textAbility));
                 }
@@ -752,15 +772,26 @@ namespace DnDClient
 
             var equipments = new List<Character.Equipment>();
 
-            foreach(DataGridViewRow elem in dataGridViewEquipment.Rows)
+            foreach (DataGridViewRow elem in dataGridViewEquipment.Rows)
             {
                 if (elem.Cells[0].Value != null)
                 {
-                    var equipmentName = elem.Cells[0].Value.ToString();
-                    var equipmentAbout = elem.Cells[1].Value.ToString();
+                    var equipmentName = (elem.Cells[0].Value != null) ? elem.Cells[0].Value.ToString() : "";
+                    var equipmentAbout = (elem.Cells[1].Value != null) ? elem.Cells[1].Value.ToString() : "";
 
                     equipments.Add(new Character.Equipment(equipmentName, equipmentAbout));
                 }
+            }
+
+            var skillList = new List<Character.Skill>();
+
+            foreach(var elem in skills)
+            {
+                var cb = GetSkillCheckBoxByName(elem.Key);
+                var val = GetSkillValueTextBoxByName(elem.Key);
+                var tb = GetSkillNameTextBoxByName(elem.Key);
+
+                skillList.Add(new Character.Skill(cb.Checked, int.Parse(val.Text), tb.Text));
             }
 
             var userName = textBoxUserName.Text;
@@ -792,12 +823,18 @@ namespace DnDClient
 
             var hist = richTextBoxHist.Text;
 
-            var character = new Character(name, characteristics, mastery, saves, deadAlive, weapons, abilities, equipments,
+            var character = new Character(name, characteristics, mastery, saves, skillList, deadAlive, weapons, abilities, equipments,
                 userName, classAndLevet, history, race, god, speed, traits, ideals, attachment, weakness, maxHP, currentHP,
                 timeHP, boneHP, isCheckedBoneHP, languages, passive, XP, inspiration, KD, initiative, copperMoney, silverMoney,
                 electoMoney, goldMoney, platinumMoney, hist);
 
             var json = JsonConvert.SerializeObject(character);
+
+            string path = Directory.GetCurrentDirectory() + "\\" + name;
+
+            var stream = File.Create(path);
+
+            stream.Close();
 
             File.WriteAllText(path, json);
 
@@ -820,61 +857,191 @@ namespace DnDClient
             ChangeAllSkills((int)numericUpDownMastery.Value);
         }
 
-        private void CheckForNull(object element)
+        private void LoadCharacter()
         {
-            if(element == null)
+            try
             {
-                throw new Exception(element.ToString());
+                var character = LoadedCharacter;
+                var abilities = character.Abilities;
+                foreach (var e in abilities)
+                {
+                    var index = dataGridViewAbilities.Rows.Add();
+
+                    dataGridViewAbilities.Rows[index].Cells["ColumnAbilityName"].Value = e.Name;
+                    dataGridViewAbilities.Rows[index].Cells["ColumnAbilityAbout"].Value = e.About;
+                    dataGridViewAbilities.Rows[index].Cells["ColumnAbilityText"].Value = e.Text;
+                }
+
+                var attachment = character.Attachment;
+                richTextBoxAttachment.Text = attachment;
+
+                var boneHP = character.BoneHP;
+                textBoxBoneHP.Text = boneHP;
+
+                var characteristics = character.Characteristics;
+                foreach(var e in characteristics)
+                {
+                    GetCharacteristicsValueTextBoxByName(e.Name.ToString()).Text = e.Value.ToString();
+                }
+
+                var classAndLevel = character.ClassAndLevel;
+                textBoxClassAndLevel.Text = classAndLevel;
+                
+                var copperMoney = character.CopperMoney;
+                numericUpDownCopperMoney.Value = int.Parse(copperMoney.ToString());
+
+                var currentHP = character.CurrentHP;
+                numericUpDownCurrentHP.Value = int.Parse(currentHP.ToString());
+
+                var deadAndAlive = character.DeadAndAlive;
+
+                foreach(var e in deadAndAlive)
+                {
+                    if (e.Name.Equals("Deathes"))
+                    {
+                        var deathes = e.Value;
+
+                        int i = 0;
+                        foreach(var d in deathes)
+                        {
+                            DeadCheckBoxes[i].Checked = d;
+                            i++;
+                        }
+                    }
+                    else if(e.Name.Equals("Alives"))
+                    {
+                        var alives = e.Value;
+
+                        int i = 0;
+
+                        foreach (var a in alives)
+                        {
+                            AliveCheckBoxes[i].Checked = a;
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                }
+
+                var electroMoney = character.ElectroMoney;
+                numericUpDownElectroMoney.Value = int.Parse(electroMoney.ToString());
+
+                var equipments = character.Equipments;
+                foreach(var e in equipments)
+                {
+                    var index = dataGridViewEquipment.Rows.Add();
+
+                    dataGridViewEquipment.Rows[index].Cells["ColumnEquipmentName"].Value = e.Name;
+                    dataGridViewEquipment.Rows[index].Cells["ColumnEquipmentAbout"].Value = e.About;
+                }
+
+                var god = character.God;
+                textBoxGod.Text = god;
+
+                var goldMoney = character.GoldMoney;
+                numericUpDownGoldMoney.Value = int.Parse(goldMoney.ToString());
+
+                var hist = character.Hist;
+                richTextBoxHist.Text = hist ?? "";
+
+                var history = character.History;
+                textBoxHistory.Text = history;
+
+                var ideals = character.Ideals;
+                richTextBoxIdeals.Text = ideals;
+
+                var initiative = character.Initiative;
+                numericUpDownInitiative.Value = int.Parse(initiative.ToString());
+
+                var inspiration = character.Inspiration;
+                checkBoxInspiration.Checked = inspiration;
+
+                var isCheckedBoneHP = character.IsCheckedBoneHP;
+                checkBoxBoneHP.Checked = isCheckedBoneHP;
+
+                var KD = character.KD;
+                numericUpDownKD.Value = int.Parse(KD.ToString());
+
+                var languages = character.Languages;
+                richTextBoxLanguages.Text = languages;
+
+                var mastery = character.Mastery;
+                numericUpDownMastery.Value = int.Parse(mastery.ToString());
+
+                var maxHP = character.MaxHP;
+                numericUpDownMaximumHP.Value = int.Parse(maxHP.ToString());
+
+                var name = character.Name;
+                textBoxName.Text = name;
+
+                var passive = character.Passive;
+                numericUpDownPassive.Value = int.Parse(passive.ToString());
+
+                var platinumMoney = character.PlatinumMoney;
+                numericUpDownPlatinumMoney.Value = int.Parse(platinumMoney.ToString());
+
+                var race = character.Race;
+                textBoxRace.Text = race;
+
+                var saves = character.Saves;
+                foreach(var e in saves)
+                {
+                    var saveName = e.Name.ToString();
+                    GetSaveCheckBoxByName(saveName).Checked = bool.Parse(e.IsChecked.ToString());
+                }
+
+                var skills = character.Skills;
+                foreach(var e in skills)
+                {
+                    var n = e.Name.ToString();
+                    n = n.Substring(0, n.IndexOf('(') - 1);
+                    GetSkillCheckBoxByName(n).Checked = bool.Parse(e.IsChecked.ToString());
+                }
+
+                var silverMoney = character.SilverMoney;
+                numericUpDownSilverMoney.Value = int.Parse(silverMoney.ToString());
+
+                var speed = character.Speed;
+                numericUpDownSpeed.Value = int.Parse(speed.ToString());
+
+                var timeHP = character.TimeHP;
+                numericUpDownTimeHp.Value = int.Parse(timeHP.ToString());
+
+                var traits = character.Traits;
+                richTextBoxTraits.Text = traits;
+
+                var userName = character.UserName;
+                textBoxUserName.Text = userName;
+
+                var weaknesses = character.Weaknesses;
+                richTextBoxWeaknesses.Text = weaknesses;
+
+                var weapons = character.Weapons;
+                foreach(var e in weapons)
+                {
+                    var index = dataGridViewWeapons.Rows.Add();
+
+                    dataGridViewWeapons.Rows[index].Cells["ColumnWeaponName"].Value = e.Name;
+                    dataGridViewWeapons.Rows[index].Cells["ColumnWeaponAccuracy"].Value = e.Accuracy;
+                    dataGridViewWeapons.Rows[index].Cells["ColumnWeaponDamage"].Value = e.Damage;
+                }
+
+                var XP = character.XP;
+                numericUpDownXP.Value = int.Parse(XP.ToString());
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+                Close();
             }
         }
 
-        private void LoadCharacter(dynamic character)
+        private void CreateCharacterForm_Shown(object sender, EventArgs e)
         {
-            var person = character as Character;
-            var abilities = character.Abilities;
-            CheckForNull(abilities);
-            var a = person.Attachment;
-            var b = person.BoneHP;
-            var c = person.Characteristics;
-            var d = person.ClassAndLevel;
-            var e = person.CopperMoney;
-            var f = person.CurrentHP;
-            var g = person.DeadAndAlive;
-            var h = person.ElectroMoney;
-            var i = person.Equipments;
-            var j = person.God;
-            var k = person.GoldMoney;
-            var l = person.Hist;
-            var m = person.History;
-            var n = person.Ideals;
-            var o = person.Initiative;
-            var p = person.Inspiration;
-            var q = person.IsCheckedBoneHP;
-            var r = person.KD;
-            var s = person.Languages;
-            var t = person.Mastery;
-            var u = person.MaxHP;
-            var v = person.Name;
-            var w = person.Passive;
-            var x = person.PlatinumMoney;
-            var y = person.Race;
-            var z = person.Saves;
-            var aa = person.SilverMoney;
-            var bb = person.Speed;
-            var cc = person.TimeHP;
-            var dd = person.Traits;
-            var ee = person.UserName;
-            var ff = person.Weaknesses;
-            var gg = person.Weapons;
-            var hh = person.XP;
-            /*
-             private Dictionary<string, TextBox> characteristicsValueTextBoxes;
-        private Dictionary<string, TextBox> bonusValueTextBoxes;
-        private Dictionary<string, CheckBox> saveCheckBoxes;
-        private Dictionary<string, TextBox> saveTextBoxes;
-        private Dictionary<string, string> parametres;
 
-        private Dictionary<string, string> skills;*/
         }
     }
 }
