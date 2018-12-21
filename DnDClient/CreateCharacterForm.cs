@@ -10,22 +10,26 @@ namespace DnDClient
 {
     public partial class CreateCharacterForm : Form
     {
+        private bool IsLoad { get; set; }
+
         private const int CHARACTER_POINT_HEIGHT = 80;
         private const int SAVE_HEIGHT = 20;
         private const int SKILL_HEIGHT = 20;
         private const int DEFAULT_MASTERY_VALUE = 2;
 
-        private bool isLoad;
-
-        public CreateCharacterForm(bool isLoad)
+        public CreateCharacterForm(bool isLoad, dynamic element)
         {
             InitializeComponent();
-
-            this.isLoad = isLoad;
+            IsLoad = false;
 
             if (isLoad)
             {
                 DisableLoadElements();
+            }
+
+            if (element != null)
+            {
+                LoadCharacter(element);
             }
         }
 
@@ -293,7 +297,7 @@ namespace DnDClient
                 Location = new Point(0, valuePanel.Height / 2 - numbersHeight / 2),
                 TextAlign = HorizontalAlignment.Center,
                 BorderStyle = BorderStyle.None,
-                ReadOnly = isLoad
+                ReadOnly = IsLoad
             };
 
             textBoxValue.Text = value.ToString();
@@ -384,7 +388,7 @@ namespace DnDClient
             {
                 Height = SKILL_HEIGHT,
                 Width = checkBoxWidth,
-                Enabled = !isLoad
+                Enabled = !IsLoad
             };
 
             checkBoxEnabled.CheckedChanged += ChangeSkill;
@@ -437,7 +441,7 @@ namespace DnDClient
             {
                 Height = panelHeight,
                 Width = checkBoxWidth,
-                Enabled = !isLoad
+                Enabled = !IsLoad
             };
 
             checkBoxEnabled.CheckedChanged += ChangeSave;
@@ -658,14 +662,16 @@ namespace DnDClient
 
         private void ButtonAccept_Click(object sender, EventArgs e)
         {
-            if (ValidateData())
-            {
-                SaveCharacter();
-            }
+            SaveCharacter();
         }
 
-        private void SaveCharacter()
+        public void SaveCharacter()
         {
+            if (!ValidateData())
+            {
+                return;
+            }
+
             string name = textBoxName.Text;
 
             string path = Directory.GetCurrentDirectory() + "\\" + name;
@@ -794,6 +800,8 @@ namespace DnDClient
             var json = JsonConvert.SerializeObject(character);
 
             File.WriteAllText(path, json);
+
+            Close();
         }
 
         private void ChangeAllSaves(int mastery)
@@ -810,6 +818,63 @@ namespace DnDClient
         {
             ChangeAllSaves((int)numericUpDownMastery.Value);
             ChangeAllSkills((int)numericUpDownMastery.Value);
+        }
+
+        private void CheckForNull(object element)
+        {
+            if(element == null)
+            {
+                throw new Exception(element.ToString());
+            }
+        }
+
+        private void LoadCharacter(dynamic character)
+        {
+            var person = character as Character;
+            var abilities = character.Abilities;
+            CheckForNull(abilities);
+            var a = person.Attachment;
+            var b = person.BoneHP;
+            var c = person.Characteristics;
+            var d = person.ClassAndLevel;
+            var e = person.CopperMoney;
+            var f = person.CurrentHP;
+            var g = person.DeadAndAlive;
+            var h = person.ElectroMoney;
+            var i = person.Equipments;
+            var j = person.God;
+            var k = person.GoldMoney;
+            var l = person.Hist;
+            var m = person.History;
+            var n = person.Ideals;
+            var o = person.Initiative;
+            var p = person.Inspiration;
+            var q = person.IsCheckedBoneHP;
+            var r = person.KD;
+            var s = person.Languages;
+            var t = person.Mastery;
+            var u = person.MaxHP;
+            var v = person.Name;
+            var w = person.Passive;
+            var x = person.PlatinumMoney;
+            var y = person.Race;
+            var z = person.Saves;
+            var aa = person.SilverMoney;
+            var bb = person.Speed;
+            var cc = person.TimeHP;
+            var dd = person.Traits;
+            var ee = person.UserName;
+            var ff = person.Weaknesses;
+            var gg = person.Weapons;
+            var hh = person.XP;
+            /*
+             private Dictionary<string, TextBox> characteristicsValueTextBoxes;
+        private Dictionary<string, TextBox> bonusValueTextBoxes;
+        private Dictionary<string, CheckBox> saveCheckBoxes;
+        private Dictionary<string, TextBox> saveTextBoxes;
+        private Dictionary<string, string> parametres;
+
+        private Dictionary<string, string> skills;*/
         }
     }
 }

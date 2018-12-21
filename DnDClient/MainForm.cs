@@ -62,7 +62,7 @@ namespace DnDClient
 
         private void CreateCharacterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new CreateCharacterForm(false).ShowDialog();
+            new CreateCharacterForm(false, null).ShowDialog();
         }
 
         private void LoadCharacterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -80,12 +80,39 @@ namespace DnDClient
 
                     dynamic element = JsonConvert.DeserializeObject(text);
 
-                    var form = new CreateCharacterForm(true) {
+                    var form = new CreateCharacterForm(true, element) {
                         AutoScroll = true,
                         TopLevel = false
                     };
                     panelCharacter.Controls.Add(form);
                     form.Show();
+                }
+            }
+        }
+
+        private void сохранитьПерсонажаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void редактироватьПерсонажаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox("Введите имя персонажа",
+                       "Загрузка персонажа");
+
+            if (input != "")
+            {
+                panelCharacter.Controls.RemoveAt(0);
+
+                string path = Directory.GetCurrentDirectory() + "\\" + input;
+
+                if (File.Exists(path))
+                {
+                    var text = File.ReadAllText(path);
+
+                    dynamic element = JsonConvert.DeserializeObject(text);
+
+                    new CreateCharacterForm(false, element).ShowDialog();
                 }
             }
         }

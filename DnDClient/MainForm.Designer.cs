@@ -37,6 +37,7 @@
             this.loadCharacterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelCharacter = new System.Windows.Forms.Panel();
             this.сохранитьПерсонажаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.редактироватьПерсонажаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,7 +81,8 @@
             this.персонажToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createCharacterToolStripMenuItem,
             this.loadCharacterToolStripMenuItem,
-            this.сохранитьПерсонажаToolStripMenuItem});
+            this.сохранитьПерсонажаToolStripMenuItem,
+            this.редактироватьПерсонажаToolStripMenuItem});
             this.персонажToolStripMenuItem.Name = "персонажToolStripMenuItem";
             this.персонажToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
             this.персонажToolStripMenuItem.Text = "Персонаж";
@@ -109,8 +111,16 @@
             // сохранитьПерсонажаToolStripMenuItem
             // 
             this.сохранитьПерсонажаToolStripMenuItem.Name = "сохранитьПерсонажаToolStripMenuItem";
-            this.сохранитьПерсонажаToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.сохранитьПерсонажаToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.сохранитьПерсонажаToolStripMenuItem.Text = "Сохранить персонажа";
+            this.сохранитьПерсонажаToolStripMenuItem.Click += new System.EventHandler(this.сохранитьПерсонажаToolStripMenuItem_Click);
+            // 
+            // редактироватьПерсонажаToolStripMenuItem
+            // 
+            this.редактироватьПерсонажаToolStripMenuItem.Name = "редактироватьПерсонажаToolStripMenuItem";
+            this.редактироватьПерсонажаToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.редактироватьПерсонажаToolStripMenuItem.Text = "Редактировать персонажа";
+            this.редактироватьПерсонажаToolStripMenuItem.Click += new System.EventHandler(this.редактироватьПерсонажаToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -143,6 +153,7 @@
         private System.Windows.Forms.ToolStripMenuItem loadCharacterToolStripMenuItem;
         private System.Windows.Forms.Panel panelCharacter;
         private System.Windows.Forms.ToolStripMenuItem сохранитьПерсонажаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem редактироватьПерсонажаToolStripMenuItem;
     }
 }
 
