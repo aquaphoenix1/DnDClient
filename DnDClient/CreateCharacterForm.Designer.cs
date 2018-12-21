@@ -36,15 +36,12 @@
             this.panelSave = new System.Windows.Forms.Panel();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.labelName = new System.Windows.Forms.Label();
-            this.textBoxKD = new System.Windows.Forms.TextBox();
             this.labelTraits = new System.Windows.Forms.Label();
             this.labelInspiration = new System.Windows.Forms.Label();
             this.checkBoxInspiration = new System.Windows.Forms.CheckBox();
             this.labelKD = new System.Windows.Forms.Label();
             this.labelInitiative = new System.Windows.Forms.Label();
-            this.textBoxInitiative = new System.Windows.Forms.TextBox();
             this.labelSpeed = new System.Windows.Forms.Label();
-            this.textBoxSpeed = new System.Windows.Forms.TextBox();
             this.labelClassAndLevel = new System.Windows.Forms.Label();
             this.textBoxClassAndLevel = new System.Windows.Forms.TextBox();
             this.labelHistory = new System.Windows.Forms.Label();
@@ -56,12 +53,8 @@
             this.labelGod = new System.Windows.Forms.Label();
             this.textBoxGod = new System.Windows.Forms.TextBox();
             this.labelXP = new System.Windows.Forms.Label();
-            this.textBoxXP = new System.Windows.Forms.TextBox();
-            this.textBoxHP = new System.Windows.Forms.TextBox();
             this.panelHP = new System.Windows.Forms.Panel();
             this.labelMaxHP = new System.Windows.Forms.Label();
-            this.textBoxMaxHP = new System.Windows.Forms.TextBox();
-            this.textBoxCurrentHP = new System.Windows.Forms.TextBox();
             this.labelCurrentHP = new System.Windows.Forms.Label();
             this.labelSave = new System.Windows.Forms.Label();
             this.panelTimeHP = new System.Windows.Forms.Panel();
@@ -101,7 +94,6 @@
             this.panelLanguages = new System.Windows.Forms.Panel();
             this.labelLanguages = new System.Windows.Forms.Label();
             this.panelPassive = new System.Windows.Forms.Panel();
-            this.textBoxPassive = new System.Windows.Forms.TextBox();
             this.labelPassive = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.dataGridViewAbilities = new System.Windows.Forms.DataGridView();
@@ -127,6 +119,15 @@
             this.labelPlatinumMoney = new System.Windows.Forms.Label();
             this.richTextBoxHist = new System.Windows.Forms.RichTextBox();
             this.labelHist = new System.Windows.Forms.Label();
+            this.numericUpDownMaximumHP = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownCurrentHP = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownKD = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownInitiative = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownSpeed = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownXP = new System.Windows.Forms.NumericUpDown();
+            this.richTextBoxLanguages = new System.Windows.Forms.RichTextBox();
+            this.numericUpDownPassive = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownTimeHp = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMastery)).BeginInit();
             this.panelHP.SuspendLayout();
             this.panelTimeHP.SuspendLayout();
@@ -149,6 +150,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownElectroMoney)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGoldMoney)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlatinumMoney)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumHP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCurrentHP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInitiative)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownXP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPassive)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeHp)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonAccept
@@ -209,24 +218,17 @@
             // 
             this.textBoxName.Location = new System.Drawing.Point(118, 23);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(100, 20);
+            this.textBoxName.Size = new System.Drawing.Size(167, 20);
             this.textBoxName.TabIndex = 7;
             // 
             // labelName
             // 
             this.labelName.AutoSize = true;
-            this.labelName.Location = new System.Drawing.Point(154, 7);
+            this.labelName.Location = new System.Drawing.Point(189, 7);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(29, 13);
             this.labelName.TabIndex = 8;
             this.labelName.Text = "Имя";
-            // 
-            // textBoxKD
-            // 
-            this.textBoxKD.Location = new System.Drawing.Point(291, 113);
-            this.textBoxKD.Name = "textBoxKD";
-            this.textBoxKD.Size = new System.Drawing.Size(70, 20);
-            this.textBoxKD.TabIndex = 9;
             // 
             // labelTraits
             // 
@@ -273,13 +275,6 @@
             this.labelInitiative.TabIndex = 18;
             this.labelInitiative.Text = "Инициатива";
             // 
-            // textBoxInitiative
-            // 
-            this.textBoxInitiative.Location = new System.Drawing.Point(366, 113);
-            this.textBoxInitiative.Name = "textBoxInitiative";
-            this.textBoxInitiative.Size = new System.Drawing.Size(70, 20);
-            this.textBoxInitiative.TabIndex = 17;
-            // 
             // labelSpeed
             // 
             this.labelSpeed.AutoSize = true;
@@ -288,13 +283,6 @@
             this.labelSpeed.Size = new System.Drawing.Size(55, 13);
             this.labelSpeed.TabIndex = 20;
             this.labelSpeed.Text = "Скорость";
-            // 
-            // textBoxSpeed
-            // 
-            this.textBoxSpeed.Location = new System.Drawing.Point(441, 113);
-            this.textBoxSpeed.Name = "textBoxSpeed";
-            this.textBoxSpeed.Size = new System.Drawing.Size(70, 20);
-            this.textBoxSpeed.TabIndex = 19;
             // 
             // labelClassAndLevel
             // 
@@ -385,26 +373,12 @@
             this.labelXP.TabIndex = 32;
             this.labelXP.Text = "Опыт";
             // 
-            // textBoxXP
-            // 
-            this.textBoxXP.Location = new System.Drawing.Point(514, 70);
-            this.textBoxXP.Name = "textBoxXP";
-            this.textBoxXP.Size = new System.Drawing.Size(98, 20);
-            this.textBoxXP.TabIndex = 31;
-            // 
-            // textBoxHP
-            // 
-            this.textBoxHP.Location = new System.Drawing.Point(65, 27);
-            this.textBoxHP.Name = "textBoxHP";
-            this.textBoxHP.Size = new System.Drawing.Size(98, 20);
-            this.textBoxHP.TabIndex = 33;
-            // 
             // panelHP
             // 
             this.panelHP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelHP.Controls.Add(this.numericUpDownCurrentHP);
+            this.panelHP.Controls.Add(this.numericUpDownMaximumHP);
             this.panelHP.Controls.Add(this.labelMaxHP);
-            this.panelHP.Controls.Add(this.textBoxMaxHP);
-            this.panelHP.Controls.Add(this.textBoxCurrentHP);
             this.panelHP.Controls.Add(this.labelCurrentHP);
             this.panelHP.Location = new System.Drawing.Point(291, 139);
             this.panelHP.Name = "panelHP";
@@ -419,20 +393,6 @@
             this.labelMaxHP.Size = new System.Drawing.Size(92, 13);
             this.labelMaxHP.TabIndex = 38;
             this.labelMaxHP.Text = "Максимум хитов";
-            // 
-            // textBoxMaxHP
-            // 
-            this.textBoxMaxHP.Location = new System.Drawing.Point(65, 30);
-            this.textBoxMaxHP.Name = "textBoxMaxHP";
-            this.textBoxMaxHP.Size = new System.Drawing.Size(98, 20);
-            this.textBoxMaxHP.TabIndex = 37;
-            // 
-            // textBoxCurrentHP
-            // 
-            this.textBoxCurrentHP.Location = new System.Drawing.Point(65, 73);
-            this.textBoxCurrentHP.Name = "textBoxCurrentHP";
-            this.textBoxCurrentHP.Size = new System.Drawing.Size(98, 20);
-            this.textBoxCurrentHP.TabIndex = 36;
             // 
             // labelCurrentHP
             // 
@@ -455,8 +415,8 @@
             // panelTimeHP
             // 
             this.panelTimeHP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTimeHP.Controls.Add(this.numericUpDownTimeHp);
             this.panelTimeHP.Controls.Add(this.labelTimeHP);
-            this.panelTimeHP.Controls.Add(this.textBoxHP);
             this.panelTimeHP.Location = new System.Drawing.Point(291, 245);
             this.panelTimeHP.Name = "panelTimeHP";
             this.panelTimeHP.Size = new System.Drawing.Size(220, 53);
@@ -781,6 +741,7 @@
             // panelLanguages
             // 
             this.panelLanguages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelLanguages.Controls.Add(this.richTextBoxLanguages);
             this.panelLanguages.Controls.Add(this.labelLanguages);
             this.panelLanguages.Location = new System.Drawing.Point(10, 777);
             this.panelLanguages.Name = "panelLanguages";
@@ -799,19 +760,12 @@
             // panelPassive
             // 
             this.panelPassive.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelPassive.Controls.Add(this.textBoxPassive);
+            this.panelPassive.Controls.Add(this.numericUpDownPassive);
             this.panelPassive.Controls.Add(this.labelPassive);
             this.panelPassive.Location = new System.Drawing.Point(11, 736);
             this.panelPassive.Name = "panelPassive";
             this.panelPassive.Size = new System.Drawing.Size(273, 35);
             this.panelPassive.TabIndex = 43;
-            // 
-            // textBoxPassive
-            // 
-            this.textBoxPassive.Location = new System.Drawing.Point(3, 9);
-            this.textBoxPassive.Name = "textBoxPassive";
-            this.textBoxPassive.Size = new System.Drawing.Size(57, 20);
-            this.textBoxPassive.TabIndex = 36;
             // 
             // labelPassive
             // 
@@ -1031,6 +985,105 @@
             this.labelHist.TabIndex = 47;
             this.labelHist.Text = "Подробности";
             // 
+            // numericUpDownMaximumHP
+            // 
+            this.numericUpDownMaximumHP.Location = new System.Drawing.Point(68, 30);
+            this.numericUpDownMaximumHP.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownMaximumHP.Name = "numericUpDownMaximumHP";
+            this.numericUpDownMaximumHP.Size = new System.Drawing.Size(92, 20);
+            this.numericUpDownMaximumHP.TabIndex = 48;
+            // 
+            // numericUpDownCurrentHP
+            // 
+            this.numericUpDownCurrentHP.Location = new System.Drawing.Point(69, 72);
+            this.numericUpDownCurrentHP.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownCurrentHP.Name = "numericUpDownCurrentHP";
+            this.numericUpDownCurrentHP.Size = new System.Drawing.Size(92, 20);
+            this.numericUpDownCurrentHP.TabIndex = 49;
+            // 
+            // numericUpDownKD
+            // 
+            this.numericUpDownKD.Location = new System.Drawing.Point(291, 113);
+            this.numericUpDownKD.Name = "numericUpDownKD";
+            this.numericUpDownKD.Size = new System.Drawing.Size(70, 20);
+            this.numericUpDownKD.TabIndex = 50;
+            // 
+            // numericUpDownInitiative
+            // 
+            this.numericUpDownInitiative.Location = new System.Drawing.Point(366, 113);
+            this.numericUpDownInitiative.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownInitiative.Name = "numericUpDownInitiative";
+            this.numericUpDownInitiative.Size = new System.Drawing.Size(70, 20);
+            this.numericUpDownInitiative.TabIndex = 51;
+            // 
+            // numericUpDownSpeed
+            // 
+            this.numericUpDownSpeed.Location = new System.Drawing.Point(442, 113);
+            this.numericUpDownSpeed.Name = "numericUpDownSpeed";
+            this.numericUpDownSpeed.Size = new System.Drawing.Size(70, 20);
+            this.numericUpDownSpeed.TabIndex = 52;
+            // 
+            // numericUpDownXP
+            // 
+            this.numericUpDownXP.Location = new System.Drawing.Point(514, 70);
+            this.numericUpDownXP.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numericUpDownXP.Name = "numericUpDownXP";
+            this.numericUpDownXP.Size = new System.Drawing.Size(98, 20);
+            this.numericUpDownXP.TabIndex = 53;
+            // 
+            // richTextBoxLanguages
+            // 
+            this.richTextBoxLanguages.Location = new System.Drawing.Point(4, 25);
+            this.richTextBoxLanguages.Name = "richTextBoxLanguages";
+            this.richTextBoxLanguages.Size = new System.Drawing.Size(264, 72);
+            this.richTextBoxLanguages.TabIndex = 41;
+            this.richTextBoxLanguages.Text = "";
+            // 
+            // numericUpDownPassive
+            // 
+            this.numericUpDownPassive.Location = new System.Drawing.Point(5, 10);
+            this.numericUpDownPassive.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numericUpDownPassive.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDownPassive.Name = "numericUpDownPassive";
+            this.numericUpDownPassive.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownPassive.TabIndex = 56;
+            // 
+            // numericUpDownTimeHp
+            // 
+            this.numericUpDownTimeHp.Location = new System.Drawing.Point(68, 26);
+            this.numericUpDownTimeHp.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownTimeHp.Name = "numericUpDownTimeHp";
+            this.numericUpDownTimeHp.Size = new System.Drawing.Size(92, 20);
+            this.numericUpDownTimeHp.TabIndex = 50;
+            // 
             // CreateCharacterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1038,6 +1091,10 @@
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1007, 886);
             this.ControlBox = false;
+            this.Controls.Add(this.numericUpDownXP);
+            this.Controls.Add(this.numericUpDownSpeed);
+            this.Controls.Add(this.numericUpDownInitiative);
+            this.Controls.Add(this.numericUpDownKD);
             this.Controls.Add(this.labelHist);
             this.Controls.Add(this.richTextBoxHist);
             this.Controls.Add(this.labelSkills);
@@ -1058,7 +1115,6 @@
             this.Controls.Add(this.labelSave);
             this.Controls.Add(this.panelHP);
             this.Controls.Add(this.labelXP);
-            this.Controls.Add(this.textBoxXP);
             this.Controls.Add(this.labelGod);
             this.Controls.Add(this.textBoxGod);
             this.Controls.Add(this.labelRace);
@@ -1070,13 +1126,10 @@
             this.Controls.Add(this.labelClassAndLevel);
             this.Controls.Add(this.textBoxClassAndLevel);
             this.Controls.Add(this.labelSpeed);
-            this.Controls.Add(this.textBoxSpeed);
             this.Controls.Add(this.labelInitiative);
-            this.Controls.Add(this.textBoxInitiative);
             this.Controls.Add(this.labelKD);
             this.Controls.Add(this.checkBoxInspiration);
             this.Controls.Add(this.labelInspiration);
-            this.Controls.Add(this.textBoxKD);
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.panelSave);
@@ -1091,7 +1144,6 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Персонаж";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.CreateCharacterForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMastery)).EndInit();
             this.panelHP.ResumeLayout(false);
@@ -1128,6 +1180,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownElectroMoney)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGoldMoney)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlatinumMoney)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaximumHP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCurrentHP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInitiative)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSpeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownXP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPassive)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeHp)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1143,15 +1203,12 @@
         private System.Windows.Forms.Panel panelSave;
         private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Label labelName;
-        private System.Windows.Forms.TextBox textBoxKD;
         private System.Windows.Forms.Label labelTraits;
         private System.Windows.Forms.Label labelInspiration;
         private System.Windows.Forms.CheckBox checkBoxInspiration;
         private System.Windows.Forms.Label labelKD;
         private System.Windows.Forms.Label labelInitiative;
-        private System.Windows.Forms.TextBox textBoxInitiative;
         private System.Windows.Forms.Label labelSpeed;
-        private System.Windows.Forms.TextBox textBoxSpeed;
         private System.Windows.Forms.Label labelClassAndLevel;
         private System.Windows.Forms.TextBox textBoxClassAndLevel;
         private System.Windows.Forms.Label labelHistory;
@@ -1163,12 +1220,8 @@
         private System.Windows.Forms.Label labelGod;
         private System.Windows.Forms.TextBox textBoxGod;
         private System.Windows.Forms.Label labelXP;
-        private System.Windows.Forms.TextBox textBoxXP;
-        private System.Windows.Forms.TextBox textBoxHP;
         private System.Windows.Forms.Panel panelHP;
         private System.Windows.Forms.Label labelMaxHP;
-        private System.Windows.Forms.TextBox textBoxMaxHP;
-        private System.Windows.Forms.TextBox textBoxCurrentHP;
         private System.Windows.Forms.Label labelCurrentHP;
         private System.Windows.Forms.Label labelSave;
         private System.Windows.Forms.Panel panelTimeHP;
@@ -1207,7 +1260,6 @@
         private System.Windows.Forms.Panel panelLanguages;
         private System.Windows.Forms.Label labelLanguages;
         private System.Windows.Forms.Panel panelPassive;
-        private System.Windows.Forms.TextBox textBoxPassive;
         private System.Windows.Forms.Label labelPassive;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.CheckBox checkBoxBoneHP;
@@ -1234,5 +1286,14 @@
         private System.Windows.Forms.Label labelCopperMoney;
         private System.Windows.Forms.RichTextBox richTextBoxHist;
         private System.Windows.Forms.Label labelHist;
+        private System.Windows.Forms.NumericUpDown numericUpDownCurrentHP;
+        private System.Windows.Forms.NumericUpDown numericUpDownMaximumHP;
+        private System.Windows.Forms.NumericUpDown numericUpDownKD;
+        private System.Windows.Forms.NumericUpDown numericUpDownInitiative;
+        private System.Windows.Forms.NumericUpDown numericUpDownSpeed;
+        private System.Windows.Forms.NumericUpDown numericUpDownXP;
+        private System.Windows.Forms.RichTextBox richTextBoxLanguages;
+        private System.Windows.Forms.NumericUpDown numericUpDownPassive;
+        private System.Windows.Forms.NumericUpDown numericUpDownTimeHp;
     }
 }

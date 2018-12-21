@@ -48,11 +48,11 @@ namespace DnDClient
             textBoxUserName.ReadOnly = true;
             textBoxRace.ReadOnly = true;
             textBoxGod.ReadOnly = true;
-            textBoxKD.ReadOnly = true;
-            textBoxInitiative.ReadOnly = true;
-            textBoxSpeed.ReadOnly = true;
-            textBoxMaxHP.ReadOnly = true;
-            textBoxPassive.ReadOnly = true;
+            numericUpDownKD.ReadOnly = true;
+            numericUpDownInitiative.ReadOnly = true;
+            numericUpDownSpeed.ReadOnly = true;
+            numericUpDownMaximumHP.ReadOnly = true;
+            numericUpDownPassive.ReadOnly = true;
 
             richTextBoxTraits.ReadOnly = true;
             richTextBoxIdeals.ReadOnly = true;
@@ -96,6 +96,14 @@ namespace DnDClient
             return skills.First(x => x.Key.Equals(name)).Value;
         }
 
+        private void ChangeInitiative(int value)
+        {
+            if (value != int.MinValue)
+            {
+                numericUpDownInitiative.Value = value;
+            }
+        }
+
         private void ChangeCharacteristic(object sender, EventArgs e)
         {
             var elem = sender as TextBox;
@@ -108,6 +116,11 @@ namespace DnDClient
             var name = characteristicsValueTextBoxes.First(x => x.Value.Equals(elem)).Key;
             
             int bonus = CalculateBonusValue(result);
+
+            if (name.Equals("Agility"))
+            {
+                ChangeInitiative(bonus);
+            }
 
             GetBonusValueTextBoxesByName(name).Text = bonus.ToString();
 
@@ -545,14 +558,107 @@ namespace DnDClient
             Close();
         }
 
-        private bool IsValidData()
+        private bool ValidateData()
         {
+            if(textBoxName.Text == "")
+            {
+                MessageBox.Show("Введите имя!");
+                return false;
+            }
+
+            if(textBoxUserName.Text == "")
+            {
+                MessageBox.Show("Введите имя игрока!");
+                return false;
+            }
+
+            foreach(var elem in characteristicsValueTextBoxes)
+            {
+                if(!int.TryParse(elem.Value.Text, out int value))
+                {
+                    MessageBox.Show("Введите {0}!", elem.Key);
+                    return false;
+                }
+
+                if(value == int.MinValue)
+                {
+                    MessageBox.Show("Введите {0}!", elem.Key);
+                    return false;
+                }
+            }
+
+            if(textBoxClassAndLevel.Text == "")
+            {
+                MessageBox.Show("Введите класс и уровень!");
+                return false;
+            }
+
+            if(textBoxHistory.Text == "")
+            {
+                MessageBox.Show("Введите предысторию!");
+                return false;
+            }
+
+            if(textBoxRace.Text == "")
+            {
+                MessageBox.Show("Введите расуу!");
+                return false;
+            }
+
+            if(textBoxGod.Text == "")
+            {
+                MessageBox.Show("Введите мировоззрение!");
+                return false;
+            }
+
+            if (richTextBoxTraits.Text == "")
+            {
+                MessageBox.Show("Черты характера!");
+                return false;
+            }
+
+            if(richTextBoxIdeals.Text == "")
+            {
+                MessageBox.Show("Введите идеалы!");
+                return false;
+            }
+
+            if(richTextBoxAttachment.Text == "")
+            {
+                MessageBox.Show("Введите привязанности!");
+                return false;
+            }
+
+            if(richTextBoxWeaknesses.Text == "")
+            {
+                MessageBox.Show("Введите слабости!");
+                return false;
+            }
+
+            if(richTextBoxLanguages.Text == "")
+            {
+                MessageBox.Show("Введите владение языками!");
+                return false;
+            }
+
+            if((int)numericUpDownMaximumHP.Value <= 0)
+            {
+                MessageBox.Show("Неверное значение HP!");
+                return false;
+            }
+
+            if(textBoxBoneHP.Text == "")
+            {
+                MessageBox.Show("Введите кость хитов!");
+                return false;
+            }
+
             return true;
         }
 
         private void ButtonAccept_Click(object sender, EventArgs e)
         {
-            if (IsValidData())
+            if (ValidateData())
             {
                 SaveCharacter();
             }
@@ -583,7 +689,107 @@ namespace DnDClient
 
             int mastery = (int)numericUpDownMastery.Value;
 
-            var character = new Character(name, characteristics, mastery);
+            List<Character.Save> saves = new List<Character.Save>();
+
+            foreach(var elem in parametres)
+            {
+                var checkBox = GetSaveCheckBoxByName(elem.Key);
+                var value = GetSaveTextBoxesByName(elem.Key).Text;
+                var paramName = elem.Value;
+
+                saves.Add(new Character.Save(checkBox.Checked, value, paramName));
+            }
+
+            var aliveChecked = new bool[]
+            {
+                checkBoxAliveOne.Checked,
+                checkBoxAliveTwo.Checked,
+                checkBoxAliveThree.Checked
+            };
+
+            var deadChecked = new bool[]
+            {
+                checkBoxDeathOne.Checked,
+                checkBoxDeathTwo.Checked,
+                checkBoxDeathThree.Checked
+            };
+
+            var deadAlive = new Character.DeadAlive(aliveChecked, deadChecked);
+
+            var weapons = new List<Character.Weapon>();
+
+            foreach (DataGridViewRow elem in dataGridViewWeapons.Rows)
+            {
+                if (elem.Cells[0].Value != null)
+                {
+                    var weaponName = elem.Cells[0].Value.ToString();
+                    var accuracy = elem.Cells[1].Value.ToString();
+                    var damage = elem.Cells[2].Value.ToString();
+
+                    weapons.Add(new Character.Weapon(weaponName, accuracy, damage));
+                }
+            }
+
+            var abilities = new List<Character.Abilitiy>();
+
+            foreach(DataGridViewRow elem in dataGridViewAbilities.Rows)
+            {
+                if (elem.Cells[0].Value != null)
+                {
+                    var abilityName = elem.Cells[0].Value.ToString();
+                    var aboutAbility = elem.Cells[1].Value.ToString();
+                    var textAbility = elem.Cells[2].Value.ToString();
+
+                    abilities.Add(new Character.Abilitiy(abilityName, aboutAbility, textAbility));
+                }
+            }
+
+            var equipments = new List<Character.Equipment>();
+
+            foreach(DataGridViewRow elem in dataGridViewEquipment.Rows)
+            {
+                if (elem.Cells[0].Value != null)
+                {
+                    var equipmentName = elem.Cells[0].Value.ToString();
+                    var equipmentAbout = elem.Cells[1].Value.ToString();
+
+                    equipments.Add(new Character.Equipment(equipmentName, equipmentAbout));
+                }
+            }
+
+            var userName = textBoxUserName.Text;
+            var classAndLevet = textBoxClassAndLevel.Text;
+            var history = textBoxHistory.Text;
+            var race = textBoxRace.Text;
+            var god = textBoxGod.Text;
+            var speed = (int)numericUpDownSpeed.Value;
+            var traits = richTextBoxTraits.Text;
+            var ideals = richTextBoxIdeals.Text;
+            var attachment = richTextBoxAttachment.Text;
+            var weakness = richTextBoxWeaknesses.Text;
+            var maxHP = (int)numericUpDownMaximumHP.Value;
+            var currentHP = (int)numericUpDownCurrentHP.Value;
+            var timeHP = (int)numericUpDownTimeHp.Value;
+            var boneHP = textBoxBoneHP.Text;
+            var isCheckedBoneHP = checkBoxBoneHP.Checked;
+            var languages = richTextBoxLanguages.Text;
+            var passive = (int)numericUpDownPassive.Value;
+            var XP = (int)numericUpDownXP.Value;
+            var inspiration = checkBoxInspiration.Checked;
+            var KD = (int)numericUpDownKD.Value;
+            var initiative = (int)numericUpDownInitiative.Value;
+            var copperMoney = (int)numericUpDownCopperMoney.Value;
+            var silverMoney = (int)numericUpDownSilverMoney.Value;
+            var electoMoney = (int)numericUpDownElectroMoney.Value;
+            var goldMoney = (int)numericUpDownGoldMoney.Value;
+            var platinumMoney = (int)numericUpDownPlatinumMoney.Value;
+
+            var hist = richTextBoxHist.Text;
+
+            var character = new Character(name, characteristics, mastery, saves, deadAlive, weapons, abilities, equipments,
+                userName, classAndLevet, history, race, god, speed, traits, ideals, attachment, weakness, maxHP, currentHP,
+                timeHP, boneHP, isCheckedBoneHP, languages, passive, XP, inspiration, KD, initiative, copperMoney, silverMoney,
+                electoMoney, goldMoney, platinumMoney, hist);
 
             var json = JsonConvert.SerializeObject(character);
 
