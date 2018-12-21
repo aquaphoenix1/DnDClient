@@ -1,7 +1,9 @@
-﻿using DnDClient.Client_Elements;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using PdfiumViewer;
 using System;
+using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DnDClient
@@ -11,31 +13,8 @@ namespace DnDClient
         public MainForm()
         {
             InitializeComponent();
-
-            /*int port = 9999;
-            string ipAdress = "82.179.48.155";
-
-            Client client = new Client(port, ipAdress);
-            client.ActivityHandler += ActivityHandler;*/
         }
 
-        private void ActivityHandler(object sender, String message)
-        {
-            var client = sender as Client;
-
-            string[] msg = message.Split(new char[] { ' ' });
-
-            int code = Int32.Parse(msg[0]);
-
-            switch (code)
-            {
-                case (int)Codes.Code.GetMessageChat:
-                    {
-                        Console(msg[1]);
-                        break;
-                    }
-            }
-        }
         private void Console(string message)
         {
             if (InvokeRequired)
@@ -75,8 +54,15 @@ namespace DnDClient
 
                     var form = new CreateCharacterForm(true, element) {
                         AutoScroll = true,
-                        TopLevel = false
+                        TopLevel = false,
+                        Name = "MyCharacter"
                     };
+
+                    if(panelCharacter.Controls.Find("MyCharacter", true).Length > 0)
+                    {
+                        panelCharacter.Controls.RemoveAt(0);
+                    }
+
                     panelCharacter.Controls.Add(form);
                     try
                     {
@@ -89,7 +75,15 @@ namespace DnDClient
 
         private void сохранитьПерсонажаToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var panel = panelCharacter.Controls.Find("MyCharacter", true);
 
+            if(panel != null)
+            {
+                Type t = typeof(CreateCharacterForm);
+
+                System.Reflection.MethodInfo m = t.GetMethod("SaveCharacter");
+                m.Invoke(panel[0], null);
+            }
         }
 
         private void редактироватьПерсонажаToolStripMenuItem_Click(object sender, EventArgs e)
@@ -119,6 +113,23 @@ namespace DnDClient
                     catch { }
                 }
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                var path = Directory.GetCurrentDirectory() + "\\rules.pdf";
+
+                axAcroPDFRules.LoadFile(path);
+                axAcroPDFRules.src = path;
+            }
+            catch { }
+        }
+
+        private void TabControlMain_Selected(object sender, TabControlEventArgs e)
+        {
+            axAcroPDFRules.Select();
         }
     }
 }

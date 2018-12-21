@@ -88,9 +88,15 @@
             this.labelWeaknesses = new System.Windows.Forms.Label();
             this.panelAtacks = new System.Windows.Forms.Panel();
             this.dataGridViewWeapons = new System.Windows.Forms.DataGridView();
+            this.ColumnWeaponName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnWeaponAccuracy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnWeaponDamage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelAtacks = new System.Windows.Forms.Label();
             this.panelAbilities = new System.Windows.Forms.Panel();
             this.dataGridViewAbilities = new System.Windows.Forms.DataGridView();
+            this.ColumnAbilityName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAbilityAbout = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAbilityText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelAbilities = new System.Windows.Forms.Label();
             this.panelEquipment = new System.Windows.Forms.Panel();
             this.numericUpDownPlatinumMoney = new System.Windows.Forms.NumericUpDown();
@@ -122,12 +128,6 @@
             this.numericUpDownInitiative = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSpeed = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownXP = new System.Windows.Forms.NumericUpDown();
-            this.ColumnAbilityName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnAbilityAbout = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnAbilityText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnWeaponName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnWeaponAccuracy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnWeaponDamage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMastery)).BeginInit();
             this.panelHP.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCurrentHP)).BeginInit();
@@ -694,29 +694,46 @@
             // 
             this.panelAtacks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelAtacks.Controls.Add(this.dataGridViewWeapons);
-            this.panelAtacks.Controls.Add(this.labelAtacks);
-            this.panelAtacks.Location = new System.Drawing.Point(291, 363);
+            this.panelAtacks.Location = new System.Drawing.Point(291, 376);
             this.panelAtacks.Name = "panelAtacks";
-            this.panelAtacks.Size = new System.Drawing.Size(352, 244);
+            this.panelAtacks.Size = new System.Drawing.Size(352, 231);
             this.panelAtacks.TabIndex = 7;
             // 
             // dataGridViewWeapons
             // 
             this.dataGridViewWeapons.AllowUserToOrderColumns = true;
+            this.dataGridViewWeapons.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewWeapons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewWeapons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnWeaponName,
             this.ColumnWeaponAccuracy,
             this.ColumnWeaponDamage});
-            this.dataGridViewWeapons.Location = new System.Drawing.Point(5, 16);
+            this.dataGridViewWeapons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewWeapons.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewWeapons.Name = "dataGridViewWeapons";
-            this.dataGridViewWeapons.Size = new System.Drawing.Size(343, 223);
+            this.dataGridViewWeapons.RowHeadersVisible = false;
+            this.dataGridViewWeapons.Size = new System.Drawing.Size(350, 229);
             this.dataGridViewWeapons.TabIndex = 43;
+            // 
+            // ColumnWeaponName
+            // 
+            this.ColumnWeaponName.HeaderText = "Название";
+            this.ColumnWeaponName.Name = "ColumnWeaponName";
+            // 
+            // ColumnWeaponAccuracy
+            // 
+            this.ColumnWeaponAccuracy.HeaderText = "Попадание";
+            this.ColumnWeaponAccuracy.Name = "ColumnWeaponAccuracy";
+            // 
+            // ColumnWeaponDamage
+            // 
+            this.ColumnWeaponDamage.HeaderText = "Урон";
+            this.ColumnWeaponDamage.Name = "ColumnWeaponDamage";
             // 
             // labelAtacks
             // 
             this.labelAtacks.AutoSize = true;
-            this.labelAtacks.Location = new System.Drawing.Point(86, 0);
+            this.labelAtacks.Location = new System.Drawing.Point(439, 360);
             this.labelAtacks.Name = "labelAtacks";
             this.labelAtacks.Size = new System.Drawing.Size(37, 13);
             this.labelAtacks.TabIndex = 41;
@@ -726,29 +743,46 @@
             // 
             this.panelAbilities.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelAbilities.Controls.Add(this.dataGridViewAbilities);
-            this.panelAbilities.Controls.Add(this.labelAbilities);
-            this.panelAbilities.Location = new System.Drawing.Point(649, 363);
+            this.panelAbilities.Location = new System.Drawing.Point(649, 376);
             this.panelAbilities.Name = "panelAbilities";
-            this.panelAbilities.Size = new System.Drawing.Size(352, 517);
+            this.panelAbilities.Size = new System.Drawing.Size(352, 504);
             this.panelAbilities.TabIndex = 42;
             // 
             // dataGridViewAbilities
             // 
             this.dataGridViewAbilities.AllowUserToOrderColumns = true;
+            this.dataGridViewAbilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewAbilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewAbilities.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnAbilityName,
             this.ColumnAbilityAbout,
             this.ColumnAbilityText});
-            this.dataGridViewAbilities.Location = new System.Drawing.Point(3, 20);
+            this.dataGridViewAbilities.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewAbilities.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewAbilities.Name = "dataGridViewAbilities";
-            this.dataGridViewAbilities.Size = new System.Drawing.Size(343, 490);
+            this.dataGridViewAbilities.RowHeadersVisible = false;
+            this.dataGridViewAbilities.Size = new System.Drawing.Size(350, 502);
             this.dataGridViewAbilities.TabIndex = 42;
+            // 
+            // ColumnAbilityName
+            // 
+            this.ColumnAbilityName.HeaderText = "Название умения";
+            this.ColumnAbilityName.Name = "ColumnAbilityName";
+            // 
+            // ColumnAbilityAbout
+            // 
+            this.ColumnAbilityAbout.HeaderText = "Описание";
+            this.ColumnAbilityAbout.Name = "ColumnAbilityAbout";
+            // 
+            // ColumnAbilityText
+            // 
+            this.ColumnAbilityText.HeaderText = "Заметки";
+            this.ColumnAbilityText.Name = "ColumnAbilityText";
             // 
             // labelAbilities
             // 
             this.labelAbilities.AutoSize = true;
-            this.labelAbilities.Location = new System.Drawing.Point(36, 4);
+            this.labelAbilities.Location = new System.Drawing.Point(773, 360);
             this.labelAbilities.Name = "labelAbilities";
             this.labelAbilities.Size = new System.Drawing.Size(124, 13);
             this.labelAbilities.TabIndex = 41;
@@ -882,12 +916,14 @@
             // dataGridViewEquipment
             // 
             this.dataGridViewEquipment.AllowUserToOrderColumns = true;
+            this.dataGridViewEquipment.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewEquipment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewEquipment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnEquipmentName,
             this.ColumnEquipmentAbout});
             this.dataGridViewEquipment.Location = new System.Drawing.Point(104, 16);
             this.dataGridViewEquipment.Name = "dataGridViewEquipment";
+            this.dataGridViewEquipment.RowHeadersVisible = false;
             this.dataGridViewEquipment.Size = new System.Drawing.Size(243, 244);
             this.dataGridViewEquipment.TabIndex = 44;
             // 
@@ -904,7 +940,7 @@
             // labelEquipment
             // 
             this.labelEquipment.AutoSize = true;
-            this.labelEquipment.Location = new System.Drawing.Point(76, 0);
+            this.labelEquipment.Location = new System.Drawing.Point(135, 0);
             this.labelEquipment.Name = "labelEquipment";
             this.labelEquipment.Size = new System.Drawing.Size(70, 13);
             this.labelEquipment.TabIndex = 41;
@@ -1054,36 +1090,6 @@
             this.numericUpDownXP.Size = new System.Drawing.Size(98, 20);
             this.numericUpDownXP.TabIndex = 53;
             // 
-            // ColumnAbilityName
-            // 
-            this.ColumnAbilityName.HeaderText = "Название умения";
-            this.ColumnAbilityName.Name = "ColumnAbilityName";
-            // 
-            // ColumnAbilityAbout
-            // 
-            this.ColumnAbilityAbout.HeaderText = "Описание";
-            this.ColumnAbilityAbout.Name = "ColumnAbilityAbout";
-            // 
-            // ColumnAbilityText
-            // 
-            this.ColumnAbilityText.HeaderText = "Заметки";
-            this.ColumnAbilityText.Name = "ColumnAbilityText";
-            // 
-            // ColumnWeaponName
-            // 
-            this.ColumnWeaponName.HeaderText = "Название";
-            this.ColumnWeaponName.Name = "ColumnWeaponName";
-            // 
-            // ColumnWeaponAccuracy
-            // 
-            this.ColumnWeaponAccuracy.HeaderText = "Попадание";
-            this.ColumnWeaponAccuracy.Name = "ColumnWeaponAccuracy";
-            // 
-            // ColumnWeaponDamage
-            // 
-            this.ColumnWeaponDamage.HeaderText = "Урон";
-            this.ColumnWeaponDamage.Name = "ColumnWeaponDamage";
-            // 
             // CreateCharacterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1092,6 +1098,8 @@
             this.ClientSize = new System.Drawing.Size(1007, 886);
             this.ControlBox = false;
             this.Controls.Add(this.numericUpDownXP);
+            this.Controls.Add(this.labelAbilities);
+            this.Controls.Add(this.labelAtacks);
             this.Controls.Add(this.numericUpDownSpeed);
             this.Controls.Add(this.numericUpDownInitiative);
             this.Controls.Add(this.numericUpDownKD);
@@ -1145,7 +1153,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Персонаж";
             this.Load += new System.EventHandler(this.CreateCharacterForm_Load);
-            this.Shown += new System.EventHandler(this.CreateCharacterForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMastery)).EndInit();
             this.panelHP.ResumeLayout(false);
             this.panelHP.PerformLayout();
@@ -1167,10 +1174,8 @@
             this.panelWeaknesses.ResumeLayout(false);
             this.panelWeaknesses.PerformLayout();
             this.panelAtacks.ResumeLayout(false);
-            this.panelAtacks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWeapons)).EndInit();
             this.panelAbilities.ResumeLayout(false);
-            this.panelAbilities.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAbilities)).EndInit();
             this.panelEquipment.ResumeLayout(false);
             this.panelEquipment.PerformLayout();

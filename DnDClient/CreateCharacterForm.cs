@@ -838,7 +838,10 @@ namespace DnDClient
 
             File.WriteAllText(path, json);
 
-            Close();
+            if (!IsLoad)
+            {
+                Close();
+            }
         }
 
         private void ChangeAllSaves(int mastery)
@@ -1037,11 +1040,6 @@ namespace DnDClient
                 MessageBox.Show(e.Message);
                 Close();
             }
-        }
-
-        private void CreateCharacterForm_Shown(object sender, EventArgs e)
-        {
-
         }
     }
 }
