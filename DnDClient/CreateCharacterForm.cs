@@ -107,8 +107,8 @@ namespace DnDClient
         private void ChangeCharacteristic(object sender, EventArgs e)
         {
             var elem = sender as TextBox;
-
-            if (!int.TryParse(elem.Text, out int result))
+            int result;
+            if (!int.TryParse(elem.Text, out /*int*/ result))
             {
                 return;
             }
@@ -188,8 +188,8 @@ namespace DnDClient
         private int CalculateSave(string name)
         {
             var value = GetBonusValueTextBoxesByName(name).Text;
-
-            if (!int.TryParse(value, out int bonus))
+            int bonus;
+            if (!int.TryParse(value, out /*int*/ bonus))
             {
                 return 0;
             }
@@ -346,8 +346,8 @@ namespace DnDClient
         private int CalculateSkill(string name, bool isMastery)
         {
             var parameter = GetBonusValueTextBoxesByName(GetSkillByKey(name)).Text;
-
-            if(!int.TryParse(parameter, out int value))
+            int value;
+            if(!int.TryParse(parameter, out /*int*/ value))
             {
                 return 0;
             }
@@ -604,7 +604,8 @@ namespace DnDClient
 
             foreach(var elem in characteristicsValueTextBoxes)
             {
-                if(!int.TryParse(elem.Value.Text, out int value))
+                int value;
+                if(!int.TryParse(elem.Value.Text, out /*int*/ value))
                 {
                     MessageBox.Show("Введите {0}!", elem.Key);
                     return false;
@@ -832,9 +833,9 @@ namespace DnDClient
 
             string path = Directory.GetCurrentDirectory() + "\\" + name;
 
-            var stream = File.Create(path);
+            /*var stream = File.Create(path);
 
-            stream.Close();
+            stream.Close();*/
 
             File.WriteAllText(path, json);
 

@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnDClient", "DnDClient\DnDClient.csproj", "{AEB51485-7A7C-4B68-A94B-F46EB79E817A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ethernet", "Ethernet\Ethernet.csproj", "{B9FA48C8-1A50-4003-8E48-4DC5A0FE4892}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AEB51485-7A7C-4B68-A94B-F46EB79E817A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEB51485-7A7C-4B68-A94B-F46EB79E817A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEB51485-7A7C-4B68-A94B-F46EB79E817A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9FA48C8-1A50-4003-8E48-4DC5A0FE4892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FA48C8-1A50-4003-8E48-4DC5A0FE4892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FA48C8-1A50-4003-8E48-4DC5A0FE4892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FA48C8-1A50-4003-8E48-4DC5A0FE4892}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

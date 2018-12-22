@@ -29,7 +29,7 @@ namespace DnDClient
 
         private void ButtonSendChatMessage_Click(object sender, EventArgs e)
         {
-
+            ChatEthernetController.GetController().SendChatMessage("Dsd");
         }
 
         private void CreateCharacterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -125,11 +125,19 @@ namespace DnDClient
                 axAcroPDFRules.src = path;
             }
             catch { }
+
+            radioButtonNormal.Checked = true;
+            comboBoxDice.SelectedIndex = 0;
         }
 
         private void TabControlMain_Selected(object sender, TabControlEventArgs e)
         {
             axAcroPDFRules.Select();
+        }
+
+        private void buttonThrowDice_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
