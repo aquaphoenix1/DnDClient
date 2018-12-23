@@ -120,9 +120,9 @@ namespace DnDClient
             try
             {
                 var path = Directory.GetCurrentDirectory() + "\\rules.pdf";
-
+                /*
                 axAcroPDFRules.LoadFile(path);
-                axAcroPDFRules.src = path;
+                axAcroPDFRules.src = path;*/
             }
             catch { }
 
@@ -131,8 +131,8 @@ namespace DnDClient
         }
 
         private void TabControlMain_Selected(object sender, TabControlEventArgs e)
-        {
-            axAcroPDFRules.Select();
+        {/*
+            axAcroPDFRules.Select();*/
         }
 
         private void buttonThrowDice_Click(object sender, EventArgs e)

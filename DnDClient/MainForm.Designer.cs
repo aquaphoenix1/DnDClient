@@ -55,7 +55,7 @@
             this.comboBoxDice = new System.Windows.Forms.ComboBox();
             this.tabPageMyCharacter = new System.Windows.Forms.TabPage();
             this.tabPageRules = new System.Windows.Forms.TabPage();
-            this.axAcroPDFRules = new AxAcroPDFLib.AxAcroPDF();
+          //  this.axAcroPDFRules = new AxAcroPDFLib.AxAcroPDF();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
@@ -65,7 +65,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCountDices)).BeginInit();
             this.tabPageMyCharacter.SuspendLayout();
             this.tabPageRules.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axAcroPDFRules)).BeginInit();
+         //   ((System.ComponentModel.ISupportInitialize)(this.axAcroPDFRules)).BeginInit();
             this.SuspendLayout();
             // 
             // richTextBoxChat
@@ -348,7 +348,7 @@
             // 
             // tabPageRules
             // 
-            this.tabPageRules.Controls.Add(this.axAcroPDFRules);
+         //   this.tabPageRules.Controls.Add(this.axAcroPDFRules);
             this.tabPageRules.Location = new System.Drawing.Point(4, 22);
             this.tabPageRules.Name = "tabPageRules";
             this.tabPageRules.Padding = new System.Windows.Forms.Padding(3);
@@ -359,13 +359,14 @@
             // 
             // axAcroPDFRules
             // 
+            /*
             this.axAcroPDFRules.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axAcroPDFRules.Enabled = true;
             this.axAcroPDFRules.Location = new System.Drawing.Point(3, 3);
             this.axAcroPDFRules.Name = "axAcroPDFRules";
             this.axAcroPDFRules.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axAcroPDFRules.OcxState")));
             this.axAcroPDFRules.Size = new System.Drawing.Size(1227, 515);
-            this.axAcroPDFRules.TabIndex = 0;
+            this.axAcroPDFRules.TabIndex = 0;*/
             // 
             // MainForm
             // 
@@ -392,7 +393,7 @@
             this.tabPageMyCharacter.ResumeLayout(false);
             this.tabPageMyCharacter.PerformLayout();
             this.tabPageRules.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.axAcroPDFRules)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.axAcroPDFRules)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -426,7 +427,7 @@
         private System.Windows.Forms.RadioButton radioButtonAdvantage;
         private System.Windows.Forms.RadioButton radioButtonNormal;
         private System.Windows.Forms.Button buttonThrowDice;
-        private AxAcroPDFLib.AxAcroPDF axAcroPDFRules;
+       // private AxAcroPDFLib.AxAcroPDF axAcroPDFRules;
     }
 }
 

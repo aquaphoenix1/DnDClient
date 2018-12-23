@@ -13,7 +13,7 @@ namespace ChatServer.Controllers
         private Dictionary<DateTime, string> chatHistory;
         private int CHAT_HISTORY_MAX_VALUES = 20;
 
-        // GET chat
+        // GET chat/values
         [HttpGet]
         public string Get()
         {
@@ -23,7 +23,7 @@ namespace ChatServer.Controllers
 
         // POST chat/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]dynamic value)
         {
             if(chatHistory.Count > CHAT_HISTORY_MAX_VALUES)
             {

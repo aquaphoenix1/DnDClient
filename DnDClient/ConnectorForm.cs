@@ -31,7 +31,7 @@ namespace DnDClient
         private void ConnectorForm_Load(object sender, EventArgs e)
         {
             try
-            {
+            {/*
                 string currentPath = Directory.GetCurrentDirectory() + "\\settings.stgs";
 
                 string line;
@@ -58,7 +58,7 @@ namespace DnDClient
                     }
                 }
 
-                settingsForm.SetDefaultValues(URL);
+                settingsForm.SetDefaultValues(URL);*/
             }
             catch (Exception exc)
             {
