@@ -40,7 +40,7 @@
             this.buttonSettings.TabIndex = 0;
             this.buttonSettings.Text = "*";
             this.buttonSettings.UseVisualStyleBackColor = true;
-            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
+            this.buttonSettings.Click += new System.EventHandler(this.ButtonSettings_Click);
             // 
             // buttonStart
             // 
@@ -50,7 +50,7 @@
             this.buttonStart.TabIndex = 1;
             this.buttonStart.Text = "Вход";
             this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            this.buttonStart.Click += new System.EventHandler(this.ButtonStart_Click);
             // 
             // MainForm
             // 

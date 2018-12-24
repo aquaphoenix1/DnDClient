@@ -833,10 +833,6 @@ namespace DnDClient
 
             string path = Directory.GetCurrentDirectory() + "\\" + name;
 
-            /*var stream = File.Create(path);
-
-            stream.Close();*/
-
             File.WriteAllText(path, json);
 
             if (!IsLoad)

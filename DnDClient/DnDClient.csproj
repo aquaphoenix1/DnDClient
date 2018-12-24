@@ -55,12 +55,14 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="ChatEthernetController.cs" />
+    <Compile Include="Controller\ChatController.cs" />
     <Compile Include="ConnectorForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ConnectorForm.designer.cs">
       <DependentUpon>ConnectorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controller\Controller.cs" />
     <Compile Include="CreateCharacterForm.cs">
       <SubType>Form</SubType>
     </Compile>

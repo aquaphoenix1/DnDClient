@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DnDClient.Controller;
+using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Windows.Forms;
 
@@ -15,15 +17,36 @@ namespace DnDClient
             settingsForm = new SettingsForm();
         }
 
-        private void buttonStart_Click(object sender, EventArgs e)
+        private void ButtonStart_Click(object sender, EventArgs e)
         {
             ChatEthernetController.GetController(settingsForm.GetURL());
-            ChatEthernetController.GetController().AddUpdater((o)=> { });
-            this.Hide();
-            new MainForm().ShowDialog();
+
+            bool isConnected = false;
+
+            try
+            {
+                var response = ChatEthernetController.GetController().SendHello(settingsForm.GetName());
+                isConnected = true;
+            }
+            catch { }
+
+            if (isConnected)
+            {
+                var main = new MainForm();
+                Controller.Controller.SetController(main);
+                Controller.Controller.SetUserName(settingsForm.GetName());
+                ChatEthernetController.GetController().AddUpdater(ChatController.ChatGetMessagesController);
+                Hide();
+                settingsForm.Close();
+                main.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Не удалось соединиться с сервером!");
+            }
         }
 
-        private void buttonSettings_Click(object sender, EventArgs e)
+        private void ButtonSettings_Click(object sender, EventArgs e)
         {
             settingsForm.ShowDialog();
         }
@@ -31,34 +54,22 @@ namespace DnDClient
         private void ConnectorForm_Load(object sender, EventArgs e)
         {
             try
-            {/*
+            {
                 string currentPath = Directory.GetCurrentDirectory() + "\\settings.stgs";
 
-                string line;
-
                 string URL = "";
+                string name = "";
 
-                using (StreamReader file = new StreamReader(currentPath))
+                if (File.Exists(currentPath))
                 {
-                    while ((line = file.ReadLine()) != null)
-                    {
-                        string[] array = line.Split(new char[] { ' ' });
+                    var text = File.ReadAllText(currentPath);
 
-                        if (array[0].Equals("URL"))
-                        {
-                            if (!array[1].Equals(""))
-                            {
-                                URL = array[1];
-                            }
-                        }
-                        else
-                        {
-                            throw new Exception("Ошибка чтения файла настроек");
-                        }
-                    }
+                    dynamic element = JsonConvert.DeserializeObject(text);
+                    URL = element.Http;
+                    name = element.Name;
                 }
 
-                settingsForm.SetDefaultValues(URL);*/
+                settingsForm.SetDefaultValues(name, URL);
             }
             catch (Exception exc)
             {

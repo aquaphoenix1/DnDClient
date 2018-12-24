@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.richTextBoxChat = new System.Windows.Forms.RichTextBox();
             this.textBoxChatMessage = new System.Windows.Forms.TextBox();
             this.buttonSendChatMessage = new System.Windows.Forms.Button();
@@ -55,7 +54,6 @@
             this.comboBoxDice = new System.Windows.Forms.ComboBox();
             this.tabPageMyCharacter = new System.Windows.Forms.TabPage();
             this.tabPageRules = new System.Windows.Forms.TabPage();
-          //  this.axAcroPDFRules = new AxAcroPDFLib.AxAcroPDF();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
@@ -64,8 +62,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlusDices)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCountDices)).BeginInit();
             this.tabPageMyCharacter.SuspendLayout();
-            this.tabPageRules.SuspendLayout();
-         //   ((System.ComponentModel.ISupportInitialize)(this.axAcroPDFRules)).BeginInit();
             this.SuspendLayout();
             // 
             // richTextBoxChat
@@ -205,7 +201,7 @@
             this.buttonThrowDice.TabIndex = 4;
             this.buttonThrowDice.Text = "Бросить";
             this.buttonThrowDice.UseVisualStyleBackColor = true;
-            this.buttonThrowDice.Click += new System.EventHandler(this.buttonThrowDice_Click);
+            this.buttonThrowDice.Click += new System.EventHandler(this.ButtonThrowDice_Click);
             // 
             // groupBoxAdvantageAndInterference
             // 
@@ -348,7 +344,6 @@
             // 
             // tabPageRules
             // 
-         //   this.tabPageRules.Controls.Add(this.axAcroPDFRules);
             this.tabPageRules.Location = new System.Drawing.Point(4, 22);
             this.tabPageRules.Name = "tabPageRules";
             this.tabPageRules.Padding = new System.Windows.Forms.Padding(3);
@@ -356,17 +351,6 @@
             this.tabPageRules.TabIndex = 2;
             this.tabPageRules.Text = "Правила";
             this.tabPageRules.UseVisualStyleBackColor = true;
-            // 
-            // axAcroPDFRules
-            // 
-            /*
-            this.axAcroPDFRules.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axAcroPDFRules.Enabled = true;
-            this.axAcroPDFRules.Location = new System.Drawing.Point(3, 3);
-            this.axAcroPDFRules.Name = "axAcroPDFRules";
-            this.axAcroPDFRules.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axAcroPDFRules.OcxState")));
-            this.axAcroPDFRules.Size = new System.Drawing.Size(1227, 515);
-            this.axAcroPDFRules.TabIndex = 0;*/
             // 
             // MainForm
             // 
@@ -378,6 +362,8 @@
             this.MainMenuStrip = this.menuStripMain;
             this.Name = "MainForm";
             this.Text = "Dungeon and Dragons";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
@@ -392,8 +378,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCountDices)).EndInit();
             this.tabPageMyCharacter.ResumeLayout(false);
             this.tabPageMyCharacter.PerformLayout();
-            this.tabPageRules.ResumeLayout(false);
-            //((System.ComponentModel.ISupportInitialize)(this.axAcroPDFRules)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

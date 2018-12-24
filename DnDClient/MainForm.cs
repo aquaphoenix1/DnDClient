@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
-using PdfiumViewer;
 using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace DnDClient
 {
@@ -15,7 +14,7 @@ namespace DnDClient
             InitializeComponent();
         }
 
-        private void Console(string message)
+        private void ToChat(string message)
         {
             if (InvokeRequired)
             {
@@ -27,9 +26,30 @@ namespace DnDClient
             }
         }
 
+        private int MAX_MESSAGES = 20;
+        private Dictionary<int, string> chatMessages;
+
+        internal void AddChatMessage(int id, string message)
+        {
+            if(chatMessages.Count > MAX_MESSAGES)
+            {
+                chatMessages.Remove(chatMessages.ElementAt(0).Key);
+            }
+
+            if (!chatMessages.ContainsKey(id))
+            {
+                chatMessages.Add(id, message);
+                ToChat(message);
+            }
+        }
+
         private void ButtonSendChatMessage_Click(object sender, EventArgs e)
         {
-            ChatEthernetController.GetController().SendChatMessage("Dsd");
+            if (textBoxChatMessage.Text != "")
+            {
+                ChatEthernetController.GetController().SendChatMessage(Controller.Controller.UserName, textBoxChatMessage.Text);
+                textBoxChatMessage.Text = "";
+            }
         }
 
         private void CreateCharacterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -76,13 +96,10 @@ namespace DnDClient
         private void сохранитьПерсонажаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var panel = panelCharacter.Controls.Find("MyCharacter", true);
-
-            if(panel != null)
+            if(panel.Length > 0)
             {
-                Type t = typeof(CreateCharacterForm);
-
-                System.Reflection.MethodInfo m = t.GetMethod("SaveCharacter");
-                m.Invoke(panel[0], null);
+                var form = panel[0] as CreateCharacterForm;
+                form.SaveCharacter();
             }
         }
 
@@ -117,6 +134,7 @@ namespace DnDClient
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            chatMessages = new Dictionary<int, string>();
             try
             {
                 var path = Directory.GetCurrentDirectory() + "\\rules.pdf";
@@ -135,9 +153,23 @@ namespace DnDClient
             axAcroPDFRules.Select();*/
         }
 
-        private void buttonThrowDice_Click(object sender, EventArgs e)
+        private void ButtonThrowDice_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Controller.Controller.ShutDown();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                ChatEthernetController.GetController().SendGoodBye(Controller.Controller.UserName);
+            }
+            catch { }
         }
     }
 }

@@ -12,9 +12,10 @@ namespace Ethernet
         private const int TIMEOUT = 4000;
         private const string JSON_DATA_TYPE = "application/json; charset=utf-8";
         private const int DELAY = 100;
-
+        
         private Action<dynamic> update;
-        private string url = "http://{0}:{1}/{2}";
+
+        public string Url { get; private set; } = "http://{0}:{1}/{2}";
 
         public void AddUpdater(Action<dynamic> updater)
         {
@@ -24,7 +25,7 @@ namespace Ethernet
 
         public Controller(string url, int port, string servicePath)
         {
-            this.url = string.Format(this.url, url, port, servicePath);
+            this.Url = string.Format(this.Url, url, port, servicePath);
         }
 
         private Task GetUpdatesFromServer()
@@ -34,7 +35,14 @@ namespace Ethernet
                 while (true)
                 {
                     var response = SendRequest("GET");
-                    update.Invoke(extractString(response));
+
+                    string str = ExtractString(response);
+
+                    dynamic d = JsonConvert.DeserializeObject(str);
+                    dynamic a = JsonConvert.DeserializeObject(d);
+
+                    update.Invoke(a);
+
                     Thread.Sleep(DELAY);
                 }
             });
@@ -42,17 +50,51 @@ namespace Ethernet
             return task;
         }
 
+        private class Hello
+        {
+            public string Message { get; set; } = "hello";
+            public string Name { get; private set; }
+
+            public Hello(string name)
+            {
+                Name = name;
+            }
+        }
+
+        private class GoodBye
+        {
+            public string Message { get; set; } = "goodbye";
+            public string Name { get; private set; }
+
+            public GoodBye(string name)
+            {
+                Name = name;
+            }
+        }
+
+        public WebResponse SendHello(string name)
+        {
+            return SendRequest("POST", JsonConvert.SerializeObject(new Hello(name)));
+        }
+
+        public void SendGoodBye(string name)
+        {
+            SendRequest("POST", JsonConvert.SerializeObject(new GoodBye(name)));
+        }
+
         public WebResponse SendRequest(string methodType, string data = null)
         {
-            var req = (HttpWebRequest)WebRequest.Create(url);
+            var req = (HttpWebRequest)WebRequest.Create(Url);
             req.Method = methodType;
             req.Timeout = TIMEOUT;
             req.ContentType = JSON_DATA_TYPE;
 
-            /*var a = new WebProxy("192.168.10.2", 8080);
+            /*
+            var a = new WebProxy("192.168.10.2", 8080);
             a.Credentials = new NetworkCredential("aqua_phoenix", "Oltain");
 
-            req.Proxy = a;*/
+            req.Proxy = a;
+            */
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
@@ -61,13 +103,15 @@ namespace Ethernet
                 byte[] byteData = Encoding.UTF8.GetBytes(data);
                 req.ContentLength = byteData.Length;
                 using (System.IO.Stream sendStream = req.GetRequestStream())
+                {
                     sendStream.Write(byteData, 0, byteData.Length);
+                }
             }
 
             return req.GetResponse();
         }
 
-        internal string extractString(WebResponse webRespons)
+        public string ExtractString(WebResponse webRespons)
         {
             var resStr = string.Empty;
             using (System.IO.Stream responceStream = webRespons.GetResponseStream())
