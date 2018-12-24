@@ -39,7 +39,6 @@ namespace DnDClient
             try
             {
                 DiceEthernetController.GetController().SendHello();
-                DiceEthernetController.GetController().AddUpdater(DiceController.DiceGetValueController);
             }
             catch
             {

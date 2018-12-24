@@ -1,4 +1,6 @@
-﻿namespace DnDClient.Controller
+﻿using Newtonsoft.Json;
+
+namespace DnDClient.Controller
 {
     class DiceController : Controller
     {
@@ -6,13 +8,15 @@
         {
             if(value != null)
             {
+                var elem = JsonConvert.DeserializeObject(value);
+                var el = JsonConvert.DeserializeObject(elem);
                 var message = "";
-                if (value.IsCritical)
+                if (bool.Parse(el.IsCritical.ToString()))
                 {
                     message = "Критический успех! ";
                 }
 
-                message += string.Format("Результат: {0}", value.Value);
+                message += string.Format("Результат: {0}", el.Value.ToString());
 
                 ChatEthernetController.GetController().SendChatMessage(Controller.UserName, message);
             }

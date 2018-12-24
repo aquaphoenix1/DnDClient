@@ -1,4 +1,5 @@
-﻿using DnDClient.EthernetControllers;
+﻿using DnDClient.Controller;
+using DnDClient.EthernetControllers;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -159,7 +160,8 @@ namespace DnDClient
             var json = JsonConvert.SerializeObject(new Entities.Dice((int)numericUpDownCountDices.Value, Entities.Dice.GetCountEdged(comboBoxDice.SelectedItem.ToString()),
                 advantageAndInterferenceEnum, (int)numericUpDownPlusDices.Value));
 
-            DiceEthernetController.GetController().SendRequest("POST", json);
+            var response = DiceEthernetController.GetController().ExtractString(DiceEthernetController.GetController().SendRequest("POST", json));
+            DiceController.DiceGetValueController(response);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
