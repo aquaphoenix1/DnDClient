@@ -53,8 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Character.cs" />
-    <Compile Include="ChatEthernetController.cs" />
+    <Compile Include="Controller\DiceController.cs" />
+    <Compile Include="Entities\Character.cs" />
+    <Compile Include="Entities\Dice.cs" />
+    <Compile Include="EthernetControllers\ChatEthernetController.cs" />
     <Compile Include="Controller\ChatController.cs" />
     <Compile Include="ConnectorForm.cs">
       <SubType>Form</SubType>
@@ -69,6 +71,7 @@
     <Compile Include="CreateCharacterForm.Designer.cs">
       <DependentUpon>CreateCharacterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EthernetControllers\DiceEthernetController.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

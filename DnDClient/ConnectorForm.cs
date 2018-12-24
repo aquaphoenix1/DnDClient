@@ -1,4 +1,5 @@
 ﻿using DnDClient.Controller;
+using DnDClient.EthernetControllers;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -19,31 +20,36 @@ namespace DnDClient
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            ChatEthernetController.GetController(settingsForm.GetURL());
+            var main = new MainForm();
+            Controller.Controller.SetController(main);
+            Controller.Controller.SetUserName(settingsForm.GetName());
 
-            bool isConnected = false;
+            ChatEthernetController.GetController(settingsForm.GetURL());
+            DiceEthernetController.GetController(settingsForm.GetURL());
 
             try
             {
-                var response = ChatEthernetController.GetController().SendHello(settingsForm.GetName());
-                isConnected = true;
-            }
-            catch { }
-
-            if (isConnected)
-            {
-                var main = new MainForm();
-                Controller.Controller.SetController(main);
-                Controller.Controller.SetUserName(settingsForm.GetName());
+                ChatEthernetController.GetController().SendHello(settingsForm.GetName());
                 ChatEthernetController.GetController().AddUpdater(ChatController.ChatGetMessagesController);
-                Hide();
-                settingsForm.Close();
-                main.ShowDialog();
             }
-            else
+            catch {
+                Controller.Controller.MainForm.DisableChat();
+            }
+
+            try
             {
-                MessageBox.Show("Не удалось соединиться с сервером!");
+                DiceEthernetController.GetController().SendHello();
+                DiceEthernetController.GetController().AddUpdater(DiceController.DiceGetValueController);
             }
+            catch
+            {
+                Controller.Controller.MainForm.DisableDices();
+            }
+
+            Hide();
+            settingsForm.Close();
+            main.ShowDialog();
+            Close();
         }
 
         private void ButtonSettings_Click(object sender, EventArgs e)

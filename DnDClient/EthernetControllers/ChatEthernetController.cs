@@ -8,7 +8,6 @@ namespace DnDClient
         private const string CHAT_PATH = "api/chat";
         private const int PORT = 58830;
 
-
         private static ChatEthernetController controller;
 
         public static ChatEthernetController GetController() => controller;

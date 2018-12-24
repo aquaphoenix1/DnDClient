@@ -1,9 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using DnDClient.EthernetControllers;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using System.Linq;
 
 namespace DnDClient
 {
@@ -26,21 +25,9 @@ namespace DnDClient
             }
         }
 
-        private int MAX_MESSAGES = 20;
-        private Dictionary<int, string> chatMessages;
-
-        internal void AddChatMessage(int id, string message)
+        internal void AddChatMessage(string message)
         {
-            if(chatMessages.Count > MAX_MESSAGES)
-            {
-                chatMessages.Remove(chatMessages.ElementAt(0).Key);
-            }
-
-            if (!chatMessages.ContainsKey(id))
-            {
-                chatMessages.Add(id, message);
-                ToChat(message);
-            }
+            ToChat(message);
         }
 
         private void ButtonSendChatMessage_Click(object sender, EventArgs e)
@@ -50,6 +37,17 @@ namespace DnDClient
                 ChatEthernetController.GetController().SendChatMessage(Controller.Controller.UserName, textBoxChatMessage.Text);
                 textBoxChatMessage.Text = "";
             }
+        }
+
+        public void DisableChat()
+        {
+            textBoxChatMessage.Enabled = false;
+            buttonSendChatMessage.Enabled = false;
+        }
+
+        public void DisableDices()
+        {
+            groupBoxDices.Enabled = false;
         }
 
         private void CreateCharacterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -134,7 +132,6 @@ namespace DnDClient
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            chatMessages = new Dictionary<int, string>();
             try
             {
                 var path = Directory.GetCurrentDirectory() + "\\rules.pdf";
@@ -155,12 +152,14 @@ namespace DnDClient
 
         private void ButtonThrowDice_Click(object sender, EventArgs e)
         {
+            var advantageAndInterferenceEnum = radioButtonAdvantage.Checked ? Entities.Dice.AdvantageAndInterferenceEnum.Advantage :
+                radioButtonInterference.Checked ? Entities.Dice.AdvantageAndInterferenceEnum.Interference : 
+                Entities.Dice.AdvantageAndInterferenceEnum.Normal;
 
-        }
+            var json = JsonConvert.SerializeObject(new Entities.Dice((int)numericUpDownCountDices.Value, Entities.Dice.GetCountEdged(comboBoxDice.SelectedItem.ToString()),
+                advantageAndInterferenceEnum, (int)numericUpDownPlusDices.Value));
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Controller.Controller.ShutDown();
+            DiceEthernetController.GetController().SendRequest("POST", json);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

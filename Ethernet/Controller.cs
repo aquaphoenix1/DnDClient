@@ -72,7 +72,7 @@ namespace Ethernet
             }
         }
 
-        public WebResponse SendHello(string name)
+        public WebResponse SendHello(string name = "")
         {
             return SendRequest("POST", JsonConvert.SerializeObject(new Hello(name)));
         }

@@ -22,10 +22,5 @@ namespace DnDClient.Controller
         {
             UserName = name;
         }
-
-        internal static void ShutDown()
-        {
-            ConnectorForm.Close();
-        }
     }
 }
