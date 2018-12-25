@@ -15,6 +15,8 @@ namespace Ethernet
         
         private Action<dynamic> update;
 
+        private volatile object locker;
+
         public string Url { get; private set; } = "http://{0}:{1}/{2}";
 
         public void AddUpdater(Action<dynamic> updater)
@@ -34,14 +36,25 @@ namespace Ethernet
             {
                 while (true)
                 {
-                    var response = SendRequest("GET");
+                    try
+                    {
+                        string str;
+                        lock (locker)
+                        {
+                            var response = SendRequest("GET");
 
-                    string str = ExtractString(response);
+                            str = ExtractString(response);
+                        }
 
-                    dynamic d = JsonConvert.DeserializeObject(str);
-                    dynamic a = JsonConvert.DeserializeObject(d);
+                        dynamic d = JsonConvert.DeserializeObject(str);
+                        dynamic a = JsonConvert.DeserializeObject(d);
 
-                    update.Invoke(a);
+                        update.Invoke(a);
+                    }
+                    catch
+                    {
+                        update.Invoke("Ошибка подключения к серверу");
+                    }
 
                     Thread.Sleep(DELAY);
                 }
@@ -84,36 +97,40 @@ namespace Ethernet
 
         public WebResponse SendRequest(string methodType, string data = null)
         {
-            var req = (HttpWebRequest)WebRequest.Create(Url);
-            req.Method = methodType;
-            req.Timeout = TIMEOUT;
-            req.ContentType = JSON_DATA_TYPE;
-
-            /*
-            var a = new WebProxy("192.168.10.2", 8080);
-            a.Credentials = new NetworkCredential("aqua_phoenix", "Oltain");
-
-            req.Proxy = a;
-            */
-
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-
-            if (data != null)
+            lock (locker)
             {
-                byte[] byteData = Encoding.UTF8.GetBytes(data);
-                req.ContentLength = byteData.Length;
-                using (System.IO.Stream sendStream = req.GetRequestStream())
-                {
-                    sendStream.Write(byteData, 0, byteData.Length);
-                }
-            }
+                var req = (HttpWebRequest)WebRequest.Create(Url);
+                req.Method = methodType;
+                req.Timeout = TIMEOUT;
+                req.ContentType = JSON_DATA_TYPE;
 
-            return req.GetResponse();
+                /*
+                var a = new WebProxy("192.168.10.2", 8080);
+                a.Credentials = new NetworkCredential("aqua_phoenix", "Oltain");
+
+                req.Proxy = a;
+                */
+
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+                if (data != null)
+                {
+                    byte[] byteData = Encoding.UTF8.GetBytes(data);
+                    req.ContentLength = byteData.Length;
+                    using (System.IO.Stream sendStream = req.GetRequestStream())
+                    {
+                        sendStream.Write(byteData, 0, byteData.Length);
+                    }
+                }
+
+                return req.GetResponse();
+            }
         }
 
         public string ExtractString(WebResponse webRespons)
         {
             var resStr = string.Empty;
+            
             using (System.IO.Stream responceStream = webRespons.GetResponseStream())
             using (System.IO.StreamReader streamReader = new System.IO.StreamReader(responceStream, Encoding.UTF8))
             {

@@ -36,14 +36,14 @@ namespace DnDClient
                 Controller.Controller.MainForm.DisableChat();
             }
 
-            try
+            /*try
             {
                 DiceEthernetController.GetController().SendHello();
             }
             catch
             {
                 Controller.Controller.MainForm.DisableDices();
-            }
+            }*/
 
             Hide();
             settingsForm.Close();

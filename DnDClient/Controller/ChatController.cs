@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace DnDClient.Controller
+﻿namespace DnDClient.Controller
 {
     class ChatController : Controller
     {
@@ -8,17 +6,24 @@ namespace DnDClient.Controller
 
         public static void ChatGetMessagesController(dynamic value)
         {
-            foreach (var e in value)
+            if (value is string)
             {
-                var a = int.Parse(e.Name);
-                var b = e.Value.ToString();
-
-                int id = int.Parse(e.Name);
-
-                if(id > lastMessageId)
+                MainForm.AddChatMessage(value);
+            }
+            else
+            {
+                foreach (var e in value)
                 {
-                    lastMessageId = id;
-                    MainForm.AddChatMessage(e.Value.ToString());
+                    var a = int.Parse(e.Name);
+                    var b = e.Value.ToString();
+
+                    int id = int.Parse(e.Name);
+
+                    if (id > lastMessageId)
+                    {
+                        lastMessageId = id;
+                        MainForm.AddChatMessage(e.Value.ToString());
+                    }
                 }
             }
         }
