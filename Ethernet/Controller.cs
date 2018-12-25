@@ -38,13 +38,9 @@ namespace Ethernet
                 {
                     try
                     {
-                        string str;
-                        lock (locker)
-                        {
-                            var response = SendRequest("GET");
+                        var response = SendRequest("GET");
 
-                            str = ExtractString(response);
-                        }
+                        string str = ExtractString(response);
 
                         dynamic d = JsonConvert.DeserializeObject(str);
                         dynamic a = JsonConvert.DeserializeObject(d);
