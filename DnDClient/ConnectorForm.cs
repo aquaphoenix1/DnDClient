@@ -29,21 +29,21 @@ namespace DnDClient
 
             try
             {
-                ChatEthernetController.GetController().SendHello(settingsForm.GetName());
                 ChatEthernetController.GetController().AddUpdater(ChatController.ChatGetMessagesController);
+                ChatEthernetController.GetController().SendHello(settingsForm.GetName());
             }
             catch {
-                Controller.Controller.MainForm.DisableChat();
+               // Controller.Controller.MainForm.DisableChat();
             }
 
-            /*try
+            try
             {
                 DiceEthernetController.GetController().SendHello();
             }
             catch
             {
-                Controller.Controller.MainForm.DisableDices();
-            }*/
+                //Controller.Controller.MainForm.DisableDices();
+            }
 
             Hide();
             settingsForm.Close();

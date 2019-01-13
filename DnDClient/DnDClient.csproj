@@ -55,7 +55,9 @@
   <ItemGroup>
     <Compile Include="Controller\DiceController.cs" />
     <Compile Include="Entities\Character.cs" />
+    <Compile Include="Entities\Creature.cs" />
     <Compile Include="Entities\Dice.cs" />
+    <Compile Include="Entities\Object.cs" />
     <Compile Include="EthernetControllers\ChatEthernetController.cs" />
     <Compile Include="Controller\ChatController.cs" />
     <Compile Include="ConnectorForm.cs">
@@ -72,6 +74,11 @@
       <DependentUpon>CreateCharacterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EthernetControllers\DiceEthernetController.cs" />
+    <Compile Include="Graphics\BattleField.cs" />
+    <Compile Include="Graphics\FieldSquare.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Graphics\GraphicsController.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

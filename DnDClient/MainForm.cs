@@ -1,8 +1,10 @@
 ﻿using DnDClient.Controller;
 using DnDClient.EthernetControllers;
+using DnDClient.Graphics;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DnDClient
@@ -16,14 +18,18 @@ namespace DnDClient
 
         private void ToChat(string message)
         {
-            if (InvokeRequired)
+            Task.Factory.StartNew(() =>
+            {
+                BeginInvoke(new MethodInvoker(() => richTextBoxChat.AppendText(message + Environment.NewLine)));
+            });
+            /*if (InvokeRequired)
             {
                 BeginInvoke(new MethodInvoker(() => richTextBoxChat.AppendText(message + Environment.NewLine)));
             }
             else
             {
                 richTextBoxChat.AppendText(message + Environment.NewLine);
-            }
+            }*/
         }
 
         internal void AddChatMessage(string message)
@@ -126,7 +132,9 @@ namespace DnDClient
                     {
                         new CreateCharacterForm(false, element).ShowDialog();
                     }
-                    catch { }
+                    catch {
+                        MessageBox.Show("Ошибка");
+                    }
                 }
             }
         }
@@ -144,6 +152,8 @@ namespace DnDClient
 
             radioButtonNormal.Checked = true;
             comboBoxDice.SelectedIndex = 0;
+
+            BattleField.CreateBattleField(panelBattlefield);
         }
 
         private void TabControlMain_Selected(object sender, TabControlEventArgs e)
@@ -160,8 +170,15 @@ namespace DnDClient
             var json = JsonConvert.SerializeObject(new Entities.Dice((int)numericUpDownCountDices.Value, Entities.Dice.GetCountEdged(comboBoxDice.SelectedItem.ToString()),
                 advantageAndInterferenceEnum, (int)numericUpDownPlusDices.Value));
 
-            var response = DiceEthernetController.GetController().ExtractString(DiceEthernetController.GetController().SendRequest("POST", json));
-            DiceController.DiceGetValueController(response);
+            try
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    var response = DiceEthernetController.GetController().SendRequest("POST", json);
+                    DiceController.DiceGetValueController(response);
+                });
+            }
+            catch { }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

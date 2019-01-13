@@ -98,6 +98,44 @@ namespace DnDClient
             }
         }
 
+        internal class Talking
+        {
+            public string Name { get; set; }
+            public string About { get; set; }
+            public string Text { get; set; }
+
+            public Talking(string name, string about, string text)
+            {
+                Name = name;
+                About = about;
+                Text = text;
+            }
+        }
+
+        internal class Spell : Talking
+        {
+            public string IsUsed { get; set; }
+
+            public Spell(string name, string about, string text, string isUsed) : base(name, about, text)
+            {
+                IsUsed = isUsed;
+            }
+        }
+
+        internal class SpellsByLevel
+        {
+            public int Count;
+            public int Used;
+            public List<Spell> Spells { get; set; }
+
+            public SpellsByLevel(int count, int used, List<Spell> spells)
+            {
+                Count = count;
+                Used = used;
+                Spells = spells;
+            }
+        }
+
         public string Name { get; set; }
         public List<Characteristic> Characteristics { get; set; }
         public int Mastery { get; set; }
@@ -133,10 +171,17 @@ namespace DnDClient
         public int ElectroMoney { get; set; }
         public int GoldMoney { get; set; }
         public int PlatinumMoney { get; set; }
-        
+       
+        public List<Talking> Talkings { get; set; }
+        public Dictionary<int, SpellsByLevel> Spells { get; set; }
+        public string SpellCharacter { get; set; }
+        public string SpellDifficult { get; set; }
+        public string SpellBonus { get; set; }
+        public string SpellsAbout { get; set; }
+
         public string Hist { get; set; }
 
-        public Character(string name, List<Characteristic> characteristics, int mastery, List<Save> saves, List<Skill> skills, DeadAlive deadAndAlive, List<Weapon> weapons, List<Abilitiy> abilities, List<Equipment> equipments, string userName, string classAndLevel, string history, string race, string god, int speed, string traits, string ideals, string attachment, string weaknesses, int maxHP, int currentHP, int timeHP, string boneHP, bool isCheckedBoneHP, string languages, int passive, int xP, bool inspiration, int kD, int initiative, int copperMoney, int silverMoney, int electroMoney, int goldMoney, int platinumMoney, string hist)
+        public Character(string name, List<Characteristic> characteristics, int mastery, List<Save> saves, List<Skill> skills, DeadAlive deadAndAlive, List<Weapon> weapons, List<Abilitiy> abilities, List<Equipment> equipments, string userName, string classAndLevel, string history, string race, string god, int speed, string traits, string ideals, string attachment, string weaknesses, int maxHP, int currentHP, int timeHP, string boneHP, bool isCheckedBoneHP, string languages, int passive, int xP, bool inspiration, int kD, int initiative, int copperMoney, int silverMoney, int electroMoney, int goldMoney, int platinumMoney, string hist, List<Talking> talkings, Dictionary<int, SpellsByLevel> spells, string spellCharacter, string spellBonus, string spellDifficult, string spellsAbout)
         {
             Name = name;
             Characteristics = characteristics;
@@ -174,6 +219,12 @@ namespace DnDClient
             GoldMoney = goldMoney;
             PlatinumMoney = platinumMoney;
             Hist = hist;
+            Talkings = talkings;
+            Spells = spells;
+            SpellCharacter = spellCharacter;
+            SpellBonus = spellBonus;
+            SpellDifficult = spellDifficult;
+            SpellsAbout = spellsAbout;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace DnDClient.Controller
                     message = "Критический успех! ";
                 }
 
-                message += string.Format("Результат: {0}", el.Value.ToString());
+                message += string.Format("{0}: {1}", el.Message.ToString(), el.Value.ToString());
 
                 ChatEthernetController.GetController().SendChatMessage(Controller.UserName, message);
             }

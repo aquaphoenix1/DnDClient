@@ -65,6 +65,8 @@ namespace DnDClient
             richTextBoxHist.ReadOnly = true;
 
             numericUpDownMastery.Enabled = false;
+
+            comboBoxBaseCharacter.Enabled = false;
         }
 
         private TextBox GetCharacteristicsValueTextBoxByName(string name)
@@ -94,6 +96,11 @@ namespace DnDClient
             return parametres.First(x => x.Key.Equals(name)).Value;
         }
 
+        private string GetParametresByValue(string value)
+        {
+            return parametres.First(x => x.Value.Equals(value)).Key;
+        }
+
         private Dictionary<string, string> skills;
 
         private void ChangeInitiative(int value)
@@ -107,8 +114,7 @@ namespace DnDClient
         private void ChangeCharacteristic(object sender, EventArgs e)
         {
             var elem = sender as TextBox;
-            int result;
-            if (!int.TryParse(elem.Text, out /*int*/ result))
+            if (!int.TryParse(elem.Text, out int result))
             {
                 return;
             }
@@ -123,6 +129,12 @@ namespace DnDClient
             }
 
             GetBonusValueTextBoxesByName(name).Text = bonus.ToString();
+
+            if (name.Equals(GetParametresByValue(comboBoxBaseCharacter.SelectedItem.ToString())))
+            {
+                ChangeDifficult();
+                ChangeSpellBonus();
+            }
 
             int save = CalculateSave(name);
 
@@ -147,7 +159,7 @@ namespace DnDClient
             }
         }
 
-        private void ChangeAllSkills(int value)
+        private void ChangeAllSkills()
         {
             foreach (var cb in skillsCheckBoxes)
             {
@@ -188,13 +200,12 @@ namespace DnDClient
         private int CalculateSave(string name)
         {
             var value = GetBonusValueTextBoxesByName(name).Text;
-            int bonus;
-            if (!int.TryParse(value, out /*int*/ bonus))
+            if (!int.TryParse(value, out int bonus))
             {
                 return 0;
             }
 
-            if(bonus == int.MinValue)
+            if (bonus == int.MinValue)
             {
                 return 0;
             }
@@ -346,13 +357,12 @@ namespace DnDClient
         private int CalculateSkill(string name, bool isMastery)
         {
             var parameter = GetBonusValueTextBoxesByName(GetSkillByKey(name)).Text;
-            int value;
-            if(!int.TryParse(parameter, out /*int*/ value))
+            if (!int.TryParse(parameter, out int value))
             {
                 return 0;
             }
 
-            if(value == int.MinValue)
+            if (value == int.MinValue)
             {
                 return 0;
             }
@@ -539,7 +549,11 @@ namespace DnDClient
 
                 panelCharacteristic.Controls.Add(panel);
                 panelSave.Controls.Add(save);
+
+                comboBoxBaseCharacter.Items.Add(elem.Value);
             }
+
+            comboBoxBaseCharacter.SelectedIndex = 0;
 
             var skillsY = 5;
 
@@ -552,6 +566,8 @@ namespace DnDClient
 
                 skillsY += SKILL_HEIGHT + 5;
             }
+
+            NumericUpDownMastery_ValueChanged(null, null);
 
             numericUpDownMastery.Value = DEFAULT_MASTERY_VALUE;
 
@@ -604,14 +620,13 @@ namespace DnDClient
 
             foreach(var elem in characteristicsValueTextBoxes)
             {
-                int value;
-                if(!int.TryParse(elem.Value.Text, out /*int*/ value))
+                if (!int.TryParse(elem.Value.Text, out int value))
                 {
                     MessageBox.Show("Введите {0}!", elem.Key);
                     return false;
                 }
 
-                if(value == int.MinValue)
+                if (value == int.MinValue)
                 {
                     MessageBox.Show("Введите {0}!", elem.Key);
                     return false;
@@ -824,10 +839,33 @@ namespace DnDClient
 
             var hist = richTextBoxHist.Text;
 
+            List<Character.Talking> talkings = new List<Character.Talking>();
+
+            foreach (DataGridViewRow elem in dataGridViewTalking.Rows)
+            {
+                if (elem.Cells[0].Value != null)
+                {
+                    var talkingName = (elem.Cells[0].Value != null) ? elem.Cells[0].Value.ToString() : "";
+                    var talkingText = (elem.Cells[1].Value != null) ? elem.Cells[1].Value.ToString() : "";
+                    var talkingAbout = (elem.Cells[2].Value != null) ? elem.Cells[2].Value.ToString() : "";
+
+                    talkings.Add(new Character.Talking(talkingName, talkingAbout, talkingText));
+                }
+            }
+
+            var spells = FillSpells();
+
+            var spellCharacter = comboBoxBaseCharacter.SelectedItem.ToString();
+
+            var spellBonus = textBoxSpellBonus.Text;
+            var spellDifficult = textBoxDifficult.Text;
+
+            var spellsAbout = richTextBoxSpellsAbout.Text;
+
             var character = new Character(name, characteristics, mastery, saves, skillList, deadAlive, weapons, abilities, equipments,
                 userName, classAndLevet, history, race, god, speed, traits, ideals, attachment, weakness, maxHP, currentHP,
                 timeHP, boneHP, isCheckedBoneHP, languages, passive, XP, inspiration, KD, initiative, copperMoney, silverMoney,
-                electoMoney, goldMoney, platinumMoney, hist);
+                electoMoney, goldMoney, platinumMoney, hist, talkings, spells, spellCharacter, spellBonus, spellDifficult, spellsAbout);
 
             var json = JsonConvert.SerializeObject(character);
 
@@ -841,7 +879,106 @@ namespace DnDClient
             }
         }
 
-        private void ChangeAllSaves(int mastery)
+        private Dictionary<int, Character.SpellsByLevel> FillSpells()
+        {
+            Dictionary<int, Character.SpellsByLevel> spells = new Dictionary<int, Character.SpellsByLevel>();
+
+            var firstLevelSpells = GetSpellsByLevel("FirstSpellLevel");
+
+            var firstCount = (int)numericUpDownFirstSpellLevelCount.Value;
+            var firstUsed = (int)numericUpDownFirstSpellLevelUsed.Value;
+
+            spells.Add(1, new Character.SpellsByLevel(firstCount, firstUsed, firstLevelSpells));
+
+            var secondLevelSpells = GetSpellsByLevel("SecondSpellLevel");
+
+            var secondCount = (int)numericUpDownSecondSpellLevelCount.Value;
+            var secondUsed = (int)numericUpDownSecondSpellLevelUsed.Value;
+
+            spells.Add(2, new Character.SpellsByLevel(secondCount, secondCount, secondLevelSpells));
+
+            var thirdtLevelSpells = GetSpellsByLevel("ThirdSpellLevel");
+
+            var thirdCount = (int)numericUpDownThirdSpellLevelCount.Value;
+            var thirdUsed = (int)numericUpDownThirdSpellLevelUsed.Value;
+
+            spells.Add(3, new Character.SpellsByLevel(thirdCount, thirdUsed, thirdtLevelSpells));
+
+            var fourthLevelSpells = GetSpellsByLevel("FourthSpellLevel");
+
+            var fourthCount = (int)numericUpDownFourthSpellLevelCount.Value;
+            var fourthUsed = (int)numericUpDownFourthSpellLevelUsed.Value;
+
+            spells.Add(4, new Character.SpellsByLevel(fourthCount, fourthUsed, fourthLevelSpells));
+
+            var fifthLevelSpells = GetSpellsByLevel("FifthSpellLevel");
+
+            var fifthCount = (int)numericUpDownFifthSpellLevelCount.Value;
+            var fifthUsed = (int)numericUpDownFifthSpellLevelUsed.Value;
+
+            spells.Add(5, new Character.SpellsByLevel(fifthCount, fifthUsed, fifthLevelSpells));
+
+            var sixthLevelSpells = GetSpellsByLevel("SixthSpellLevel");
+
+            var sixthCount = (int)numericUpDownSixthSpellLevelCount.Value;
+            var sixthUsed = (int)numericUpDownSixthSpellLevelUsed.Value;
+
+            spells.Add(6, new Character.SpellsByLevel(sixthCount, sixthUsed, sixthLevelSpells));
+
+            var seventhLevelSpells = GetSpellsByLevel("SeventhSpellLevel");
+
+            var seventhCount = (int)numericUpDownSeventhSpellLevelCount.Value;
+            var seventhUsed = (int)numericUpDownSeventhSpellLevelUsed.Value;
+
+            spells.Add(7, new Character.SpellsByLevel(seventhCount, seventhUsed, seventhLevelSpells));
+
+            var eighthLevelSpells = GetSpellsByLevel("EighthSpellLevel");
+
+            var eighthCount = (int)numericUpDownEighthSpellLevelCount.Value;
+            var eighthUsed = (int)numericUpDownEighthSpellLevelUsed.Value;
+
+            spells.Add(8, new Character.SpellsByLevel(eighthCount, eighthUsed, eighthLevelSpells));
+
+            var ninthLevelSpells = GetSpellsByLevel("NinthSpellLevel");
+
+            var ninthCount = (int)numericUpDownNinthSpellLevelCount.Value;
+            var ninthUsed = (int)numericUpDownNinthSpellLevelUsed.Value;
+
+            spells.Add(9, new Character.SpellsByLevel(ninthCount, ninthUsed, ninthLevelSpells));
+
+            return spells;
+        }
+
+        private List<Character.Spell> GetSpellsByLevel(string level)
+        {
+            List<Character.Spell> spells = new List<Character.Spell>();
+
+            try
+            {
+                DataGridView table = tabPageSpells.Controls.Find("dataGridView" + level, true)[0] as DataGridView;
+
+                foreach(DataGridViewRow elem in table.Rows)
+                {
+                    if (elem.Cells[0].Value != null)
+                    {
+                        var isUsed = (elem.Cells[0].Value != null) ? elem.Cells[0].Value.ToString() : "";
+                        var talkingName = (elem.Cells[1].Value != null) ? elem.Cells[1].Value.ToString() : "";
+                        var talkingText = (elem.Cells[2].Value != null) ? elem.Cells[2].Value.ToString() : "";
+                        var talkingAbout = (elem.Cells[3].Value != null) ? elem.Cells[3].Value.ToString() : "";
+
+                        spells.Add(new Character.Spell(talkingName, talkingAbout, talkingText, isUsed));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return spells;
+        }
+
+        private void ChangeAllSaves()
         {
             foreach(var e in bonusValueTextBoxes)
             {
@@ -851,10 +988,39 @@ namespace DnDClient
             }
         }
 
+        private void ChangeDifficult()
+        {
+            var baseCharValue = GetBonusValueTextBoxesByName(GetParametresByValue(comboBoxBaseCharacter.SelectedItem.ToString())).Text;
+            var value = int.Parse(baseCharValue);
+
+            if (value != int.MinValue)
+            {
+                int mastery = (int)numericUpDownMastery.Value;
+                const int bonus = 8;
+
+                textBoxDifficult.Text = (mastery + int.Parse(baseCharValue) + bonus).ToString();
+            }
+        }
+
+        private void ChangeSpellBonus()
+        {
+            var baseCharValue = GetBonusValueTextBoxesByName(GetParametresByValue(comboBoxBaseCharacter.SelectedItem.ToString())).Text;
+            var value = int.Parse(baseCharValue);
+
+            if (value != int.MinValue)
+            {
+                int mastery = (int)numericUpDownMastery.Value;
+
+                textBoxSpellBonus.Text = (mastery + int.Parse(baseCharValue)).ToString();
+            }
+        }
+
         private void NumericUpDownMastery_ValueChanged(object sender, EventArgs e)
         {
-            ChangeAllSaves((int)numericUpDownMastery.Value);
-            ChangeAllSkills((int)numericUpDownMastery.Value);
+            ChangeAllSaves();
+            ChangeAllSkills();
+            ChangeDifficult();
+            ChangeSpellBonus();
         }
 
         private void LoadCharacter()
@@ -1031,12 +1197,197 @@ namespace DnDClient
 
                 var XP = character.XP;
                 numericUpDownXP.Value = int.Parse(XP.ToString());
+
+                var spellBaseCharacteristic = character.SpellCharacter.ToString();
+                comboBoxBaseCharacter.SelectedItem = spellBaseCharacteristic;
+
+                var spellsAbout = character.SpellsAbout;
+                richTextBoxSpellsAbout.Text = spellsAbout;
+
+                var talkings = character.Talkings;
+                foreach(var e in talkings)
+                {
+                    var index = dataGridViewTalking.Rows.Add();
+
+                    dataGridViewTalking.Rows[index].Cells["ColumnTalkingName"].Value = e.Name;
+                    dataGridViewTalking.Rows[index].Cells["ColumnTalkingText"].Value = e.Text;
+                    dataGridViewTalking.Rows[index].Cells["ColumnTalkingAbout"].Value = e.About;
+                }
+
+                var spells = character.Spells;
+                foreach(var e in spells)
+                {
+                    var level = int.Parse(e.Name);
+
+                    switch (level)
+                    {
+                        case 1:
+                            {
+                                var spellsByLevel = e.Value;
+
+                                var count = spellsByLevel.Count;
+                                var used = spellsByLevel.Used;
+                                var spellList = spellsByLevel.Spells;
+
+                                numericUpDownFirstSpellLevelCount.Value = count;
+                                numericUpDownFirstSpellLevelUsed.Value = used;
+
+                                FillSpellsTable(dataGridViewFirstSpellLevel, spellList);
+
+                                break;
+                            }
+                        case 2:
+                            {
+                                var spellsByLevel = e.Value;
+
+                                var count = spellsByLevel.Count;
+                                var used = spellsByLevel.Used;
+                                var spellList = spellsByLevel.Spells;
+
+                                numericUpDownSecondSpellLevelCount.Value = count;
+                                numericUpDownSecondSpellLevelUsed.Value = used;
+
+                                FillSpellsTable(dataGridViewSecondSpellLevel, spellList);
+
+                                break;
+                            }
+                        case 3:
+                            {
+                                var spellsByLevel = e.Value;
+
+                                var count = spellsByLevel.Count;
+                                var used = spellsByLevel.Used;
+                                var spellList = spellsByLevel.Spells;
+
+                                numericUpDownThirdSpellLevelCount.Value = count;
+                                numericUpDownThirdSpellLevelUsed.Value = used;
+
+                                FillSpellsTable(dataGridViewThirdSpellLevel, spellList);
+
+                                break;
+                            }
+                        case 4:
+                            {
+                                var spellsByLevel = e.Value;
+
+                                var count = spellsByLevel.Count;
+                                var used = spellsByLevel.Used;
+                                var spellList = spellsByLevel.Spells;
+
+                                numericUpDownFourthSpellLevelCount.Value = count;
+                                numericUpDownFourthSpellLevelUsed.Value = used;
+
+                                FillSpellsTable(dataGridViewFourthSpellLevel, spellList);
+
+                                break;
+                            }
+                        case 5:
+                            {
+                                var spellsByLevel = e.Value;
+
+                                var count = spellsByLevel.Count;
+                                var used = spellsByLevel.Used;
+                                var spellList = spellsByLevel.Spells;
+
+                                numericUpDownFifthSpellLevelCount.Value = count;
+                                numericUpDownFifthSpellLevelUsed.Value = used;
+
+                                FillSpellsTable(dataGridViewFifthSpellLevel, spellList);
+
+                                break;
+                            }
+                        case 6:
+                            {
+                                var spellsByLevel = e.Value;
+
+                                var count = spellsByLevel.Count;
+                                var used = spellsByLevel.Used;
+                                var spellList = spellsByLevel.Spells;
+
+                                numericUpDownSixthSpellLevelCount.Value = count;
+                                numericUpDownSixthSpellLevelUsed.Value = used;
+
+                                FillSpellsTable(dataGridViewSixthSpellLevel, spellList);
+
+                                break;
+                            }
+                        case 7:
+                            {
+                                var spellsByLevel = e.Value;
+
+                                var count = spellsByLevel.Count;
+                                var used = spellsByLevel.Used;
+                                var spellList = spellsByLevel.Spells;
+
+                                numericUpDownSeventhSpellLevelCount.Value = count;
+                                numericUpDownSeventhSpellLevelUsed.Value = used;
+
+                                FillSpellsTable(dataGridViewSeventhSpellLevel, spellList);
+
+                                break;
+                            }
+                        case 8:
+                            {
+                                var spellsByLevel = e.Value;
+
+                                var count = spellsByLevel.Count;
+                                var used = spellsByLevel.Used;
+                                var spellList = spellsByLevel.Spells;
+
+                                numericUpDownEighthSpellLevelCount.Value = count;
+                                numericUpDownEighthSpellLevelUsed.Value = used;
+
+                                FillSpellsTable(dataGridViewEighthSpellLevel, spellList);
+
+                                break;
+                            }
+                        case 9:
+                            {
+                                var spellsByLevel = e.Value;
+
+                                var count = spellsByLevel.Count;
+                                var used = spellsByLevel.Used;
+                                var spellList = spellsByLevel.Spells;
+
+                                numericUpDownNinthSpellLevelCount.Value = count;
+                                numericUpDownNinthSpellLevelUsed.Value = used;
+
+                                FillSpellsTable(dataGridViewNinthSpellLevel, spellList);
+
+                                break;
+                            }
+                    }
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
                 Close();
             }
+        }
+
+        private void FillSpellsTable(DataGridView table, dynamic spellList)
+        {
+            foreach (var s in spellList)
+            {
+                var isUsed = s.IsUsed;
+                var nameSpell = s.Name;
+                var text = s.Text;
+                var aboutSpell = s.About;
+
+                var index = table.Rows.Add();
+
+                table.Rows[index].Cells[0].Value = isUsed;
+                table.Rows[index].Cells[1].Value = nameSpell;
+                table.Rows[index].Cells[2].Value = text;
+                table.Rows[index].Cells[3].Value = aboutSpell;
+            }
+        }
+
+        private void ComboBoxBaseCharacter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChangeDifficult();
+            ChangeSpellBonus();
         }
     }
 }
