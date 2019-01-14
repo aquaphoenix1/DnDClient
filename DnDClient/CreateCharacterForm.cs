@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DnDClient.EthernetControllers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,7 +21,7 @@ namespace DnDClient
         private const int SKILL_HEIGHT = 20;
         private const int DEFAULT_MASTERY_VALUE = 2;
 
-        public CreateCharacterForm(bool isLoad, dynamic element)
+        public CreateCharacterForm(bool isLoad, dynamic element, bool isOnlyRead)
         {
             InitializeComponent();
             IsLoad = isLoad;
@@ -30,7 +31,82 @@ namespace DnDClient
                 DisableLoadElements();
             }
 
+            if (isOnlyRead)
+            {
+                DisableAllElements();
+            }
+
             LoadedCharacter = element;
+        }
+
+        private void DisableAllElements()
+        {
+            numericUpDownCurrentHP.ReadOnly = true;
+
+            checkBoxBoneHP.Enabled = false;
+            textBoxBoneHP.ReadOnly = true;
+
+            numericUpDownTimeHp.ReadOnly = true;
+
+            numericUpDownXP.ReadOnly = true;
+
+            checkBoxAliveOne.Enabled = false;
+            checkBoxAliveTwo.Enabled = false;
+            checkBoxAliveThree.Enabled = false;
+            checkBoxDeathOne.Enabled = false;
+            checkBoxDeathTwo.Enabled = false;
+            checkBoxDeathThree.Enabled = false;
+
+            dataGridViewAbilities.ReadOnly = true;
+            dataGridViewEquipment.ReadOnly = true;
+            dataGridViewWeapons.ReadOnly = true;
+
+            numericUpDownCopperMoney.ReadOnly = true;
+            numericUpDownSilverMoney.ReadOnly = true;
+            numericUpDownGoldMoney.ReadOnly = true;
+            numericUpDownElectroMoney.ReadOnly = true; ;
+            numericUpDownPlatinumMoney.ReadOnly = true;
+
+            numericUpDownPassive.ReadOnly = true;
+
+            richTextBoxSpellsAbout.ReadOnly = true;
+            dataGridViewTalking.ReadOnly = true;
+
+            numericUpDownFirstSpellLevelCount.ReadOnly = true;
+            numericUpDownFirstSpellLevelUsed.ReadOnly = true;
+            dataGridViewFirstSpellLevel.ReadOnly = true;
+
+            numericUpDownSecondSpellLevelCount.ReadOnly = true;
+            numericUpDownSecondSpellLevelUsed.ReadOnly = true;
+            dataGridViewSecondSpellLevel.ReadOnly = true;
+
+            numericUpDownThirdSpellLevelCount.ReadOnly = true;
+            numericUpDownThirdSpellLevelUsed.ReadOnly = true;
+            dataGridViewThirdSpellLevel.ReadOnly = true;
+
+            numericUpDownFourthSpellLevelCount.ReadOnly = true;
+            numericUpDownFourthSpellLevelUsed.ReadOnly = true;
+            dataGridViewFourthSpellLevel.ReadOnly = true;
+
+            numericUpDownFifthSpellLevelCount.ReadOnly = true;
+            numericUpDownFifthSpellLevelUsed.ReadOnly = true;
+            dataGridViewFifthSpellLevel.ReadOnly = true;
+
+            numericUpDownSixthSpellLevelCount.ReadOnly = true;
+            numericUpDownSixthSpellLevelUsed.ReadOnly = true;
+            dataGridViewSixthSpellLevel.ReadOnly = true;
+
+            numericUpDownSeventhSpellLevelCount.ReadOnly = true;
+            numericUpDownSeventhSpellLevelUsed.ReadOnly = true;
+            dataGridViewSeventhSpellLevel.ReadOnly = true;
+
+            numericUpDownEighthSpellLevelCount.ReadOnly = true;
+            numericUpDownEighthSpellLevelUsed.ReadOnly = true;
+            dataGridViewEighthSpellLevel.ReadOnly = true;
+
+            numericUpDownNinthSpellLevelCount.ReadOnly = true;
+            numericUpDownNinthSpellLevelUsed.ReadOnly = true;
+            dataGridViewNinthSpellLevel.ReadOnly = true;
         }
 
         private Dictionary<string, TextBox> characteristicsValueTextBoxes;
@@ -1388,6 +1464,115 @@ namespace DnDClient
         {
             ChangeDifficult();
             ChangeSpellBonus();
+        }
+
+        private class ChangeCharacter
+        {
+            public string UserName { get; set; }
+            public string ValueName;
+            public dynamic Value;
+
+            public ChangeCharacter(string userName, string valueName, dynamic value)
+            {
+                UserName = userName;
+                ValueName = valueName;
+                Value = value;
+            }
+        }
+
+        private void NumericUpDownXP_ValueChanged(object sender, EventArgs e)
+        {
+            CharacterEthernetController.GetController().SendRequest("GET", JsonConvert.SerializeObject(new ChangeCharacter(Controller.Controller.UserName, "XP", numericUpDownXP.Value)));
+        }
+
+        private void NumericUpDownCurrentHP_ValueChanged(object sender, EventArgs e)
+        {
+            CharacterEthernetController.GetController().SendRequest("GET", JsonConvert.SerializeObject(new ChangeCharacter(Controller.Controller.UserName, "Current HP", numericUpDownCurrentHP.Value)));
+        }
+
+        private void NumericUpDownTimeHp_ValueChanged(object sender, EventArgs e)
+        {
+            CharacterEthernetController.GetController().SendRequest("GET", JsonConvert.SerializeObject(new ChangeCharacter(Controller.Controller.UserName, "Time HP", numericUpDownTimeHp.Value)));
+        }
+
+        private void CheckBoxBoneHP_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxAliveOne_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxAliveTwo_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxAliveThree_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxDeathOne_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxDeathTwo_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxDeathThree_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDownPassive_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDownCopperMoney_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDownSilverMoney_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDownElectroMoney_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDownGoldMoney_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NumericUpDownPlatinumMoney_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DataGridViewWeapons_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridViewAbilities_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void DataGridViewEquipment_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

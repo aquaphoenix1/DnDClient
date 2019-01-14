@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DnDClient.EthernetControllers;
+using Newtonsoft.Json;
 
 namespace DnDClient.Controller
 {

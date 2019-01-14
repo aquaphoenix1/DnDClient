@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace DnDClient.Controller
 {
@@ -18,9 +19,28 @@ namespace DnDClient.Controller
             ConnectorForm = connectorForm;
         }
 
-        internal static void SetUserName(string name)
+        public static void SetUserName(string name)
         {
             UserName = name;
+        }
+
+        private static CharactersForm charactersForm = new CharactersForm();
+        public static Panel CharactersPanel { get; private set; } = charactersForm.Controls.Find("panelCharacters", true)[0] as Panel;
+        public static bool IsCharactersVisible { private set; get; } = false;
+
+        public static void ToggleCharactersVisible()
+        {
+            if (IsCharactersVisible)
+            {
+                IsCharactersVisible = false;
+                charactersForm.Hide();
+                MainForm.ToggleCharactersVisible(IsCharactersVisible);
+            }
+            else
+            {
+                IsCharactersVisible = true;
+                charactersForm.Show();
+            }
         }
     }
 }

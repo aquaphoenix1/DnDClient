@@ -37,6 +37,11 @@ namespace DnDClient
             ToChat(message);
         }
 
+        internal void ToggleCharactersVisible(bool isCharactersVisible)
+        {
+            показатьПерсонажейToolStripMenuItem.Text = (isCharactersVisible) ? "Скрыть персонажей" : "Показать персонажей";
+        }
+
         private void ButtonSendChatMessage_Click(object sender, EventArgs e)
         {
             if (textBoxChatMessage.Text != "")
@@ -59,7 +64,7 @@ namespace DnDClient
 
         private void CreateCharacterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new CreateCharacterForm(false, null).ShowDialog();
+            new CreateCharacterForm(false, null, false).ShowDialog();
         }
 
         private void LoadCharacterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -77,7 +82,7 @@ namespace DnDClient
 
                     dynamic element = JsonConvert.DeserializeObject(text);
 
-                    var form = new CreateCharacterForm(true, element) {
+                    var form = new CreateCharacterForm(true, element, false) {
                         AutoScroll = true,
                         TopLevel = false,
                         Name = "MyCharacter"
@@ -92,6 +97,8 @@ namespace DnDClient
                     try
                     {
                         form.Show();
+
+                        CharacterEthernetController.GetController().SendRequest("GET", JsonConvert.SerializeObject(new { UserName = Controller.Controller.UserName, Value = element }));
                     }
                     catch { }
                 }
@@ -130,7 +137,7 @@ namespace DnDClient
 
                     try
                     {
-                        new CreateCharacterForm(false, element).ShowDialog();
+                        new CreateCharacterForm(false, element, false).ShowDialog();
                     }
                     catch {
                         MessageBox.Show("Ошибка");
@@ -188,6 +195,11 @@ namespace DnDClient
                 ChatEthernetController.GetController().SendGoodBye(Controller.Controller.UserName);
             }
             catch { }
+        }
+
+        private void показатьПерсонажейToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Controller.Controller.ToggleCharactersVisible();
         }
     }
 }

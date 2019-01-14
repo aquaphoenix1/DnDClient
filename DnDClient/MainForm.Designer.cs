@@ -57,6 +57,7 @@
             this.labelDice = new System.Windows.Forms.Label();
             this.comboBoxDice = new System.Windows.Forms.ComboBox();
             this.panelBattlefield = new System.Windows.Forms.Panel();
+            this.показатьПерсонажейToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
@@ -72,6 +73,7 @@
             // menuStripMain
             // 
             this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.показатьПерсонажейToolStripMenuItem,
             this.персонажToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
@@ -400,6 +402,13 @@
             this.panelBattlefield.Size = new System.Drawing.Size(924, 518);
             this.panelBattlefield.TabIndex = 9;
             // 
+            // показатьПерсонажейToolStripMenuItem
+            // 
+            this.показатьПерсонажейToolStripMenuItem.Name = "показатьПерсонажейToolStripMenuItem";
+            this.показатьПерсонажейToolStripMenuItem.Size = new System.Drawing.Size(140, 20);
+            this.показатьПерсонажейToolStripMenuItem.Text = "Показать персонажей";
+            this.показатьПерсонажейToolStripMenuItem.Click += new System.EventHandler(this.показатьПерсонажейToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -462,6 +471,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownCountDices;
         private System.Windows.Forms.Label labelDice;
         private System.Windows.Forms.ComboBox comboBoxDice;
+        private System.Windows.Forms.ToolStripMenuItem показатьПерсонажейToolStripMenuItem;
         // private AxAcroPDFLib.AxAcroPDF axAcroPDFRules;
     }
 }

@@ -13,7 +13,11 @@ namespace DnDClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            var main = new MainForm();
+            Controller.Controller.SetController(main);
+
+            Application.Run(main);
             //Application.Run(new ConnectorForm());
         }
     }

@@ -45,6 +45,15 @@ namespace DnDClient
                 //Controller.Controller.MainForm.DisableDices();
             }
 
+            try
+            {
+                CharacterEthernetController.GetController().AddUpdater(CharacterController.CharacterGetMessage);
+                CharacterEthernetController.GetController().SendHello(settingsForm.GetName());
+            }
+            catch
+            {
+            }
+
             Hide();
             settingsForm.Close();
             main.ShowDialog();

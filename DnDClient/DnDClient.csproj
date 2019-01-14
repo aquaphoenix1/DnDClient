@@ -53,11 +53,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharactersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharactersForm.Designer.cs">
+      <DependentUpon>CharactersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\CharacterController.cs" />
     <Compile Include="Controller\DiceController.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Creature.cs" />
     <Compile Include="Entities\Dice.cs" />
     <Compile Include="Entities\Object.cs" />
+    <Compile Include="EthernetControllers\CharacterEthernetController.cs" />
     <Compile Include="EthernetControllers\ChatEthernetController.cs" />
     <Compile Include="Controller\ChatController.cs" />
     <Compile Include="ConnectorForm.cs">
@@ -93,6 +101,9 @@
     <Compile Include="SettingsForm.designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CharactersForm.resx">
+      <DependentUpon>CharactersForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConnectorForm.resx">
       <DependentUpon>ConnectorForm.cs</DependentUpon>
     </EmbeddedResource>

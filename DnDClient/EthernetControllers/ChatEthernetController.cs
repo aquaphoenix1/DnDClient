@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
 
-namespace DnDClient
+namespace DnDClient.EthernetControllers
 {
     class ChatEthernetController : Ethernet.Controller
     {
