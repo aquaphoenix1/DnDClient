@@ -28,23 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.hScrollBarCharacters = new System.Windows.Forms.HScrollBar();
             this.panelCharacters = new System.Windows.Forms.Panel();
-            this.panelCharacters.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // hScrollBarCharacters
-            // 
-            this.hScrollBarCharacters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hScrollBarCharacters.Location = new System.Drawing.Point(0, 433);
-            this.hScrollBarCharacters.Name = "hScrollBarCharacters";
-            this.hScrollBarCharacters.Size = new System.Drawing.Size(800, 17);
-            this.hScrollBarCharacters.TabIndex = 0;
             // 
             // panelCharacters
             // 
-            this.panelCharacters.Controls.Add(this.hScrollBarCharacters);
             this.panelCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelCharacters.Location = new System.Drawing.Point(0, 0);
             this.panelCharacters.Name = "panelCharacters";
@@ -62,14 +50,11 @@
             this.MinimizeBox = false;
             this.Name = "CharactersForm";
             this.Text = "Персонажи";
-            this.panelCharacters.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.HScrollBar hScrollBarCharacters;
         private System.Windows.Forms.Panel panelCharacters;
     }
 }

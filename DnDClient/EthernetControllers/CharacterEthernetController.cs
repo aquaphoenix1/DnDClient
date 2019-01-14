@@ -2,7 +2,7 @@
 {
     class CharacterEthernetController : Ethernet.Controller
     {
-        private const int PORT = 62354;
+        private const int PORT = 58749;
         private const string CHARACTER_PATH = "api/character";
 
         private static CharacterEthernetController controller;

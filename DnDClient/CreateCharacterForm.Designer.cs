@@ -471,6 +471,7 @@
             // 
             // numericUpDownPassive
             // 
+            this.numericUpDownPassive.Enabled = false;
             this.numericUpDownPassive.Location = new System.Drawing.Point(5, 10);
             this.numericUpDownPassive.Maximum = new decimal(new int[] {
             1000,
@@ -485,7 +486,6 @@
             this.numericUpDownPassive.Name = "numericUpDownPassive";
             this.numericUpDownPassive.Size = new System.Drawing.Size(53, 20);
             this.numericUpDownPassive.TabIndex = 56;
-            this.numericUpDownPassive.ValueChanged += new System.EventHandler(this.NumericUpDownPassive_ValueChanged);
             // 
             // labelPassive
             // 

@@ -16,13 +16,18 @@ namespace DnDClient.Controller
 
         internal static void CharacterGetMessage(dynamic value)
         {
-            var panels = Controller.CharactersPanel.Controls;
-
             var name = value.UserName;
 
-            foreach(var p in panels)
+            if (name.Equals(Controller.UserName))
             {
-                if((p as CharacterPanel).UserName.Equals(name))
+                return;
+            }
+
+            var panels = Controller.CharactersPanel.Controls;
+
+            foreach (var p in panels)
+            {
+                if ((p as CharacterPanel).UserName.Equals(name))
                 {
                     ChangeExistsUser(p as CharacterPanel, value);
                     return;
@@ -34,14 +39,20 @@ namespace DnDClient.Controller
 
         private static void AddNewUser(dynamic value)
         {
-            var panel = new CharacterPanel(true, value, value.UserName);
+            var panel = new CharacterPanel(true, value, value.UserName)
+            {
+                AutoScroll = true,
+                TopLevel = false
+            };
 
             Controller.CharactersPanel.Controls.Add(panel);
+
+            panel.Show();
         }
 
         private static void ChangeExistsUser(CharacterPanel characterPanel, dynamic value)
         {
-            throw new NotImplementedException();
+            characterPanel.ChangeValues(value);
         }
     }
 }

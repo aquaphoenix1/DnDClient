@@ -30,7 +30,7 @@ namespace DnDClient
             try
             {
                 ChatEthernetController.GetController().AddUpdater(ChatController.ChatGetMessagesController);
-                ChatEthernetController.GetController().SendHello(settingsForm.GetName());
+                //ChatEthernetController.GetController().SendHello(settingsForm.GetName());
             }
             catch {
                // Controller.Controller.MainForm.DisableChat();
@@ -48,7 +48,7 @@ namespace DnDClient
             try
             {
                 CharacterEthernetController.GetController().AddUpdater(CharacterController.CharacterGetMessage);
-                CharacterEthernetController.GetController().SendHello(settingsForm.GetName());
+                //CharacterEthernetController.GetController().SendHello(settingsForm.GetName());
             }
             catch
             {

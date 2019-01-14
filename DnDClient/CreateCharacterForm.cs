@@ -1133,6 +1133,7 @@ namespace DnDClient
                 numericUpDownCopperMoney.Value = int.Parse(copperMoney.ToString());
 
                 var currentHP = character.CurrentHP;
+
                 numericUpDownCurrentHP.Value = int.Parse(currentHP.ToString());
 
                 var deadAndAlive = character.DeadAndAlive;
@@ -1471,108 +1472,124 @@ namespace DnDClient
             public string UserName { get; set; }
             public string ValueName;
             public dynamic Value;
+            public string Action;
 
             public ChangeCharacter(string userName, string valueName, dynamic value)
             {
                 UserName = userName;
                 ValueName = valueName;
                 Value = value;
+                Action = "Change";
             }
+        }
+
+        private void SendChange(string value, object val)
+        {
+            try
+            {
+                CharacterEthernetController.GetController().SendRequest("POST", JsonConvert.SerializeObject(new ChangeCharacter(Controller.Controller.UserName, value, val)));
+            }
+            catch { }
         }
 
         private void NumericUpDownXP_ValueChanged(object sender, EventArgs e)
         {
-            CharacterEthernetController.GetController().SendRequest("GET", JsonConvert.SerializeObject(new ChangeCharacter(Controller.Controller.UserName, "XP", numericUpDownXP.Value)));
+            SendChange("XP", numericUpDownXP.Value);
         }
 
         private void NumericUpDownCurrentHP_ValueChanged(object sender, EventArgs e)
         {
-            CharacterEthernetController.GetController().SendRequest("GET", JsonConvert.SerializeObject(new ChangeCharacter(Controller.Controller.UserName, "Current HP", numericUpDownCurrentHP.Value)));
+            SendChange("Current HP", numericUpDownCurrentHP.Value);
         }
 
         private void NumericUpDownTimeHp_ValueChanged(object sender, EventArgs e)
         {
-            CharacterEthernetController.GetController().SendRequest("GET", JsonConvert.SerializeObject(new ChangeCharacter(Controller.Controller.UserName, "Time HP", numericUpDownTimeHp.Value)));
+            SendChange("Time HP", numericUpDownTimeHp.Value);
         }
 
         private void CheckBoxBoneHP_CheckedChanged(object sender, EventArgs e)
         {
-
+            SendChange("CheckBox Bone HP", checkBoxBoneHP.Checked);
         }
 
         private void CheckBoxAliveOne_CheckedChanged(object sender, EventArgs e)
         {
-
+            SendChange("CheckBox Alive One", checkBoxAliveOne.Checked);
         }
 
         private void CheckBoxAliveTwo_CheckedChanged(object sender, EventArgs e)
         {
-
+            SendChange("CheckBox Alive Two", checkBoxAliveTwo.Checked);
         }
 
         private void CheckBoxAliveThree_CheckedChanged(object sender, EventArgs e)
         {
-
+            SendChange("CheckBox Alive Three", checkBoxAliveThree.Checked);
         }
 
         private void CheckBoxDeathOne_CheckedChanged(object sender, EventArgs e)
         {
-
+            SendChange("CheckBox Death One", checkBoxDeathOne.Checked);
         }
 
         private void CheckBoxDeathTwo_CheckedChanged(object sender, EventArgs e)
         {
-
+            SendChange("CheckBox Death Two", checkBoxDeathTwo.Checked);
         }
 
         private void CheckBoxDeathThree_CheckedChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void NumericUpDownPassive_ValueChanged(object sender, EventArgs e)
-        {
-
+            SendChange("CheckBox Death Three", checkBoxDeathThree.Checked);
         }
 
         private void NumericUpDownCopperMoney_ValueChanged(object sender, EventArgs e)
         {
-
+            SendChange("Copper", numericUpDownCopperMoney.Value);
         }
 
         private void NumericUpDownSilverMoney_ValueChanged(object sender, EventArgs e)
         {
-
+            SendChange("Silver", numericUpDownSilverMoney.Value);
         }
 
         private void NumericUpDownElectroMoney_ValueChanged(object sender, EventArgs e)
         {
-
+            SendChange("Electro", numericUpDownElectroMoney.Value);
         }
 
         private void NumericUpDownGoldMoney_ValueChanged(object sender, EventArgs e)
         {
-
+            SendChange("Gold", numericUpDownGoldMoney.Value);
         }
 
         private void NumericUpDownPlatinumMoney_ValueChanged(object sender, EventArgs e)
         {
-
+            SendChange("Platinum", numericUpDownPlatinumMoney.Value);
         }
 
         private void DataGridViewWeapons_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-
+            //TODO
         }
 
         private void DataGridViewAbilities_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-
+            //TODO
         }
 
         private void DataGridViewEquipment_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            //TODO
+        }
 
+        private void checkBoxInspiration_CheckedChanged(object sender, EventArgs e)
+        {
+            SendChange("Inspiration", checkBoxInspiration.Checked);
+        }
+
+        internal void ChangeValues(dynamic value)
+        {
+            throw new Exception();
         }
     }
 }

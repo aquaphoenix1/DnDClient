@@ -98,7 +98,7 @@ namespace DnDClient
                     {
                         form.Show();
 
-                        CharacterEthernetController.GetController().SendRequest("GET", JsonConvert.SerializeObject(new { UserName = Controller.Controller.UserName, Value = element }));
+                        CharacterEthernetController.GetController().SendRequest("POST", JsonConvert.SerializeObject(new { Controller.Controller.UserName, Value = element, Action = "Load" }));
                     }
                     catch { }
                 }
