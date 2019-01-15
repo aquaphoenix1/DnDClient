@@ -1276,6 +1276,7 @@
             this.numericUpDownMastery.Name = "numericUpDownMastery";
             this.numericUpDownMastery.Size = new System.Drawing.Size(68, 20);
             this.numericUpDownMastery.TabIndex = 58;
+            this.numericUpDownMastery.ValueChanged += new System.EventHandler(this.NumericUpDownMastery_ValueChanged);
             // 
             // labelMastery
             // 

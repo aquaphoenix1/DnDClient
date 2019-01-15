@@ -151,21 +151,21 @@ namespace DnDClient
             try
             {
                 var path = Directory.GetCurrentDirectory() + "\\rules.pdf";
-                /*
+                
                 axAcroPDFRules.LoadFile(path);
-                axAcroPDFRules.src = path;*/
+                axAcroPDFRules.src = path;
             }
             catch { }
 
             radioButtonNormal.Checked = true;
             comboBoxDice.SelectedIndex = 0;
 
-            BattleField.CreateBattleField(panelBattlefield);
+            BattleField.CreateBattleField(panelBattlefield, 10, 10);
         }
 
         private void TabControlMain_Selected(object sender, TabControlEventArgs e)
-        {/*
-            axAcroPDFRules.Select();*/
+        {
+            axAcroPDFRules.Select();
         }
 
         private void ButtonThrowDice_Click(object sender, EventArgs e)
