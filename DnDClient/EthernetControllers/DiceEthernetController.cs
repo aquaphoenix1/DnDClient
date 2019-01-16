@@ -2,8 +2,8 @@
 {
     class DiceEthernetController : Ethernet.Controller
     {
-        private const int PORT = 61623;
-        private const string DICE_PATH = "api/dice";
+        private const int PORT = 54143;
+        private const string DICE_PATH = "api/Dice";
 
         private static DiceEthernetController controller;
 

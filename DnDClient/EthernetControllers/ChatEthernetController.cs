@@ -4,8 +4,8 @@ namespace DnDClient.EthernetControllers
 {
     class ChatEthernetController : Ethernet.Controller
     {
-        private const string CHAT_PATH = "api/chat";
-        private const int PORT = 58830;
+        private const string CHAT_PATH = "api/Chat";
+        private const int PORT = 54143;
 
         private static ChatEthernetController controller;
 

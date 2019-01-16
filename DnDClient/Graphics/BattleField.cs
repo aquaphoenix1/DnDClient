@@ -83,8 +83,6 @@ namespace DnDClient.Graphics
             // Unlock the bits.
             bmp.UnlockBits(bmpData);
 
-            //// Draw the modified image.
-            //e.Graphics.DrawImage(bmp, 0, 150);
             return bmp;
         }
     }
