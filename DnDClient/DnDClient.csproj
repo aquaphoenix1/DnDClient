@@ -83,9 +83,6 @@
     </Compile>
     <Compile Include="EthernetControllers\DiceEthernetController.cs" />
     <Compile Include="Graphics\BattleField.cs" />
-    <Compile Include="Graphics\FieldSquare.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Graphics\GraphicsController.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

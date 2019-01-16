@@ -30,7 +30,6 @@ namespace DnDClient.Graphics
             return (j + i * width) * 4;
         }
 
-
         private static Bitmap Draw(Bitmap bmp)
         {
             var width = bmp.Width / Columns;
@@ -53,9 +52,7 @@ namespace DnDClient.Graphics
 
             // Copy the RGB values into the array.
             System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
-
-
-
+            
             for (int i = 0; i < bmp.Height; i += height)
             {
                 for (int j = 0; j < width * Columns; j++)
@@ -79,13 +76,6 @@ namespace DnDClient.Graphics
                     rgbValues[s + 3] = 255;
                 }
             }
-
-
-            //// Set every third value to 255. A 24bpp bitmap will look red.  
-            //for (int counter = 2; counter < rgbValues.Length; counter += 3)
-            //    rgbValues[counter] = 255;
-
-
 
             // Copy the RGB values back to the bitmap
             System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
