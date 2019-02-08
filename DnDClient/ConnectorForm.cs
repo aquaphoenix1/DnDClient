@@ -26,10 +26,11 @@ namespace DnDClient
 
             ChatEthernetController.GetController(settingsForm.GetURL());
             DiceEthernetController.GetController(settingsForm.GetURL());
+            CharacterEthernetController.GetController(settingsForm.GetURL());
 
             try
             {
-                ChatEthernetController.GetController().AddUpdater(ChatController.ChatGetMessagesController);
+                //ChatEthernetController.GetController().AddUpdater(ChatController.ChatGetMessagesController);
                 //ChatEthernetController.GetController().SendHello(settingsForm.GetName());
             }
             catch {
@@ -38,7 +39,7 @@ namespace DnDClient
 
             try
             {
-                DiceEthernetController.GetController().SendHello();
+                //DiceEthernetController.GetController().SendHello();
             }
             catch
             {

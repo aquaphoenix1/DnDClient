@@ -5,7 +5,6 @@ namespace DnDClient.EthernetControllers
     class ChatEthernetController : Ethernet.Controller
     {
         private const string CHAT_PATH = "api/Chat";
-        private const int PORT = 54143;
 
         private static ChatEthernetController controller;
 
@@ -21,7 +20,7 @@ namespace DnDClient.EthernetControllers
             return controller;
         }
 
-        private ChatEthernetController(string url) : base(url, PORT, CHAT_PATH) { }
+        private ChatEthernetController(string url) : base(url, CHAT_PATH) { }
 
         private class MessageToServer
         {

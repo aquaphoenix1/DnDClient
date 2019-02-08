@@ -12,7 +12,9 @@ namespace Ethernet
         private const int TIMEOUT = 4000;
         private const string JSON_DATA_TYPE = "application/json; charset=utf-8";
         private const int DELAY = 100;
-        
+
+        private const int PORT = 54143;
+
         private Action<dynamic> update;
 
         private volatile object locker;
@@ -25,9 +27,9 @@ namespace Ethernet
             GetUpdatesFromServer();
         }
 
-        public Controller(string url, int port, string servicePath)
+        public Controller(string url, string servicePath)
         {
-            this.Url = string.Format(this.Url, url, port, servicePath);
+            this.Url = string.Format(this.Url, url, PORT, servicePath);
             locker = new object();
         }
 
@@ -48,7 +50,6 @@ namespace Ethernet
                     }
                     catch
                     {
-                        update.Invoke("Ошибка подключения к серверу");
                     }
 
                     Thread.Sleep(DELAY);

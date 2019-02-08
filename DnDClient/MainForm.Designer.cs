@@ -253,6 +253,7 @@
             this.buttonThrowDice.TabIndex = 4;
             this.buttonThrowDice.Text = "Бросить";
             this.buttonThrowDice.UseVisualStyleBackColor = true;
+            this.buttonThrowDice.Click += new System.EventHandler(this.ButtonThrowDice_Click);
             // 
             // groupBoxAdvantageAndInterference
             // 

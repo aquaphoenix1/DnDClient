@@ -168,10 +168,24 @@ namespace DnDClient
             axAcroPDFRules.Select();
         }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                ChatEthernetController.GetController().SendGoodBye(Controller.Controller.UserName);
+            }
+            catch { }
+        }
+
+        private void показатьПерсонажейToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Controller.Controller.ToggleCharactersVisible();
+        }
+
         private void ButtonThrowDice_Click(object sender, EventArgs e)
         {
             var advantageAndInterferenceEnum = radioButtonAdvantage.Checked ? Entities.Dice.AdvantageAndInterferenceEnum.Advantage :
-                radioButtonInterference.Checked ? Entities.Dice.AdvantageAndInterferenceEnum.Interference : 
+                radioButtonInterference.Checked ? Entities.Dice.AdvantageAndInterferenceEnum.Interference :
                 Entities.Dice.AdvantageAndInterferenceEnum.Normal;
 
             var json = JsonConvert.SerializeObject(new Entities.Dice((int)numericUpDownCountDices.Value, Entities.Dice.GetCountEdged(comboBoxDice.SelectedItem.ToString()),
@@ -186,20 +200,6 @@ namespace DnDClient
                 });
             }
             catch { }
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            try
-            {
-                ChatEthernetController.GetController().SendGoodBye(Controller.Controller.UserName);
-            }
-            catch { }
-        }
-
-        private void показатьПерсонажейToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Controller.Controller.ToggleCharactersVisible();
         }
     }
 }

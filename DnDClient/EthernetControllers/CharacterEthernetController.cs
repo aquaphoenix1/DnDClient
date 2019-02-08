@@ -2,8 +2,8 @@
 {
     class CharacterEthernetController : Ethernet.Controller
     {
-        private const int PORT = 54143;
-        private const string CHARACTER_PATH = "api/Character";
+        //private const int PORT = 61623;
+        private const string CHARACTER_PATH = "api/Characters";
 
         private static CharacterEthernetController controller;
 
@@ -19,6 +19,6 @@
             return controller;
         }
 
-        private CharacterEthernetController(string url) : base(url, PORT, CHARACTER_PATH) { }
+        private CharacterEthernetController(string url) : base(url, CHARACTER_PATH) { }
     }
 }

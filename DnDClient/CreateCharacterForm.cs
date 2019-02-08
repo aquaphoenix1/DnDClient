@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DnDClient
@@ -1487,7 +1488,9 @@ namespace DnDClient
         {
             try
             {
-                CharacterEthernetController.GetController().SendRequest("POST", JsonConvert.SerializeObject(new ChangeCharacter(Controller.Controller.UserName, value, val)));
+                Task.Factory.StartNew(() =>
+                    CharacterEthernetController.GetController().SendRequest("POST", JsonConvert.SerializeObject(new ChangeCharacter(Controller.Controller.UserName, value, val)))
+                );
             }
             catch { }
         }
