@@ -33,6 +33,7 @@
             // 
             // panelCharacters
             // 
+            this.panelCharacters.AutoScroll = true;
             this.panelCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelCharacters.Location = new System.Drawing.Point(0, 0);
             this.panelCharacters.Name = "panelCharacters";
@@ -46,8 +47,6 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
             this.Controls.Add(this.panelCharacters);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "CharactersForm";
             this.Text = "Персонажи";
             this.ResumeLayout(false);

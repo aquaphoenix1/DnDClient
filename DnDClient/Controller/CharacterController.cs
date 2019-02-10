@@ -1,54 +1,45 @@
 ﻿using System;
+using static DnDClient.CharactersForm;
 
 namespace DnDClient.Controller
 {
-    class CharacterController
+    public class CharacterController
     {
-        private class CharacterPanel : CreateCharacterForm
-        {
-            public string UserName { get; set; }
-
-            public CharacterPanel(bool isLoad, object element, string userName) : base(isLoad, element, true)
-            {
-                UserName = userName;
-            }
-        }
-
+       
         internal static void CharacterGetMessage(dynamic value)
         {
-            var name = value.UserName;
 
-            if (name.Equals(Controller.UserName))
+            bool isFlag = false;
+            foreach (var element in value)
             {
-                return;
-            }
+                var userName = element.Name;
 
-            var panels = Controller.CharactersPanel.Controls;
-
-            foreach (var p in panels)
-            {
-                if ((p as CharacterPanel).UserName.Equals(name))
+                if (userName.Equals(Controller.UserName))
                 {
-                    ChangeExistsUser(p as CharacterPanel, value);
-                    return;
+                    continue;
                 }
+
+                var panels = Controller.CharactersPanel.Controls;
+
+                foreach (var p in panels)
+                {
+                    if ((p as CharacterPanel).UserName.Equals(userName))
+                    {
+                        ChangeExistsUser(p as CharacterPanel, value);
+                        isFlag = true;
+                        break;
+                    }
+                }
+
+                if (!isFlag)
+                {
+                    CharactersForm.AddNewUser(element);
+                }
+                isFlag = false;
             }
-
-            AddNewUser(value);
         }
 
-        private static void AddNewUser(dynamic value)
-        {
-            var panel = new CharacterPanel(true, value, value.UserName)
-            {
-                AutoScroll = true,
-                TopLevel = false
-            };
-
-            Controller.CharactersPanel.Controls.Add(panel);
-
-            panel.Show();
-        }
+      
 
         private static void ChangeExistsUser(CharacterPanel characterPanel, dynamic value)
         {

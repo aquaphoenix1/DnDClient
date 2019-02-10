@@ -32,12 +32,13 @@ namespace DnDClient
                 DisableLoadElements();
             }
 
+            LoadedCharacter = element;
+
             if (isOnlyRead)
             {
                 DisableAllElements();
+                CreateCharacterForm_Load(null, null);
             }
-
-            LoadedCharacter = element;
         }
 
         private void DisableAllElements()
@@ -47,9 +48,14 @@ namespace DnDClient
             checkBoxBoneHP.Enabled = false;
             textBoxBoneHP.ReadOnly = true;
 
-            numericUpDownTimeHp.ReadOnly = true;
+            richTextBoxLanguages.ReadOnly = true;
 
-            numericUpDownXP.ReadOnly = true;
+            checkBoxInspiration.Enabled = false;
+
+            numericUpDownTimeHp.Enabled = false;
+            numericUpDownCurrentHP.Enabled = false;
+
+            numericUpDownXP.Enabled = false;
 
             checkBoxAliveOne.Enabled = false;
             checkBoxAliveTwo.Enabled = false;
@@ -62,52 +68,52 @@ namespace DnDClient
             dataGridViewEquipment.ReadOnly = true;
             dataGridViewWeapons.ReadOnly = true;
 
-            numericUpDownCopperMoney.ReadOnly = true;
-            numericUpDownSilverMoney.ReadOnly = true;
-            numericUpDownGoldMoney.ReadOnly = true;
-            numericUpDownElectroMoney.ReadOnly = true; ;
-            numericUpDownPlatinumMoney.ReadOnly = true;
+            numericUpDownCopperMoney.Enabled = false;
+            numericUpDownSilverMoney.Enabled = false;
+            numericUpDownGoldMoney.Enabled = false;
+            numericUpDownElectroMoney.Enabled = false;
+            numericUpDownPlatinumMoney.Enabled = false;
 
-            numericUpDownPassive.ReadOnly = true;
+            numericUpDownPassive.Enabled = false;
 
             richTextBoxSpellsAbout.ReadOnly = true;
             dataGridViewTalking.ReadOnly = true;
 
-            numericUpDownFirstSpellLevelCount.ReadOnly = true;
-            numericUpDownFirstSpellLevelUsed.ReadOnly = true;
-            dataGridViewFirstSpellLevel.ReadOnly = true;
+            numericUpDownFirstSpellLevelCount.Enabled = false;
+            numericUpDownFirstSpellLevelUsed.Enabled = false;
+            dataGridViewFirstSpellLevel.Enabled = false;
 
-            numericUpDownSecondSpellLevelCount.ReadOnly = true;
-            numericUpDownSecondSpellLevelUsed.ReadOnly = true;
-            dataGridViewSecondSpellLevel.ReadOnly = true;
+            numericUpDownSecondSpellLevelCount.Enabled = false;
+            numericUpDownSecondSpellLevelUsed.Enabled = false;
+            dataGridViewSecondSpellLevel.Enabled = false;
 
-            numericUpDownThirdSpellLevelCount.ReadOnly = true;
-            numericUpDownThirdSpellLevelUsed.ReadOnly = true;
-            dataGridViewThirdSpellLevel.ReadOnly = true;
+            numericUpDownThirdSpellLevelCount.Enabled = false;
+            numericUpDownThirdSpellLevelUsed.Enabled = false;
+            dataGridViewThirdSpellLevel.Enabled = false;
 
-            numericUpDownFourthSpellLevelCount.ReadOnly = true;
-            numericUpDownFourthSpellLevelUsed.ReadOnly = true;
-            dataGridViewFourthSpellLevel.ReadOnly = true;
+            numericUpDownFourthSpellLevelCount.Enabled = false;
+            numericUpDownFourthSpellLevelUsed.Enabled = false;
+            dataGridViewFourthSpellLevel.Enabled = false;
 
-            numericUpDownFifthSpellLevelCount.ReadOnly = true;
-            numericUpDownFifthSpellLevelUsed.ReadOnly = true;
-            dataGridViewFifthSpellLevel.ReadOnly = true;
+            numericUpDownFifthSpellLevelCount.Enabled = false;
+            numericUpDownFifthSpellLevelUsed.Enabled = false;
+            dataGridViewFifthSpellLevel.Enabled = false;
 
-            numericUpDownSixthSpellLevelCount.ReadOnly = true;
-            numericUpDownSixthSpellLevelUsed.ReadOnly = true;
-            dataGridViewSixthSpellLevel.ReadOnly = true;
+            numericUpDownSixthSpellLevelCount.Enabled = false;
+            numericUpDownSixthSpellLevelUsed.Enabled = false;
+            dataGridViewSixthSpellLevel.Enabled = false;
 
-            numericUpDownSeventhSpellLevelCount.ReadOnly = true;
-            numericUpDownSeventhSpellLevelUsed.ReadOnly = true;
-            dataGridViewSeventhSpellLevel.ReadOnly = true;
+            numericUpDownSeventhSpellLevelCount.Enabled = false;
+            numericUpDownSeventhSpellLevelUsed.Enabled = false;
+            dataGridViewSeventhSpellLevel.Enabled = false;
 
-            numericUpDownEighthSpellLevelCount.ReadOnly = true;
-            numericUpDownEighthSpellLevelUsed.ReadOnly = true;
-            dataGridViewEighthSpellLevel.ReadOnly = true;
+            numericUpDownEighthSpellLevelCount.Enabled = false;
+            numericUpDownEighthSpellLevelUsed.Enabled = false;
+            dataGridViewEighthSpellLevel.Enabled = false;
 
-            numericUpDownNinthSpellLevelCount.ReadOnly = true;
-            numericUpDownNinthSpellLevelUsed.ReadOnly = true;
-            dataGridViewNinthSpellLevel.ReadOnly = true;
+            numericUpDownNinthSpellLevelCount.Enabled = false;
+            numericUpDownNinthSpellLevelUsed.Enabled = false;
+            dataGridViewNinthSpellLevel.Enabled = false;
         }
 
         private Dictionary<string, TextBox> characteristicsValueTextBoxes;
@@ -1585,7 +1591,7 @@ namespace DnDClient
             //TODO
         }
 
-        private void checkBoxInspiration_CheckedChanged(object sender, EventArgs e)
+        private void CheckBoxInspiration_CheckedChanged(object sender, EventArgs e)
         {
             SendChange("Inspiration", checkBoxInspiration.Checked);
         }

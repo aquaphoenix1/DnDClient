@@ -36,7 +36,6 @@
             this.loadCharacterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьПерсонажаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.редактироватьПерсонажаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panelCharacter = new System.Windows.Forms.Panel();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageMain = new System.Windows.Forms.TabPage();
             this.panelBattlefield = new System.Windows.Forms.Panel();
@@ -60,18 +59,22 @@
             this.tabPageMyCharacter = new System.Windows.Forms.TabPage();
             this.tabPageRules = new System.Windows.Forms.TabPage();
             this.axAcroPDFRules = new AxAcroPDFLib.AxAcroPDF();
+            this.tabPageBrowser = new System.Windows.Forms.TabPage();
+            this.webBrowserMain = new System.Windows.Forms.WebBrowser();
+            this.panelCharacter = new System.Windows.Forms.Panel();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageMain.SuspendLayout();
+            this.panelBattlefield.SuspendLayout();
             this.panelChatAndDices.SuspendLayout();
             this.panelChat.SuspendLayout();
             this.groupBoxDices.SuspendLayout();
             this.groupBoxAdvantageAndInterference.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlusDices)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCountDices)).BeginInit();
-            this.tabPageMyCharacter.SuspendLayout();
             this.tabPageRules.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axAcroPDFRules)).BeginInit();
+            this.tabPageBrowser.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripMain
@@ -130,21 +133,12 @@
             this.редактироватьПерсонажаToolStripMenuItem.Text = "Редактировать персонажа";
             this.редактироватьПерсонажаToolStripMenuItem.Click += new System.EventHandler(this.редактироватьПерсонажаToolStripMenuItem_Click);
             // 
-            // panelCharacter
-            // 
-            this.panelCharacter.AutoScroll = true;
-            this.panelCharacter.AutoSize = true;
-            this.panelCharacter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCharacter.Location = new System.Drawing.Point(3, 3);
-            this.panelCharacter.Name = "panelCharacter";
-            this.panelCharacter.Size = new System.Drawing.Size(1227, 515);
-            this.panelCharacter.TabIndex = 4;
-            // 
             // tabControlMain
             // 
             this.tabControlMain.Controls.Add(this.tabPageMain);
             this.tabControlMain.Controls.Add(this.tabPageMyCharacter);
             this.tabControlMain.Controls.Add(this.tabPageRules);
+            this.tabControlMain.Controls.Add(this.tabPageBrowser);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 24);
             this.tabControlMain.Name = "tabControlMain";
@@ -171,6 +165,7 @@
             this.panelBattlefield.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelBattlefield.Controls.Add(this.panelCharacter);
             this.panelBattlefield.Location = new System.Drawing.Point(306, 3);
             this.panelBattlefield.Name = "panelBattlefield";
             this.panelBattlefield.Size = new System.Drawing.Size(924, 518);
@@ -395,7 +390,6 @@
             // 
             // tabPageMyCharacter
             // 
-            this.tabPageMyCharacter.Controls.Add(this.panelCharacter);
             this.tabPageMyCharacter.Location = new System.Drawing.Point(4, 22);
             this.tabPageMyCharacter.Name = "tabPageMyCharacter";
             this.tabPageMyCharacter.Padding = new System.Windows.Forms.Padding(3);
@@ -425,6 +419,36 @@
             this.axAcroPDFRules.Size = new System.Drawing.Size(1227, 515);
             this.axAcroPDFRules.TabIndex = 0;
             // 
+            // tabPageBrowser
+            // 
+            this.tabPageBrowser.Controls.Add(this.webBrowserMain);
+            this.tabPageBrowser.Location = new System.Drawing.Point(4, 22);
+            this.tabPageBrowser.Name = "tabPageBrowser";
+            this.tabPageBrowser.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageBrowser.Size = new System.Drawing.Size(1233, 521);
+            this.tabPageBrowser.TabIndex = 3;
+            this.tabPageBrowser.Text = "Браузер";
+            this.tabPageBrowser.UseVisualStyleBackColor = true;
+            // 
+            // webBrowserMain
+            // 
+            this.webBrowserMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowserMain.Location = new System.Drawing.Point(3, 3);
+            this.webBrowserMain.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserMain.Name = "webBrowserMain";
+            this.webBrowserMain.Size = new System.Drawing.Size(1227, 515);
+            this.webBrowserMain.TabIndex = 0;
+            // 
+            // panelCharacter
+            // 
+            this.panelCharacter.AutoScroll = true;
+            this.panelCharacter.AutoSize = true;
+            this.panelCharacter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCharacter.Location = new System.Drawing.Point(0, 0);
+            this.panelCharacter.Name = "panelCharacter";
+            this.panelCharacter.Size = new System.Drawing.Size(924, 518);
+            this.panelCharacter.TabIndex = 5;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -441,6 +465,8 @@
             this.menuStripMain.PerformLayout();
             this.tabControlMain.ResumeLayout(false);
             this.tabPageMain.ResumeLayout(false);
+            this.panelBattlefield.ResumeLayout(false);
+            this.panelBattlefield.PerformLayout();
             this.panelChatAndDices.ResumeLayout(false);
             this.panelChat.ResumeLayout(false);
             this.panelChat.PerformLayout();
@@ -450,10 +476,9 @@
             this.groupBoxAdvantageAndInterference.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlusDices)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCountDices)).EndInit();
-            this.tabPageMyCharacter.ResumeLayout(false);
-            this.tabPageMyCharacter.PerformLayout();
             this.tabPageRules.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.axAcroPDFRules)).EndInit();
+            this.tabPageBrowser.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -464,7 +489,6 @@
         private System.Windows.Forms.ToolStripMenuItem персонажToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createCharacterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadCharacterToolStripMenuItem;
-        private System.Windows.Forms.Panel panelCharacter;
         private System.Windows.Forms.ToolStripMenuItem сохранитьПерсонажаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem редактироватьПерсонажаToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControlMain;
@@ -491,6 +515,9 @@
         private System.Windows.Forms.ComboBox comboBoxDice;
         private System.Windows.Forms.ToolStripMenuItem показатьПерсонажейToolStripMenuItem;
         private AxAcroPDFLib.AxAcroPDF axAcroPDFRules;
+        private System.Windows.Forms.TabPage tabPageBrowser;
+        private System.Windows.Forms.WebBrowser webBrowserMain;
+        private System.Windows.Forms.Panel panelCharacter;
     }
 }
 

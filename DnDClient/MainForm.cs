@@ -14,6 +14,7 @@ namespace DnDClient
         public MainForm()
         {
             InitializeComponent();
+            webBrowserMain.Navigate("http://google.com");
         }
 
         private void ToChat(string message)
@@ -67,6 +68,20 @@ namespace DnDClient
             new CreateCharacterForm(false, null, false).ShowDialog();
         }
 
+        private class Send
+        {
+            public string UserName { get; set; }
+            public string Value { get; set; }
+            public string Action { get; set; }
+
+            public Send(string userName, string value, string action)
+            {
+                UserName = userName;
+                Value = value;
+                Action = action;
+            }
+        }
+
         private void LoadCharacterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string input = Microsoft.VisualBasic.Interaction.InputBox("Введите имя персонажа",
@@ -98,7 +113,7 @@ namespace DnDClient
                     {
                         form.Show();
 
-                        CharacterEthernetController.GetController().SendRequest("POST", JsonConvert.SerializeObject(new { Controller.Controller.UserName, Value = element, Action = "Load" }));
+                        CharacterEthernetController.GetController().SendRequest("POST", JsonConvert.SerializeObject(new Send(Controller.Controller.UserName, text, "Load")));
                     }
                     catch { }
                 }

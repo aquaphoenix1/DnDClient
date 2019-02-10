@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace DnDClient.Controller
@@ -39,7 +40,10 @@ namespace DnDClient.Controller
             else
             {
                 IsCharactersVisible = true;
-                charactersForm.Show();
+                //new Thread(() =>
+                //{
+                    MainForm.Invoke((MethodInvoker)delegate () { charactersForm.Show(); });
+               // }).Start();
             }
         }
     }
