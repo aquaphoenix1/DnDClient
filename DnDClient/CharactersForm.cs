@@ -23,15 +23,14 @@ namespace DnDClient
 
         public static void AddNewUser(dynamic value)
         {
-
             foreach (var item in value)
             {
-                var a = item.Value;
-                var elem = JsonConvert.DeserializeObject(a);
+                /*var a = item.Value;
+                var elem = JsonConvert.DeserializeObject(item);*/
 
                 Controller.Controller.MainForm.Invoke((MethodInvoker) delegate()
                 {
-                    var panel = new CharacterPanel(true, elem, value.Name)
+                    var panel = new CharacterPanel(true, item, value.Name)
                     {
                         AutoScroll = true,
                         TopLevel = false

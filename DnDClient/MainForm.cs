@@ -71,10 +71,10 @@ namespace DnDClient
         private class Send
         {
             public string UserName { get; set; }
-            public string Value { get; set; }
+            public dynamic Value { get; set; }
             public string Action { get; set; }
 
-            public Send(string userName, string value, string action)
+            public Send(string userName, dynamic value, string action)
             {
                 UserName = userName;
                 Value = value;
@@ -84,8 +84,10 @@ namespace DnDClient
 
         private void LoadCharacterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string input = Microsoft.VisualBasic.Interaction.InputBox("Введите имя персонажа",
-                       "Загрузка персонажа");
+            //string input = Microsoft.VisualBasic.Interaction.InputBox("Введите имя персонажа",
+            //           "Загрузка персонажа");
+
+            string input = "Олтайн";
 
             if(input != "")
             {
@@ -113,7 +115,9 @@ namespace DnDClient
                     {
                         form.Show();
 
-                        CharacterEthernetController.GetController().SendRequest("POST", JsonConvert.SerializeObject(new Send(Controller.Controller.UserName, text, "Load")));
+                        var send = new Send(Controller.Controller.UserName, element, "Load");
+
+                        CharacterEthernetController.GetController().SendRequest("POST", JsonConvert.SerializeObject(send));
                     }
                     catch { }
                 }

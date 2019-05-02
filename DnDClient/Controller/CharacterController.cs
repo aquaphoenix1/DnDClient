@@ -25,7 +25,7 @@ namespace DnDClient.Controller
                 {
                     if ((p as CharacterPanel).UserName.Equals(userName))
                     {
-                        ChangeExistsUser(p as CharacterPanel, value);
+                        ChangeExistsUser(p as CharacterPanel, element);
                         isFlag = true;
                         break;
                     }

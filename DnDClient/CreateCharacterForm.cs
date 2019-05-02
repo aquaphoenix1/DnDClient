@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -1442,6 +1443,26 @@ namespace DnDClient
                             }
                     }
                 }
+
+                numericUpDownXP.ValueChanged += NumericUpDownXP_ValueChanged;
+                numericUpDownCurrentHP.ValueChanged += NumericUpDownCurrentHP_ValueChanged;
+                numericUpDownTimeHp.ValueChanged += NumericUpDownTimeHp_ValueChanged;
+                checkBoxBoneHP.CheckedChanged += CheckBoxBoneHP_CheckedChanged;
+                checkBoxAliveOne.CheckedChanged += CheckBoxAliveOne_CheckedChanged;
+                checkBoxAliveThree.CheckedChanged += CheckBoxAliveTwo_CheckedChanged;
+                checkBoxAliveThree.CheckedChanged += CheckBoxAliveThree_CheckedChanged;
+                checkBoxDeathOne.CheckedChanged += CheckBoxDeathOne_CheckedChanged;
+                checkBoxDeathTwo.CheckedChanged += CheckBoxDeathTwo_CheckedChanged;
+                checkBoxDeathThree.CheckedChanged += CheckBoxDeathThree_CheckedChanged;
+                numericUpDownCopperMoney.ValueChanged += NumericUpDownCopperMoney_ValueChanged;
+                numericUpDownSilverMoney.ValueChanged += NumericUpDownSilverMoney_ValueChanged;
+                numericUpDownElectroMoney.ValueChanged += NumericUpDownElectroMoney_ValueChanged;
+                numericUpDownGoldMoney.ValueChanged += NumericUpDownGoldMoney_ValueChanged;
+                numericUpDownPlatinumMoney.ValueChanged += NumericUpDownPlatinumMoney_ValueChanged;
+                dataGridViewWeapons.CellEndEdit += DataGridViewWeapons_CellEndEdit;
+                dataGridViewAbilities.CellEndEdit += DataGridViewAbilities_CellEndEdit;
+                dataGridViewEquipment.CellEndEdit += DataGridViewEquipment_CellEndEdit;
+                checkBoxInspiration.CheckedChanged += CheckBoxInspiration_CheckedChanged;
             }
             catch (Exception e)
             {
@@ -1598,7 +1619,44 @@ namespace DnDClient
 
         internal void ChangeValues(dynamic value)
         {
+            var characterProps = typeof(Character).GetProperties();
+
+            try
+            {
+                var b = value.GetProperty();
+                var v = b.GetProperty("Name");
+                var vp = v.GetValue(value, null);
+                //var loadCharact = value..Characteristics;
+            }
+            catch
+            {
+                int a = 12;
+            }
+
+            
+
+            //var field = characterProps.First(o => o.Name.Equals()
+
+            /*
+            var val = value.Value;
+            var characterProps = typeof(Character).GetProperties();
+            foreach (var prop in val)
+            {
+                var o = prop.Value;
+                var name = prop.Name;
+
+
+
+                var o1 = LoadedCharacter.GetProperty(name);
+                if (!(LoadedCharacter.prop.Name).equals(val.prop.Name))
+                {
+                    LoadedCharacter.prop = val.prop;
+                }
+            }
+            var a = val.GetType().GetPropetries();
             throw new Exception();
+            */
         }
     }
 }
+ 

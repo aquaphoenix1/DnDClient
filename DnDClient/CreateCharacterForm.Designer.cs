@@ -378,7 +378,6 @@
             this.numericUpDownXP.Name = "numericUpDownXP";
             this.numericUpDownXP.Size = new System.Drawing.Size(98, 20);
             this.numericUpDownXP.TabIndex = 102;
-            this.numericUpDownXP.ValueChanged += new System.EventHandler(this.NumericUpDownXP_ValueChanged);
             // 
             // labelAbilities
             // 
@@ -562,7 +561,6 @@
             this.numericUpDownPlatinumMoney.Name = "numericUpDownPlatinumMoney";
             this.numericUpDownPlatinumMoney.Size = new System.Drawing.Size(53, 20);
             this.numericUpDownPlatinumMoney.TabIndex = 54;
-            this.numericUpDownPlatinumMoney.ValueChanged += new System.EventHandler(this.NumericUpDownPlatinumMoney_ValueChanged);
             // 
             // labelPlatinumMoney
             // 
@@ -584,7 +582,6 @@
             this.numericUpDownGoldMoney.Name = "numericUpDownGoldMoney";
             this.numericUpDownGoldMoney.Size = new System.Drawing.Size(53, 20);
             this.numericUpDownGoldMoney.TabIndex = 52;
-            this.numericUpDownGoldMoney.ValueChanged += new System.EventHandler(this.NumericUpDownGoldMoney_ValueChanged);
             // 
             // labelGoldMoney
             // 
@@ -606,7 +603,6 @@
             this.numericUpDownElectroMoney.Name = "numericUpDownElectroMoney";
             this.numericUpDownElectroMoney.Size = new System.Drawing.Size(53, 20);
             this.numericUpDownElectroMoney.TabIndex = 50;
-            this.numericUpDownElectroMoney.ValueChanged += new System.EventHandler(this.NumericUpDownElectroMoney_ValueChanged);
             // 
             // labelElectroMoney
             // 
@@ -628,7 +624,6 @@
             this.numericUpDownSilverMoney.Name = "numericUpDownSilverMoney";
             this.numericUpDownSilverMoney.Size = new System.Drawing.Size(53, 20);
             this.numericUpDownSilverMoney.TabIndex = 48;
-            this.numericUpDownSilverMoney.ValueChanged += new System.EventHandler(this.NumericUpDownSilverMoney_ValueChanged);
             // 
             // labelSilverMoney
             // 
@@ -650,7 +645,6 @@
             this.numericUpDownCopperMoney.Name = "numericUpDownCopperMoney";
             this.numericUpDownCopperMoney.Size = new System.Drawing.Size(53, 20);
             this.numericUpDownCopperMoney.TabIndex = 47;
-            this.numericUpDownCopperMoney.ValueChanged += new System.EventHandler(this.NumericUpDownCopperMoney_ValueChanged);
             // 
             // labelCopperMoney
             // 
@@ -674,7 +668,6 @@
             this.dataGridViewEquipment.RowHeadersVisible = false;
             this.dataGridViewEquipment.Size = new System.Drawing.Size(243, 244);
             this.dataGridViewEquipment.TabIndex = 44;
-            this.dataGridViewEquipment.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewEquipment_CellEndEdit);
             // 
             // ColumnEquipmentName
             // 
@@ -719,7 +712,6 @@
             this.dataGridViewAbilities.RowHeadersVisible = false;
             this.dataGridViewAbilities.Size = new System.Drawing.Size(350, 485);
             this.dataGridViewAbilities.TabIndex = 42;
-            this.dataGridViewAbilities.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewAbilities_CellEndEdit);
             // 
             // ColumnAbilityName
             // 
@@ -760,7 +752,6 @@
             this.dataGridViewWeapons.RowHeadersVisible = false;
             this.dataGridViewWeapons.Size = new System.Drawing.Size(350, 229);
             this.dataGridViewWeapons.TabIndex = 43;
-            this.dataGridViewWeapons.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewWeapons_CellEndEdit);
             // 
             // ColumnWeaponName
             // 
@@ -909,7 +900,6 @@
             this.checkBoxDeathThree.Size = new System.Drawing.Size(15, 14);
             this.checkBoxDeathThree.TabIndex = 44;
             this.checkBoxDeathThree.UseVisualStyleBackColor = true;
-            this.checkBoxDeathThree.CheckedChanged += new System.EventHandler(this.CheckBoxDeathThree_CheckedChanged);
             // 
             // checkBoxDeathTwo
             // 
@@ -919,7 +909,6 @@
             this.checkBoxDeathTwo.Size = new System.Drawing.Size(15, 14);
             this.checkBoxDeathTwo.TabIndex = 43;
             this.checkBoxDeathTwo.UseVisualStyleBackColor = true;
-            this.checkBoxDeathTwo.CheckedChanged += new System.EventHandler(this.CheckBoxDeathTwo_CheckedChanged);
             // 
             // checkBoxDeathOne
             // 
@@ -929,7 +918,6 @@
             this.checkBoxDeathOne.Size = new System.Drawing.Size(15, 14);
             this.checkBoxDeathOne.TabIndex = 42;
             this.checkBoxDeathOne.UseVisualStyleBackColor = true;
-            this.checkBoxDeathOne.CheckedChanged += new System.EventHandler(this.CheckBoxDeathOne_CheckedChanged);
             // 
             // labelDeath
             // 
@@ -948,7 +936,6 @@
             this.checkBoxAliveThree.Size = new System.Drawing.Size(15, 14);
             this.checkBoxAliveThree.TabIndex = 40;
             this.checkBoxAliveThree.UseVisualStyleBackColor = true;
-            this.checkBoxAliveThree.CheckedChanged += new System.EventHandler(this.CheckBoxAliveThree_CheckedChanged);
             // 
             // checkBoxAliveTwo
             // 
@@ -958,7 +945,6 @@
             this.checkBoxAliveTwo.Size = new System.Drawing.Size(15, 14);
             this.checkBoxAliveTwo.TabIndex = 39;
             this.checkBoxAliveTwo.UseVisualStyleBackColor = true;
-            this.checkBoxAliveTwo.CheckedChanged += new System.EventHandler(this.CheckBoxAliveTwo_CheckedChanged);
             // 
             // checkBoxAliveOne
             // 
@@ -968,7 +954,6 @@
             this.checkBoxAliveOne.Size = new System.Drawing.Size(15, 14);
             this.checkBoxAliveOne.TabIndex = 38;
             this.checkBoxAliveOne.UseVisualStyleBackColor = true;
-            this.checkBoxAliveOne.CheckedChanged += new System.EventHandler(this.CheckBoxAliveOne_CheckedChanged);
             // 
             // labelAlive
             // 
@@ -998,7 +983,6 @@
             this.checkBoxBoneHP.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBoneHP.TabIndex = 45;
             this.checkBoxBoneHP.UseVisualStyleBackColor = true;
-            this.checkBoxBoneHP.CheckedChanged += new System.EventHandler(this.CheckBoxBoneHP_CheckedChanged);
             // 
             // labelBoneHP
             // 
@@ -1037,7 +1021,6 @@
             this.numericUpDownTimeHp.Name = "numericUpDownTimeHp";
             this.numericUpDownTimeHp.Size = new System.Drawing.Size(92, 20);
             this.numericUpDownTimeHp.TabIndex = 50;
-            this.numericUpDownTimeHp.ValueChanged += new System.EventHandler(this.NumericUpDownTimeHp_ValueChanged);
             // 
             // labelTimeHP
             // 
@@ -1080,7 +1063,6 @@
             this.numericUpDownCurrentHP.Name = "numericUpDownCurrentHP";
             this.numericUpDownCurrentHP.Size = new System.Drawing.Size(92, 20);
             this.numericUpDownCurrentHP.TabIndex = 49;
-            this.numericUpDownCurrentHP.ValueChanged += new System.EventHandler(this.NumericUpDownCurrentHP_ValueChanged);
             // 
             // numericUpDownMaximumHP
             // 
