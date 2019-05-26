@@ -204,7 +204,7 @@ namespace DnDClient
             }
 
             var name = characteristicsValueTextBoxes.First(x => x.Value.Equals(elem)).Key;
-            
+
             int bonus = CalculateBonusValue(result);
 
             if (name.Equals("Agility"))
@@ -229,7 +229,7 @@ namespace DnDClient
 
         private void ChangeAllSkills(string name, int value)
         {
-            foreach(var cb in skillsCheckBoxes)
+            foreach (var cb in skillsCheckBoxes)
             {
                 var charType = skills.First(x => x.Key.Equals(cb.Key));
                 if (charType.Value.Equals(name))
@@ -642,7 +642,7 @@ namespace DnDClient
             var skillsY = 5;
 
             FillSkills();
-            foreach(var elem in skills)
+            foreach (var elem in skills)
             {
                 var panel = GetSkillPanel(elem.Key, skillsY);
 
@@ -690,19 +690,19 @@ namespace DnDClient
 
         private bool ValidateData()
         {
-            if(textBoxName.Text == "")
+            if (textBoxName.Text == "")
             {
                 MessageBox.Show("Введите имя!");
                 return false;
             }
 
-            if(textBoxUserName.Text == "")
+            if (textBoxUserName.Text == "")
             {
                 MessageBox.Show("Введите имя игрока!");
                 return false;
             }
 
-            foreach(var elem in characteristicsValueTextBoxes)
+            foreach (var elem in characteristicsValueTextBoxes)
             {
                 if (!int.TryParse(elem.Value.Text, out int value))
                 {
@@ -717,25 +717,25 @@ namespace DnDClient
                 }
             }
 
-            if(textBoxClassAndLevel.Text == "")
+            if (textBoxClassAndLevel.Text == "")
             {
                 MessageBox.Show("Введите класс и уровень!");
                 return false;
             }
 
-            if(textBoxHistory.Text == "")
+            if (textBoxHistory.Text == "")
             {
                 MessageBox.Show("Введите предысторию!");
                 return false;
             }
 
-            if(textBoxRace.Text == "")
+            if (textBoxRace.Text == "")
             {
                 MessageBox.Show("Введите расуу!");
                 return false;
             }
 
-            if(textBoxGod.Text == "")
+            if (textBoxGod.Text == "")
             {
                 MessageBox.Show("Введите мировоззрение!");
                 return false;
@@ -747,37 +747,37 @@ namespace DnDClient
                 return false;
             }
 
-            if(richTextBoxIdeals.Text == "")
+            if (richTextBoxIdeals.Text == "")
             {
                 MessageBox.Show("Введите идеалы!");
                 return false;
             }
 
-            if(richTextBoxAttachment.Text == "")
+            if (richTextBoxAttachment.Text == "")
             {
                 MessageBox.Show("Введите привязанности!");
                 return false;
             }
 
-            if(richTextBoxWeaknesses.Text == "")
+            if (richTextBoxWeaknesses.Text == "")
             {
                 MessageBox.Show("Введите слабости!");
                 return false;
             }
 
-            if(richTextBoxLanguages.Text == "")
+            if (richTextBoxLanguages.Text == "")
             {
                 MessageBox.Show("Введите владение языками!");
                 return false;
             }
 
-            if((int)numericUpDownMaximumHP.Value <= 0)
+            if ((int)numericUpDownMaximumHP.Value <= 0)
             {
                 MessageBox.Show("Неверное значение HP!");
                 return false;
             }
 
-            if(textBoxBoneHP.Text == "")
+            if (textBoxBoneHP.Text == "")
             {
                 MessageBox.Show("Введите кость хитов!");
                 return false;
@@ -817,7 +817,7 @@ namespace DnDClient
 
             List<Character.Save> saves = new List<Character.Save>();
 
-            foreach(var elem in parametres)
+            foreach (var elem in parametres)
             {
                 var checkBox = GetSaveCheckBoxByName(elem.Key);
                 var value = GetSaveTextBoxesByName(elem.Key).Text;
@@ -885,7 +885,7 @@ namespace DnDClient
 
             var skillList = new List<Character.Skill>();
 
-            foreach(var elem in skills)
+            foreach (var elem in skills)
             {
                 var cb = GetSkillCheckBoxByName(elem.Key);
                 var val = GetSkillValueTextBoxByName(elem.Key);
@@ -1041,7 +1041,7 @@ namespace DnDClient
             {
                 DataGridView table = tabPageSpells.Controls.Find("dataGridView" + level, true)[0] as DataGridView;
 
-                foreach(DataGridViewRow elem in table.Rows)
+                foreach (DataGridViewRow elem in table.Rows)
                 {
                     if (elem.Cells[0].Value != null)
                     {
@@ -1064,7 +1064,7 @@ namespace DnDClient
 
         private void ChangeAllSaves()
         {
-            foreach(var e in bonusValueTextBoxes)
+            foreach (var e in bonusValueTextBoxes)
             {
                 var newValue = CalculateSave(e.Key);
 
@@ -1129,14 +1129,14 @@ namespace DnDClient
                 textBoxBoneHP.Text = boneHP;
 
                 var characteristics = character.Characteristics;
-                foreach(var e in characteristics)
+                foreach (var e in characteristics)
                 {
                     GetCharacteristicsValueTextBoxByName(e.Name.ToString()).Text = e.Value.ToString();
                 }
 
                 var classAndLevel = character.ClassAndLevel;
                 textBoxClassAndLevel.Text = classAndLevel;
-                
+
                 var copperMoney = character.CopperMoney;
                 numericUpDownCopperMoney.Value = int.Parse(copperMoney.ToString());
 
@@ -1146,20 +1146,20 @@ namespace DnDClient
 
                 var deadAndAlive = character.DeadAndAlive;
 
-                foreach(var e in deadAndAlive)
+                foreach (var e in deadAndAlive)
                 {
                     if (e.Name.Equals("Deathes"))
                     {
                         var deathes = e.Value;
 
                         int i = 0;
-                        foreach(var d in deathes)
+                        foreach (var d in deathes)
                         {
                             DeadCheckBoxes[i].Checked = d;
                             i++;
                         }
                     }
-                    else if(e.Name.Equals("Alives"))
+                    else if (e.Name.Equals("Alives"))
                     {
                         var alives = e.Value;
 
@@ -1181,7 +1181,7 @@ namespace DnDClient
                 numericUpDownElectroMoney.Value = int.Parse(electroMoney.ToString());
 
                 var equipments = character.Equipments;
-                foreach(var e in equipments)
+                foreach (var e in equipments)
                 {
                     var index = dataGridViewEquipment.Rows.Add();
 
@@ -1238,14 +1238,14 @@ namespace DnDClient
                 textBoxRace.Text = race;
 
                 var saves = character.Saves;
-                foreach(var e in saves)
+                foreach (var e in saves)
                 {
                     var saveName = e.Name.ToString();
                     GetSaveCheckBoxByName(saveName).Checked = bool.Parse(e.IsChecked.ToString());
                 }
 
                 var skills = character.Skills;
-                foreach(var e in skills)
+                foreach (var e in skills)
                 {
                     var n = e.Name.ToString();
                     n = n.Substring(0, n.IndexOf('(') - 1);
@@ -1271,7 +1271,7 @@ namespace DnDClient
                 richTextBoxWeaknesses.Text = weaknesses;
 
                 var weapons = character.Weapons;
-                foreach(var e in weapons)
+                foreach (var e in weapons)
                 {
                     var index = dataGridViewWeapons.Rows.Add();
 
@@ -1290,7 +1290,7 @@ namespace DnDClient
                 richTextBoxSpellsAbout.Text = spellsAbout;
 
                 var talkings = character.Talkings;
-                foreach(var e in talkings)
+                foreach (var e in talkings)
                 {
                     var index = dataGridViewTalking.Rows.Add();
 
@@ -1300,7 +1300,7 @@ namespace DnDClient
                 }
 
                 var spells = character.Spells;
-                foreach(var e in spells)
+                foreach (var e in spells)
                 {
                     var level = int.Parse(e.Name);
 
@@ -1617,46 +1617,74 @@ namespace DnDClient
             SendChange("Inspiration", checkBoxInspiration.Checked);
         }
 
-        internal void ChangeValues(dynamic value)
+        public void ChangeValues(dynamic value)
         {
-            var characterProps = typeof(Character).GetProperties();
-
-            try
+            var name = value.Name.ToString();
+            foreach (var item in typeof(Character).GetProperties())
             {
-                var b = value.GetProperty();
-                var v = b.GetProperty("Name");
-                var vp = v.GetValue(value, null);
-                //var loadCharact = value..Characteristics;
-            }
-            catch
-            {
-                int a = 12;
-            }
+                var currentVal = LoadedCharacter[name];
+                var loadedVal = value[name];
 
-            
-
-            //var field = characterProps.First(o => o.Name.Equals()
-
-            /*
-            var val = value.Value;
-            var characterProps = typeof(Character).GetProperties();
-            foreach (var prop in val)
-            {
-                var o = prop.Value;
-                var name = prop.Name;
-
-
-
-                var o1 = LoadedCharacter.GetProperty(name);
-                if (!(LoadedCharacter.prop.Name).equals(val.prop.Name))
+                if (name.Equals(/*"Characteristics"*/""))//TODO
                 {
-                    LoadedCharacter.prop = val.prop;
+                    LoadedCharacter[name] = loadedVal;
+
+                    foreach (var p in parametres) {
+                        foreach(var e in loadedVal)
+                        {
+                            if (e.Name.ToString().Equals(p.Key))
+                            {
+                                GetCharacteristicsValueTextBoxByName(p.Key).Text = e.Value;
+                                break;
+                            }
+                        }
+                    }
+
+                    ChangeAllSkills();
+                }
+                else if (name.Equals("Saves"))//TODO remove
+                {
+                    LoadedCharacter[name] = loadedVal;
+                }
+                else if (name.Equals("DeadAndAlive"))
+                {
+                    LoadedCharacter[name] = loadedVal;
+                    checkBoxAliveOne.Checked = loadedVal.Alives[0];
+                    checkBoxAliveOne.Checked = loadedVal.Alives[1];
+                    checkBoxAliveOne.Checked = loadedVal.Alives[2];
+
+                    checkBoxDeathOne.Checked = loadedVal.Deathes[0];
+                    checkBoxDeathOne.Checked = loadedVal.Deathes[1];
+                    checkBoxDeathOne.Checked = loadedVal.Deathes[2];
+                }
+                else if (name.Equals("Weapons"))//TODO
+                {
+                    LoadedCharacter[name] = loadedVal;
+                }
+                else if (name.Equals("Abilities"))//TODO
+                {
+                    LoadedCharacter[name] = loadedVal;
+                }
+                else if (name.Equals("Equipments"))//TODO
+                {
+                    LoadedCharacter[name] = loadedVal;
+                }
+                else if (name.Equals("Talkings")) //TODO remove
+                {
+                    LoadedCharacter[name] = loadedVal;
+                }
+                else if (name.Equals("Spells"))//TODO
+                {
+                    LoadedCharacter[name] = loadedVal;
+                }
+                else
+                {
+                    if (currentVal != loadedVal)
+                    {
+                        LoadedCharacter[name] = loadedVal;
+                    }
                 }
             }
-            var a = val.GetType().GetPropetries();
-            throw new Exception();
-            */
         }
     }
 }
- 

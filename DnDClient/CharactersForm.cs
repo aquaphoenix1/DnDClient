@@ -25,9 +25,6 @@ namespace DnDClient
         {
             foreach (var item in value)
             {
-                /*var a = item.Value;
-                var elem = JsonConvert.DeserializeObject(item);*/
-
                 Controller.Controller.MainForm.Invoke((MethodInvoker) delegate()
                 {
                     var panel = new CharacterPanel(true, item, value.Name)
@@ -40,8 +37,6 @@ namespace DnDClient
 
                     panel.Show();
                 });
-
-               
             }
         }
     }

@@ -23,14 +23,6 @@ namespace DnDClient
             {
                 BeginInvoke(new MethodInvoker(() => richTextBoxChat.AppendText(message + Environment.NewLine)));
             });
-            /*if (InvokeRequired)
-            {
-                BeginInvoke(new MethodInvoker(() => richTextBoxChat.AppendText(message + Environment.NewLine)));
-            }
-            else
-            {
-                richTextBoxChat.AppendText(message + Environment.NewLine);
-            }*/
         }
 
         internal void AddChatMessage(string message)
